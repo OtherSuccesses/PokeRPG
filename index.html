@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pokemon RPG</title>
+</head>
+<body>
+	<input id = "text-to-search" type="text" placeholder = "Search" name="search-bar"/>
+	<button id = "search-btn">Search</button>
+
+	<div id="pokemon-info">
+		<p id="name"></p>
+		<p id="type"></p>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$("#search-btn").on("click", function(){
+		var pokemon = $("#text-to-search").val();
+		var queryURL = "http://pokeapi.co/api/v2/pokemon/" + pokemon;
+		$.ajax({
+			url: queryURL,
+			method: "GET"
+		}).done(function(pokemon){
+			$("#pokemon-info").text("Name: " + pokemon.name);
+			$("#type").text("Type: " + pokemon.types[1].name);
+		})
+	}) 	
+	</script>
+
+</body>
+</html>
