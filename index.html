@@ -36,15 +36,21 @@
 		}
 	}
 	var activePoke = [];
+	var pokeSprites = "";
 	var randomizePokemon = function(){
-			var queryURL = "https://pokeapi.co/api/v2/pokemon/?limit=150";
+			var queryURL = "https://pokeapi.co/api/v2/pokemon/150";
 			$.ajax({
 				url:queryURL,
 				method: "GET"
-			}).done(function(pokemon){
+			}).done(function(pokemon){	
 //				activePoke[i] = Math.floor(Math.random()*150);
 				console.log(pokemon);
-				var pokemon = pokeIDs[i];
+				console.log(pokemon.sprites);
+				console.log(pokemon.sprites.front_default);
+				var sprite = $("<img>");
+				sprite.attr("src", pokemon.sprites.front_default);
+				pokeSprites = pokemon.sprites.front_default;
+				sprite.appendTo($("#pokemon-info"));
 			})
 		}
 	idPush();
@@ -115,9 +121,9 @@
 	  // Origins, anchor positions and coordinates of the marker increase in the X
 	  // direction to the right and in the Y direction down.
 	  var image = {
-	    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+	    url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png',
 	    // This marker is 20 pixels wide by 32 pixels high.
-	    size: new google.maps.Size(20, 32),
+	    size: new google.maps.Size(10, 15),
 	    // The origin for this image is (0, 0).
 	    origin: new google.maps.Point(0, 0),
 	    // The anchor for this image is the base of the flagpole at (0, 32).
