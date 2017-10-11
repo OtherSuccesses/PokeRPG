@@ -1,10 +1,20 @@
+
+
 // Global Variables
+
+var hit = '';
+		var heroHP = 120;
+		var heroModifier = heroHP / 3;
+		var foeHP = 120;
+		var foeModifier = foeHP / 3;
+		var animationSpeed = 4;
+		var speedModifier = 1;
 var pokeArray = [];
-// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
-var nameArray = [];
+var url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI"
 
 //Firebase Code
 // Initialize Firebase
+
 var config = {
     apiKey: "AIzaSyC8kW0gKpIoL8W_JizTdOyuq0J0QdY7Zq0",
     authDomain: "group-project-1-b61de.firebaseapp.com",
@@ -13,14 +23,17 @@ var config = {
     storageBucket: "",
     messagingSenderId: "151973484935"
 };
+
 firebase.initializeApp(config);
 var database = firebase.database();
 
  // add firebase data to local array
- database.ref().on("child_added", function(childSnapshot){
- pokeArray.push(childSnapshot.val());
- });
- console.log(pokeArray);
+
+database.ref().on("child_added", function(childSnapshot){
+	pokeArray.push(childSnapshot.val());
+});
+
+
 
 //Pokemon API Code
 // var pokeIDs = [];
@@ -64,18 +77,11 @@ var database = firebase.database();
 // 		console.log(snapshot.val());
 // 	})
 
+
 var map;
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 40.765981527712825, lng: -78.78111690000003},
-        mapTypeId: 'satellite',
-        zoom: 4
-        });
-        window.onload = setMarkers(map);
-      }
+
+
   
-
-
 /// Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
 var markerArray = [];
@@ -93,23 +99,27 @@ var numGen =  function(to, from, fixed) {
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
 		markerArray[i].name = pokeArray[i].name;
+
 	}};
 	var longitude = function(){
 		for (i = 0; i<10; i++) {
 		var long = numGen(-60, -125, 3);
 		longArray.push(long);
 		markerArray[i].longitude = long;
-		// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
-		
-		// markerArray[i].id = pokeArray[i].id;
-		// makerArray[i].sprite = pokeArray[i].sprite;
 	}};
 	latitude ();
 	longitude();
 	}
-	console.log(markerArray);
 
-	
+	function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 40.765981527712825, lng: -78.78111690000003},
+        mapTypeId: 'satellite',
+        zoom: 4
+        });
+        window.onload = setMarkers(map);
+      }
+
 
 	function setMarkers(map) {
 	  // Adds markers to the map.
@@ -145,11 +155,79 @@ var numGen =  function(to, from, fixed) {
 	      icon: image,
 	      shape: shape,
 	    });
+
+
 	    marker.addListener('click', function(event) {
 	  	console.log(this);
+	  	  	$('#myModal').modal('show');
+	
 	  });
 	  });
 	}
 
 
+	//////////////////////Javascript for fight mechanic//////////////////////
+
+	function reduceHP(character) {
+			if (character === 'hero') {
+				return heroHP-=heroModifier;
+			} else if ( character === 'foe') {
+				return foeHP-=foeModifier;
+			}
+		}
+		function writeHit() {
+			if (hit) {
+				foeHP = reduceHP('foe');
+				$('.foeHP').html(foeHP);
+			} else {
+				heroHP = reduceHP('hero');
+				$('.heroHP').html(heroHP);
+			}
+		}
+
+		function checkWin() {
+			if (heroHP<=0) {
+				$('.results').html('You Lose!');
+				// $('.hero').effect('explode');
+			} else if (foeHP<=0) {
+				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
+				$('.foe').draggable();
+			}
+		}
+
+		$('.modal').on('click', function () {
+			var mover = $('.mover').position();
+			console.log(mover.top, mover.right, mover.bottom, mover.left);
+
+
+
+			if (heroHP>0 && foeHP>0) {
+
+				$('.hero').addClass('animateRight');
+				$('.foe').addClass('animateLeft');
+				$( ".hero" ).effect( "bounce", "slow" );
+				$( ".foe" ).effect( "bounce", "slow" );
+
+				setTimeout(function () {
+					$('.hero').removeClass('animateRight');
+					$('.foe').removeClass('animateLeft');
+				},600);
+
+				if (mover.left > 90 && mover.left < 110) {
+					hit = true;
+					
+				} else {
+					hit = false;
+					
+				}
+				writeHit();
+			}
+			checkWin();
+
+			$('.mover').css({
+				'animation-duration': animationSpeed/speedModifier
+			});
+			speedModifier+=0.1;
+
+		});
 
