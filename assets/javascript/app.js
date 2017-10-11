@@ -87,9 +87,11 @@ var pokeIDs = [];
 
 // Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
-
+	var markerArray = [];
 	var longArray = [];
 	var latArray = [];
+	// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
+	var nameArray = ["one","two","three","four","five","six","seven","eight","nine","ten"]
 	//function ()
 	var generateCoordinates = function () {
 
@@ -100,15 +102,21 @@ var pokeIDs = [];
 		for (i = 0; i<10; i++) {
 		var lat = numGen(27, 48, 3);
 		latArray.push(lat);
+		markerArray[i]={};
+		markerArray[i].latitude = lat;
 	}};
 	var longitude = function(){
 		for (i = 0; i<10; i++) {
 		var long = numGen(-60, -125, 3);
 		longArray.push(long);
+		markerArray[i].longitude = long;
+		// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
+		markerArray[i].name = nameArray[i];
 	}};
 	latitude ();
 	longitude();
 	}
+	console.log(markerArray);
 
 	function setMarkers(map) {
 	  // Adds markers to the map.
@@ -134,16 +142,21 @@ var pokeIDs = [];
 	    coords: [1, 1, 1, 20, 18, 20, 18, 1],
 	    type: 'poly'
 	  };
-	  for (var i = 0; i < latArray.length; i++) {
-	  	console.log(pokeSprites);
+
+	  markerArray.forEach(function(markerArray){
+
 	    var marker = new google.maps.Marker({
-	      position: {lat: latArray[i], lng: longArray[i]},
+	      position: {lat: markerArray.latitude, lng: markerArray.longitude },
 	      map: map,
+	      title: markerArray.name,
 	      icon: image,
 	      shape: shape,
-
 	    });
-	  }
-
+	    marker.addListener('click', function(event) {
+	  	console.log(this);
+	  });
+	  });
 	}
-	$.when(randomizePokemon()).done(initMap());
+
+
+
