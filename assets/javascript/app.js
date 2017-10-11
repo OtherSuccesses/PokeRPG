@@ -1,5 +1,8 @@
+// Global Variables
+var pokes = [];
+
 //Firebase Code
-  // Initialize Firebase
+// Initialize Firebase
   var config = {
     apiKey: "AIzaSyC8kW0gKpIoL8W_JizTdOyuq0J0QdY7Zq0",
     authDomain: "group-project-1-b61de.firebaseapp.com",
@@ -12,6 +15,11 @@
 
   var database = firebase.database();
 
+ // add firebase data to local array
+ database.ref().on("child_added", function(childSnapshot){
+ pokes = childSnapshot.val();
+  });
+
 //Pokemon API Code
 var pokeIDs = [];
 	var idPush = function(){
@@ -22,55 +30,37 @@ var pokeIDs = [];
 	}
 
 	var Pokemon = [];
-	var pokeSprites = database.ref("150")
-	var randomizePokemon = function(){
-		for(i = 0; i<150; i++){
-			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
-			$.ajax({
-				url:queryURL,
-				method: "GET"
-			}).done(function(pokemon){
-				//number.stringify();
-//				activePoke[i] = Math.floor(Math.random()*150);
-				// console.log(pokemon);
-				// console.log(pokemon.sprites);
-				// console.log(pokemon.sprites.front_default);
-				database.ref().push({
-					id: pokemon.id,
-					name: pokemon.name,
-					sprite:pokemon.sprites.front_default
-				});
-				console.log(pokemon);
-				// var sprite = $("<img>");
-				// sprite.attr("src", pokemon.sprites.front_default);
-				// pokeSprites = pokemon.sprites.front_default;
-				// sprite.appendTo($("#poke-image"));
-			})
-		}
-	}
-	idPush();
-	randomizePokemon();
-	database.ref("150").on("child_added", function(snapshot){
-		console.log(snapshot.val());
-	})
-
-
-	$("#random-poke-btn").on("click", function(){
-
-			randomizePokemon();
-		
-	});
-	$("#search-btn").on("click", function(){
-		var pokemon = $("#text-to-search").val();
-		var queryURL = "http://pokeapi.co/api/v2/pokemon/" + pokemon;
-		$.ajax({
-			url: queryURL,
-			method: "GET"
-		}).done(function(pokemon){
-			$("#pokemon-info").text("Name: " + pokemon.name);
-			$("#type").text("Type: " + pokemon.types[1].name);
-		})
-	})
+// 	var pokeSprites = database.ref("150")
+// 	var randomizePokemon = function(){
+// 		for(i = 0; i<150; i++){
+// 			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
+// 			$.ajax({
+// 				url:queryURL,
+// 				method: "GET"
+// 			}).done(function(pokemon){
+// 				//number.stringify();
+// //				activePoke[i] = Math.floor(Math.random()*150);
+// 				// console.log(pokemon);
+// 				// console.log(pokemon.sprites);
+// 				// console.log(pokemon.sprites.front_default);
+// 				database.ref().push({
+// 					id: pokemon.id,
+// 					name: pokemon.name,
+// 					sprite:pokemon.sprites.front_default
+// 				});
+// 				console.log(pokemon);
+// 				var sprite = $("<img>");
+// 				sprite.attr("src", pokemon.sprites.front_default);
+// 				pokeSprites = pokemon.sprites.front_default;
+// 				sprite.appendTo($("#poke-image"));
+// 			})
+// 		}
+// 	}
+// 	idPush();
+// 	randomizePokemon();
+// 	database.ref("150").on("child_added", function(snapshot){
+// 		console.log(snapshot.val());
+// 	})
 
  var map;
   function initMap() {
@@ -99,14 +89,14 @@ var pokeIDs = [];
 	    return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
 	};
 	var latitude = function(){
-		for (i = 0; i<10; i++) {
+		for (i = 0; i<pokes.length; i++) {
 		var lat = numGen(27, 48, 3);
 		latArray.push(lat);
 		markerArray[i]={};
 		markerArray[i].latitude = lat;
 	}};
 	var longitude = function(){
-		for (i = 0; i<10; i++) {
+		for (i = 0; i<pokes.length; i++) {
 		var long = numGen(-60, -125, 3);
 		longArray.push(long);
 		markerArray[i].longitude = long;
@@ -115,8 +105,10 @@ var pokeIDs = [];
 	}};
 	latitude ();
 	longitude();
-	}
 	console.log(markerArray);
+	}
+
+	
 
 	function setMarkers(map) {
 	  // Adds markers to the map.
@@ -126,7 +118,7 @@ var pokeIDs = [];
 	  // Origins, anchor positions and coordinates of the marker increase in the X
 	  // direction to the right and in the Y direction down.
 	  var image = new google.maps.MarkerImage(
-	    pokeSprites, null, null, null,
+	    // pokeSprites, null, null, null,
 	    // This marker is 20 pixels wide by 32 pixels high.
 	    //size: new google.maps.Size(15, 15)
 	    // The origin for this image is (0, 0).
