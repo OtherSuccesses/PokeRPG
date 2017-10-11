@@ -1,5 +1,79 @@
+//Firebase Code
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC8kW0gKpIoL8W_JizTdOyuq0J0QdY7Zq0",
+    authDomain: "group-project-1-b61de.firebaseapp.com",
+    databaseURL: "https://group-project-1-b61de.firebaseio.com",
+    projectId: "group-project-1-b61de",
+    storageBucket: "",
+    messagingSenderId: "151973484935"
+  };
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+
+//Pokemon API Code
+var pokeIDs = [];
+	var idPush = function(){
+		for (i= 1; i<151; i++){
+			pokeIDs.push(i);
+//			console.log(pokeIDs[i-1]);
+		}
+	}
+
+	var Pokemon = [];
+	var pokeSprites = database.ref("150")
+	var randomizePokemon = function(){
+		for(i = 0; i<150; i++){
+			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
+			$.ajax({
+				url:queryURL,
+				method: "GET"
+			}).done(function(pokemon){
+				//number.stringify();
+//				activePoke[i] = Math.floor(Math.random()*150);
+				// console.log(pokemon);
+				// console.log(pokemon.sprites);
+				// console.log(pokemon.sprites.front_default);
+				database.ref().push({
+					id: pokemon.id,
+					name: pokemon.name,
+					sprite:pokemon.sprites.front_default
+				});
+				console.log(pokemon);
+				// var sprite = $("<img>");
+				// sprite.attr("src", pokemon.sprites.front_default);
+				// pokeSprites = pokemon.sprites.front_default;
+				// sprite.appendTo($("#poke-image"));
+			})
+		}
+	}
+	idPush();
+	randomizePokemon();
+	database.ref("150").on("child_added", function(snapshot){
+		console.log(snapshot.val());
+	})
+
+
+	$("#random-poke-btn").on("click", function(){
+
+			randomizePokemon();
+		
+	});
+	$("#search-btn").on("click", function(){
+		var pokemon = $("#text-to-search").val();
+		var queryURL = "http://pokeapi.co/api/v2/pokemon/" + pokemon;
+		$.ajax({
+			url: queryURL,
+			method: "GET"
+		}).done(function(pokemon){
+			$("#pokemon-info").text("Name: " + pokemon.name);
+			$("#type").text("Type: " + pokemon.types[1].name);
+		})
+	})
+
  var map;
-      function initMap() {
+  function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 40.765981527712825, lng: -78.78111690000003},
           mapTypeId: 'satellite',
@@ -49,18 +123,18 @@
 	generateCoordinates();
 	  // Marker sizes are expressed as a Size of X,Y where the origin of the image
 	  // (0,0) is located in the top left of the image.
-
 	  // Origins, anchor positions and coordinates of the marker increase in the X
 	  // direction to the right and in the Y direction down.
-	  var image = {
-	    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+	  var image = new google.maps.MarkerImage(
+	    pokeSprites, null, null, null,
 	    // This marker is 20 pixels wide by 32 pixels high.
-	    size: new google.maps.Size(20, 32),
+	    //size: new google.maps.Size(15, 15)
 	    // The origin for this image is (0, 0).
-	    origin: new google.maps.Point(0, 0),
+	    //origin: new google.maps.Point(0, 0),
 	    // The anchor for this image is the base of the flagpole at (0, 32).
-	    anchor: new google.maps.Point(0, 32)
-	  };
+	    //anchor: new google.maps.Point(0, 32)
+	    new google.maps.Size(40,40)
+	  );
 	  // Shapes define the clickable region of the icon. The type defines an HTML
 	  // <area> element 'poly' which traces out a polygon as a series of X,Y points.
 	  // The final coordinate closes the poly by connecting to the first coordinate.
@@ -68,7 +142,9 @@
 	    coords: [1, 1, 1, 20, 18, 20, 18, 1],
 	    type: 'poly'
 	  };
+
 	  markerArray.forEach(function(markerArray){
+
 	    var marker = new google.maps.Marker({
 	      position: {lat: markerArray.latitude, lng: markerArray.longitude },
 	      map: map,
@@ -81,5 +157,6 @@
 	  });
 	  });
 	}
+
 
 
