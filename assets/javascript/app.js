@@ -10,11 +10,11 @@ var hit = '';
 		var animationSpeed = 4;
 		var speedModifier = 1;
 var pokeArray = [];
-// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
-var nameArray = [];
+var url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI"
 
 //Firebase Code
 // Initialize Firebase
+
 var config = {
     apiKey: "AIzaSyC8kW0gKpIoL8W_JizTdOyuq0J0QdY7Zq0",
     authDomain: "group-project-1-b61de.firebaseapp.com",
@@ -23,21 +23,17 @@ var config = {
     storageBucket: "",
     messagingSenderId: "151973484935"
 };
+
 firebase.initializeApp(config);
 var database = firebase.database();
 
  // add firebase data to local array
- database.ref().on("child_added", function(childSnapshot){
- 
+
+database.ref().on("child_added", function(childSnapshot){
+	pokeArray.push(childSnapshot.val());
+});
 
 
- 	 pokeArray.push(childSnapshot.val());
-
- 
- });
-
-
-// }
 
 //Pokemon API Code
 // var pokeIDs = [];
@@ -81,18 +77,11 @@ var database = firebase.database();
 // 		console.log(snapshot.val());
 // 	})
 
+
 var map;
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 40.765981527712825, lng: -78.78111690000003},
-        mapTypeId: 'satellite',
-        zoom: 4
-        });
-        window.onload = setMarkers(map);
-      }
+
+
   
-
-
 /// Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
 var markerArray = [];
@@ -109,24 +98,28 @@ var numGen =  function(to, from, fixed) {
 		latArray.push(lat);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
-		markerArray[i].name = pokeArray.name;
+		markerArray[i].name = pokeArray[i].name;
+		markerArray[i].url = pokeArray[i].sprite;
 	}};
 	var longitude = function(){
 		for (i = 0; i<10; i++) {
 		var long = numGen(-60, -125, 3);
 		longArray.push(long);
 		markerArray[i].longitude = long;
-		// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
-		
-		// markerArray[i].id = pokeArray[i].id;
-		// makerArray[i].sprite = pokeArray[i].sprite;
 	}};
 	latitude ();
 	longitude();
 	}
-	console.log(markerArray);
 
-	
+	function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 40.765981527712825, lng: -78.78111690000003},
+        mapTypeId: 'satellite',
+        zoom: 4
+        });
+        window.onload = setMarkers(map);
+      }
+
 
 	function setMarkers(map) {
 	  // Adds markers to the map.
