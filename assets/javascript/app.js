@@ -16,6 +16,7 @@
 	var markerArray = [];
 	var longArray = [];
 	var latArray = [];
+	// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
 	var nameArray = ["one","two","three","four","five","six","seven","eight","nine","ten"]
 	//function ()
 	var generateCoordinates = function () {
@@ -35,7 +36,7 @@
 		var long = numGen(-60, -125, 3);
 		longArray.push(long);
 		markerArray[i].longitude = long;
-		markerArray[i].position = latArray[i]+", " + longArray[i],
+		// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
 		markerArray[i].name = nameArray[i];
 	}};
 	latitude ();
@@ -76,7 +77,6 @@
 	      shape: shape,
 	    });
 	    marker.addListener('click', function(event) {
-	  	console.log("click");
 	  	console.log(this);
 	  });
 	  });
