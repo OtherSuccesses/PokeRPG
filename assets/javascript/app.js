@@ -92,7 +92,7 @@ var numGen =  function(to, from, fixed) {
 		latArray.push(lat);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
-		markerArray[i].name = pokeArray.name;
+		markerArray[i].name = pokeArray[i].name;
 	}};
 	var longitude = function(){
 		for (i = 0; i<10; i++) {
