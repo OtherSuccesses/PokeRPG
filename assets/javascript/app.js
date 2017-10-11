@@ -99,7 +99,7 @@ var numGen =  function(to, from, fixed) {
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
 		markerArray[i].name = pokeArray[i].name;
-		markerArray[i].url = pokeArray[i].sprite;
+
 	}};
 	var longitude = function(){
 		for (i = 0; i<10; i++) {
