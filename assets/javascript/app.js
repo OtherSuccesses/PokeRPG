@@ -1,4 +1,14 @@
+$(document).ready(function () {
+
 // Global Variables
+
+var hit = '';
+		var heroHP = 120;
+		var heroModifier = heroHP / 3;
+		var foeHP = 120;
+		var foeModifier = foeHP / 3;
+		var animationSpeed = 4;
+		var speedModifier = 1;
 var pokeArray = [];
 // REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
 var nameArray = [];
@@ -19,7 +29,12 @@ var database = firebase.database();
 
  // add firebase data to local array
  database.ref().on("child_added", function(childSnapshot){
- pokeArray.push(childSnapshot.val());
+ 
+
+
+ 	 pokeArray.push(childSnapshot.val());
+
+ 
  });
 
 
@@ -153,5 +168,68 @@ var numGen =  function(to, from, fixed) {
 	  });
 	}
 
+	function reduceHP(character) {
+			if (character === 'hero') {
+				return heroHP-=heroModifier;
+			} else if ( character === 'foe') {
+				return foeHP-=foeModifier;
+			}
+		}
+		function writeHit() {
+			if (hit) {
+				foeHP = reduceHP('foe');
+				$('.foeHP').html(foeHP);
+			} else {
+				heroHP = reduceHP('hero');
+				$('.heroHP').html(heroHP);
+			}
+		}
 
+		function checkWin() {
+			if (heroHP<=0) {
+				$('.results').html('You Lose!');
+				// $('.hero').effect('explode');
+			} else if (foeHP<=0) {
+				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
+				$('.foe').draggable();
+			}
+		}
+
+		$('.modal').on('click', function () {
+			var mover = $('.mover').position();
+			console.log(mover.top, mover.right, mover.bottom, mover.left);
+
+
+
+			if (heroHP>0 && foeHP>0) {
+
+				$('.hero').addClass('animateRight');
+				$('.foe').addClass('animateLeft');
+				$( ".hero" ).effect( "bounce", "slow" );
+				$( ".foe" ).effect( "bounce", "slow" );
+
+				setTimeout(function () {
+					$('.hero').removeClass('animateRight');
+					$('.foe').removeClass('animateLeft');
+				},600);
+
+				if (mover.left > 90 && mover.left < 110) {
+					hit = true;
+					
+				} else {
+					hit = false;
+					
+				}
+				writeHit();
+			}
+			checkWin();
+
+			$('.mover').css({
+				'animation-duration': animationSpeed/speedModifier
+			});
+			speedModifier+=0.1;
+
+		});
+
+});//end of document ready function 
 
