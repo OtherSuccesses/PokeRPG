@@ -1,35 +1,37 @@
 // Global Variables
-var pokes = [];
+var pokeArray = [];
+// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
+var nameArray = [];
 
 //Firebase Code
 // Initialize Firebase
-  var config = {
+var config = {
     apiKey: "AIzaSyC8kW0gKpIoL8W_JizTdOyuq0J0QdY7Zq0",
     authDomain: "group-project-1-b61de.firebaseapp.com",
     databaseURL: "https://group-project-1-b61de.firebaseio.com",
     projectId: "group-project-1-b61de",
     storageBucket: "",
     messagingSenderId: "151973484935"
-  };
-  firebase.initializeApp(config);
-
-  var database = firebase.database();
+};
+firebase.initializeApp(config);
+var database = firebase.database();
 
  // add firebase data to local array
  database.ref().on("child_added", function(childSnapshot){
- pokes = childSnapshot.val();
-  });
+ pokeArray.push(childSnapshot.val());
+ });
+ console.log(pokeArray);
 
 //Pokemon API Code
-var pokeIDs = [];
-	var idPush = function(){
-		for (i= 1; i<151; i++){
-			pokeIDs.push(i);
-//			console.log(pokeIDs[i-1]);
-		}
-	}
+// var pokeIDs = [];
+// 	var idPush = function(){
+// 		for (i= 1; i<151; i++){
+// 			pokeIDs.push(i);
+// //			console.log(pokeIDs[i-1]);
+// 		}
+// 	}
 
-	var Pokemon = [];
+// 	var Pokemon = [];
 // 	var pokeSprites = database.ref("150")
 // 	var randomizePokemon = function(){
 // 		for(i = 0; i<150; i++){
@@ -62,51 +64,50 @@ var pokeIDs = [];
 // 		console.log(snapshot.val());
 // 	})
 
- var map;
-  function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 40.765981527712825, lng: -78.78111690000003},
-          mapTypeId: 'satellite',
-          zoom: 4
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 40.765981527712825, lng: -78.78111690000003},
+        mapTypeId: 'satellite',
+        zoom: 4
         });
-
-          setMarkers(map);
+        window.onload = setMarkers(map);
       }
   
 
 
-// Data for the markers consisting of a name, a LatLng and a zIndex for the
+/// Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
-	var markerArray = [];
-	var longArray = [];
-	var latArray = [];
-	// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
-	var nameArray = ["one","two","three","four","five","six","seven","eight","nine","ten"]
-	//function ()
-	var generateCoordinates = function () {
+var markerArray = [];
+var longArray = [];
+var latArray = [];
 
-	 var numGen =  function(to, from, fixed) {
-	    return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
+function generateCoordinates() {
+var numGen =  function(to, from, fixed) {
+	return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
 	};
 	var latitude = function(){
-		for (i = 0; i<pokes.length; i++) {
+		for (i = 0; i<10; i++) {
 		var lat = numGen(27, 48, 3);
 		latArray.push(lat);
-		markerArray[i]={};
+		markerArray[i] = {};
 		markerArray[i].latitude = lat;
+		markerArray[i].name = pokeArray.name;
 	}};
 	var longitude = function(){
-		for (i = 0; i<pokes.length; i++) {
+		for (i = 0; i<10; i++) {
 		var long = numGen(-60, -125, 3);
 		longArray.push(long);
 		markerArray[i].longitude = long;
 		// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
-		markerArray[i].name = nameArray[i];
+		
+		// markerArray[i].id = pokeArray[i].id;
+		// makerArray[i].sprite = pokeArray[i].sprite;
 	}};
 	latitude ();
 	longitude();
-	console.log(markerArray);
 	}
+	console.log(markerArray);
 
 	
 
