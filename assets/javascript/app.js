@@ -5,6 +5,7 @@ var nameArray = [];
 
 //Firebase Code
 // Initialize Firebase
+
 var config = {
     apiKey: "AIzaSyC8kW0gKpIoL8W_JizTdOyuq0J0QdY7Zq0",
     authDomain: "group-project-1-b61de.firebaseapp.com",
@@ -20,7 +21,7 @@ var database = firebase.database();
  database.ref().on("child_added", function(childSnapshot){
  pokeArray.push(childSnapshot.val());
  });
- console.log(pokeArray);
+
 
 //Pokemon API Code
 // var pokeIDs = [];
@@ -92,7 +93,8 @@ var numGen =  function(to, from, fixed) {
 		latArray.push(lat);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
-		markerArray[i].name = pokeArray.name;
+		markerArray[i].name = pokeArray[i].name;
+		markerArray[i].url = pokeArray[i].sprite;
 	}};
 	var longitude = function(){
 		for (i = 0; i<10; i++) {
@@ -107,7 +109,7 @@ var numGen =  function(to, from, fixed) {
 	latitude ();
 	longitude();
 	}
-	console.log(markerArray);
+
 
 	
 
