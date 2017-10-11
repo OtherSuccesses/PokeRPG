@@ -3,6 +3,11 @@ var pokeArray = [];
 // REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
 var activePokemon = [];
 
+//PlayerName variable
+var playerName= [];
+//Number of Pokemon to capture
+var numberPokemon;
+
 //Firebase Code
 // Initialize Firebase
 var config = {
@@ -16,13 +21,13 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
-var randomizePokemon = function(){
-	for(i = 0; i < 10; i++){
-		var tempId = Math.floor(Math.random()*150);
-		console.log(tempId);
-		activePokemon[i] = pokeArray[tempId];
-	}
-}
+// var randomizePokemon = function(){
+// 	for(i = 0; i < 10; i++){
+// 		var tempId = Math.floor(Math.random()*150);
+// 		console.log(tempId);
+// 		activePokemon[i] = pokeArray[tempId];
+// 	}
+// }
  // add firebase data to local array
  database.ref().on("child_added", function(childSnapshot){
 	 pokeArray.push(childSnapshot.val());
@@ -66,9 +71,9 @@ var randomizePokemon = function(){
 		}
 	}
 
-	setTimeout(function(){
-		randomizePokemon();
-	},3000);
+	// setTimeout(function(){
+	// 	randomizePokemon();
+	// },3000);
 
 	//Pokemon initialize if Database fails to load
  	setTimeout(function(){
