@@ -3,6 +3,7 @@
 // Global Variables
 
 var hit = '';
+var foeURL = '';
 		var heroHP = 120;
 		var heroModifier = heroHP / 3;
 		var foeHP = 120;
@@ -93,16 +94,15 @@ var numGen =  function(to, from, fixed) {
 	return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
 	};
 	var latitude = function(){
-		for (i = 0; i<10; i++) {
+		for (i = 0; i<50; i++) {
 		var lat = numGen(27, 48, 3);
 		latArray.push(lat);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
-		markerArray[i].name = pokeArray[i].name;
-		markerArray[i].url = pokeArray[i].sprite;
+	
 	}};
 	var longitude = function(){
-		for (i = 0; i<10; i++) {
+		for (i = 0; i<50; i++) {
 		var long = numGen(-60, -125, 3);
 		longArray.push(long);
 		markerArray[i].longitude = long;
@@ -124,11 +124,34 @@ var numGen =  function(to, from, fixed) {
 	function setMarkers(map) {
 	  // Adds markers to the map.
 	generateCoordinates();
+	for (var i = 1; i<50; i++){
+		var icon = {
+		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
+		    scaledSize: new google.maps.Size(50, 50)
+		};
+
+		var marker = new google.maps.Marker({
+		    position: new google.maps.LatLng(markerArray[i].latitude, markerArray[i].longitude),
+		    map: map,
+		    icon: icon
+		});
+
+		   marker.addListener('click', function(event) {
+		   	foeURL = this.icon.url;
+		   	var img = $('<img>');
+		   	img.attr('src', foeURL);
+		   	img.addClass('foe');
+		   	$('.foeContainer').append(img);
+	  		console.log(this.icon.url);
+	  	  	$('#myModal').modal('show');
+	
+	  });
+	}
 	  // Marker sizes are expressed as a Size of X,Y where the origin of the image
 	  // (0,0) is located in the top left of the image.
 	  // Origins, anchor positions and coordinates of the marker increase in the X
 	  // direction to the right and in the Y direction down.
-	  var image = new google.maps.MarkerImage(
+	  // var image = new google.maps.MarkerImage(
 	    // pokeSprites, null, null, null,
 	    // This marker is 20 pixels wide by 32 pixels high.
 	    //size: new google.maps.Size(15, 15)
@@ -136,33 +159,33 @@ var numGen =  function(to, from, fixed) {
 	    //origin: new google.maps.Point(0, 0),
 	    // The anchor for this image is the base of the flagpole at (0, 32).
 	    //anchor: new google.maps.Point(0, 32)
-	    new google.maps.Size(40,40)
-	  );
+	    // new google.maps.Size(40,40)
+	  // );
 	  // Shapes define the clickable region of the icon. The type defines an HTML
 	  // <area> element 'poly' which traces out a polygon as a series of X,Y points.
 	  // The final coordinate closes the poly by connecting to the first coordinate.
-	  var shape = {
-	    coords: [1, 1, 1, 20, 18, 20, 18, 1],
-	    type: 'poly'
-	  };
+	  // var shape = {
+	  //   coords: [1, 1, 1, 20, 18, 20, 18, 1],
+	  //   type: 'poly'
+	  // };
 
-	  markerArray.forEach(function(markerArray){
+	  // markerArray.forEach(function(markerArray){
 
-	    var marker = new google.maps.Marker({
-	      position: {lat: markerArray.latitude, lng: markerArray.longitude },
-	      map: map,
-	      title: markerArray.name,
-	      icon: image,
-	      shape: shape,
-	    });
+	  //   var marker = new google.maps.Marker({
+	  //     position: {lat: markerArray.latitude, lng: markerArray.longitude },
+	  //     map: map,
+	  //     title: markerArray.name,
+	  //     icon: image,
+	  //     shape: shape,
+	  //   });
 
 
-	    marker.addListener('click', function(event) {
-	  	console.log(this);
-	  	  	$('#myModal').modal('show');
+	  //   marker.addListener('click', function(event) {
+	  // 	console.log(this);
+	  // 	  	$('#myModal').modal('show');
 	
-	  });
-	  });
+	  // });
+	  // });
 	}
 
 
