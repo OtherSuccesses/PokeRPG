@@ -12,7 +12,7 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI&callback=initMap"
     async defer></script>
     <script type="text/javascript" src="assets/javascript/app.js"></script>
-	
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	
 </head>
@@ -51,6 +51,40 @@
 		</div>
 	</div>
 </div>	
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center">Capture the <span class="pokeName">Charmander</span>!</h4>
+        </div>
+        <div class="modal-body">
+          <div class="heroContainer">
+          	<h4 class="heroHP">120</h4>
+          	<img src="https://www.models-resource.com/resources/big_icons/4/3683.png" alt="" height="200" class="hero">
+          </div>
+		<div class="results text-center"></div>
+          <div class="foeContainer pull-right">
+          	<h4 class="foeHP">120</h4>
+          	<img src="https://static.giantbomb.com/uploads/scale_small/0/6087/2438704-1202149925_t.png" alt="" height="200" class=" foe ">
+          </div>
+        </div>
+        <div class="modal-footer">
+        	<div class="slider">
+          	<div class="target"></div>
+          	<div class="mover"></div>
+          </div>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end of container -->
+
 <div id="map"></div>
 
 </body>

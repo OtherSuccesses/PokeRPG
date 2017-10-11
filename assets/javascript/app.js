@@ -1,4 +1,4 @@
-$(document).ready(function () {
+
 
 // Global Variables
 
@@ -36,9 +36,6 @@ var database = firebase.database();
  
  });
 
-	setTimeout(function (){
-		console.log(pokeArray[0].name);
-	},5000)
 
 // }
 
@@ -165,11 +162,18 @@ var numGen =  function(to, from, fixed) {
 	      icon: image,
 	      shape: shape,
 	    });
+
+
 	    marker.addListener('click', function(event) {
 	  	console.log(this);
+	  	  	$('#myModal').modal('show');
+	
 	  });
 	  });
 	}
+
+
+	//////////////////////Javascript for fight mechanic//////////////////////
 
 	function reduceHP(character) {
 			if (character === 'hero') {
@@ -233,6 +237,4 @@ var numGen =  function(to, from, fixed) {
 			speedModifier+=0.1;
 
 		});
-
-});//end of document ready function 
 
