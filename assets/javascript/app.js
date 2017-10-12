@@ -12,23 +12,18 @@ var animationSpeed = 4;
 var speedModifier = 1;
 var currentFoe = '';
 var pokeArray = [];
+
+// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
+var activePokemon = [];
+
+//PlayerName variable
+var playerName= [];
+//Number of Pokemon to capture
+var numberPokemon;
+
 var url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI"
 
-// function compare(a,b) {
-//   if (a.id < b.id) {
-//     return -1;}
-//   if (a.id > b.id){
-//     return 1;} 
-//   return 0;
-// }
 
-
-
-
-// var sortedArr = pokeArray.sort(function (a,b) {
-//  return parseFloat(a.id)-parseFloat(b.id);
-// });
-// console.log('sorted array: ', sortedArr);
 
 //Firebase Code
 // Initialize Firebase
@@ -45,55 +40,60 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
+// var randomizePokemon = function(){
+// 	for(i = 0; i < 10; i++){
+// 		var tempId = Math.floor(Math.random()*150);
+// 		console.log(tempId);
+// 		activePokemon[i] = pokeArray[tempId];
+// 	}
+// }
  // add firebase data to local array
 
-database.ref().on("child_added", function(childSnapshot){
-	pokeArray.push(childSnapshot.val());
-});
-
+ database.ref().on("child_added", function(childSnapshot){
+	 pokeArray.push(childSnapshot.val());
+	 });
+ console.log(pokeArray);
 
 
 //Pokemon API Code
-// var pokeIDs = [];
-// 	var idPush = function(){
-// 		for (i= 1; i<151; i++){
-// 			pokeIDs.push(i);
-// //			console.log(pokeIDs[i-1]);
-// 		}
-// 	}
 
-// 	var Pokemon = [];
-// 	var pokeSprites = database.ref("150")
-// 	var randomizePokemon = function(){
-// 		for(i = 0; i<150; i++){
-// 			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
-// 			$.ajax({
-// 				url:queryURL,
-// 				method: "GET"
-// 			}).done(function(pokemon){
-// 				//number.stringify();
-// //				activePoke[i] = Math.floor(Math.random()*150);
-// 				// console.log(pokemon);
-// 				// console.log(pokemon.sprites);
-// 				// console.log(pokemon.sprites.front_default);
-// 				database.ref().push({
-// 					id: pokemon.id,
-// 					name: pokemon.name,
-// 					sprite:pokemon.sprites.front_default
-// 				});
-// 				console.log(pokemon);
-// 				var sprite = $("<img>");
-// 				sprite.attr("src", pokemon.sprites.front_default);
-// 				pokeSprites = pokemon.sprites.front_default;
-// 				sprite.appendTo($("#poke-image"));
-// 			})
-// 		}
-// 	}
-// 	idPush();
-// 	randomizePokemon();
-// 	database.ref("150").on("child_added", function(snapshot){
-// 		console.log(snapshot.val());
-// 	})
+	var initializePokemonData = function(){
+		for(i = 0; i<150; i++){
+			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
+			$.ajax({
+				url:queryURL,
+				method: "GET"
+			}).done(function(pokemon){
+				//number.stringify();
+//				activePoke[i] = Math.floor(Math.random()*150);
+				// console.log(pokemon);
+				// console.log(pokemon.sprites);
+				// console.log(pokemon.sprites.front_default);
+				database.ref().push({
+					id: pokemon.id,
+					name: pokemon.name,
+					sprite:pokemon.sprites.front_default
+				});
+				console.log(pokemon);
+				var sprite = $("<img>");
+				sprite.attr("src", pokemon.sprites.front_default);
+				pokeSprites = pokemon.sprites.front_default;
+				sprite.appendTo($("#poke-image"));
+			})
+		}
+	}
+
+	// setTimeout(function(){
+	// 	randomizePokemon();
+	// },3000);
+
+	//Pokemon initialize if Database fails to load
+ 	setTimeout(function(){
+ 	 	if (pokeArray.length<149){
+ 			initializePokemonData();
+ 		}
+ 	}, 5000);
+
 
 
 var map;
@@ -185,8 +185,10 @@ var numGen =  function(to, from, fixed) {
 	  // (0,0) is located in the top left of the image.
 	  // Origins, anchor positions and coordinates of the marker increase in the X
 	  // direction to the right and in the Y direction down.
+
 	  // var image = new google.maps.MarkerImage(
 	    // pokeSprites, null, null, null,
+
 	    // This marker is 20 pixels wide by 32 pixels high.
 	    //size: new google.maps.Size(15, 15)
 	    // The origin for this image is (0, 0).

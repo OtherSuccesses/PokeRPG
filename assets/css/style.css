@@ -1,6 +1,8 @@
- #map {
+ #map, .map {
         height: 100%;
-        
+      }
+      .map {
+      	width: 75%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
