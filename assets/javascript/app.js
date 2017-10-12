@@ -42,6 +42,7 @@ database.ref().on("child_added", function(childSnapshot){
 
 //Pokemon API Code
 
+
 	var initializePokemonData = function(){
 		for(i = 0; i<150; i++){
 			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
@@ -177,7 +178,6 @@ function setMarkers(map) {
 		   	$('.foeContainer').append(h4,currentFoe);
 	  		console.log(this.icon.url);
 	  	  	$('#myModal').modal('show');
-	  	});
 	}
 }
 
@@ -268,14 +268,12 @@ $(document).on('click','.modal' ,function () {
 		}
 		writeHit();
 	}
+
 	checkWin();
 
 	$('.mover').css({
 		'animation-duration': animationSpeed/speedModifier
 	});
 	speedModifier+=0.1;
-
 });
-
-
 
