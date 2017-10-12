@@ -202,37 +202,7 @@ function writeHit() {
 	}
 }
 
-function checkWin() {
-	if (heroHP<=0) {
-		$('.results').html('You Lose!');
-		setTimeout(function () {
-			$('#myModal').modal('toggle');
-			$('.hero').hide( "explode", {pieces: 16}, 3000 );
-		}, 3000);
-    
 
-		lossCount++;
-		$("#lossCount").text("Losses: " +lossCount);
-		// $('.hero').effect('explode');
-
-	} else if (foeHP<=0) {
-		console.log(markers[clickedPoke].id);
-		
-		$('.results').html('You Captured a Pokemon! Drag him to your Pen');
-
-		// $('img.foe').css({
-		// 	'position':'relative'
-		// });
-
-		$(document).on('mousedown', 'img.foe', function () {
-			$('img.foe').appendTo('#pen').css({
-				'height':'50px'
-			});
-			$('img.foe').draggable({
-				containment: "parent",
-				grid: [ 10, 10 ],
-			});
-			$('img.foe').removeClass('foe');
 
 
 		function checkWin() {
