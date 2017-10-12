@@ -155,7 +155,7 @@ var numGen =  function(to, from, fixed) {
 			// console.log(pokeArray);
 		   marker.addListener('click', function(event) {
 		   	$('.foeContainer').empty();
-		   	$()
+		   	$('.hero').show();
 		   	heroHP = 120;
 		   	foeHP = 120;
 		   	$('.heroHP').text(heroHP);
@@ -174,7 +174,7 @@ var numGen =  function(to, from, fixed) {
 		   		'height': 200,
 		   		'class': 'foe'
 		   	});
-		   	
+		   	console.log(currentFoe);
 		   	$('.foeContainer').append(h4,currentFoe);
 	  		console.log(this.icon.url);
 	  	  	$('#myModal').modal('show');
@@ -247,16 +247,38 @@ var numGen =  function(to, from, fixed) {
 		function checkWin() {
 			if (heroHP<=0) {
 				$('.results').html('You Lose!');
-				// $('.hero').effect('explode');
+				
+				setTimeout(function () {
+					$('#myModal').modal('toggle');
+					$('.hero').hide( "explode", {pieces: 16}, 3000 );
+				}, 3000);
+            
 			} else if (foeHP<=0) {
 				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
-				currentFoe.draggable();
+				// $('img.foe').css({
+				// 	'position':'relative'
+				// });
+
+				$(document).on('mousedown', 'img.foe', function () {
+					$('img.foe').appendTo('#pen').css({
+						'height':'50px'
+					});
+					$('img.foe').draggable({
+						containment: "parent",
+						grid: [ 10, 10 ],
+					});
+					$('img.foe').removeClass('foe');
+
+					$('#myModal').modal('toggle');
+				});
+
+				
 			}
 		}
 
 		$(document).on('click','.modal' ,function () {
 			var mover = $('.mover').position();
-			console.log(mover.top, mover.right, mover.bottom, mover.left);
+			console.log(mover.left);
 
 
 
@@ -289,4 +311,6 @@ var numGen =  function(to, from, fixed) {
 			speedModifier+=0.1;
 
 		});
+
+
 
