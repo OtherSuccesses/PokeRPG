@@ -283,41 +283,7 @@ $(document).on('click','.modal' ,function () {
 	checkWin();
 
 
-		$(document).on('click','.modal' ,function () {
-			var mover = $('.mover').position();
 
-			console.log(mover.left);
-
-
-			if (heroHP>0 && foeHP>0) {
-
-				$('.hero').addClass('animateRight');
-				$('.foe').addClass('animateLeft');
-				$( ".hero" ).effect( "bounce", "slow" );
-				$( ".foe" ).effect( "bounce", "slow" );
-
-				setTimeout(function () {
-					$('.hero').removeClass('animateRight');
-					$('.foe').removeClass('animateLeft');
-				},600);
-
-				if (mover.left > 90 && mover.left < 110) {
-					hit = true;
-					
-				} else {
-					hit = false;
-					
-				}
-				writeHit();
-			}
-			checkWin();
-
-			$('.mover').css({
-				'animation-duration': animationSpeed/speedModifier
-			});
-			speedModifier+=0.1;
-
-		});
 
 	$('.mover').css({
 		'animation-duration': animationSpeed/speedModifier
