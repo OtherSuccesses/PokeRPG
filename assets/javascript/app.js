@@ -14,8 +14,8 @@ var activePokemon = [];
 
 //PlayerName variable
 var playerName= [];
-var winCount;
-var lossCount
+var winCount = 0;
+var lossCount = 0;
 //Number of Pokemon to capture
 var numberPokemon;
 
@@ -45,8 +45,6 @@ var database = firebase.database();
 database.ref().on("child_added", function(childSnapshot){
 	pokeArray.push(childSnapshot.val());
 	});
- console.log(pokeArray);
-
 
 //Pokemon API Code
 	var initializePokemonData = function(){
@@ -94,6 +92,9 @@ var latArray = [];
 
 // Function to enerate coordinates for sprite markers
 function generateCoordinates() {
+	$("#name").text("Name: " + playerName)
+	$("#winCount").text("Wins: " + winCount);
+	$("#lossCount").text("Losses: " +lossCount);
 var numGen =  function(to, from, fixed) {
 	return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
 	};
@@ -235,9 +236,13 @@ function setMarkers(map) {
 		function checkWin() {
 			if (heroHP<=0) {
 				$('.results').html('You Lose!');
+				lossCount++;
+				$("#lossCount").text("Losses: " +lossCount);
 				// $('.hero').effect('explode');
 			} else if (foeHP<=0) {
 				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
+				winCount++;
+				$("#winCount").text("Wins: " + winCount);
 				currentFoe.draggable();
 			}
 		}
