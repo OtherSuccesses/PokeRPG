@@ -11,6 +11,7 @@ var speedModifier = 1;
 var currentFoe = '';
 var pokeArray = [];
 var activePokemon = [];
+var pokeName = '';
 
 //PlayerName variable
 var playerName= [];
@@ -152,7 +153,8 @@ function setMarkers(map) {
 		   	foeURL = this.icon.url;
 		   	var index = foeURL.match(/[0-9]+/g);
 		   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
-		   	$('.pokeName').text(result[0].name);
+		   	pokeName = result[0].name;
+		   	$('.pokeName').text(pokeName);
 		   	console.log('index+1: ',parseInt(index)+1);
 		   	var h4 = $('<h4>');
 		   	h4.addClass('foeHP');
@@ -240,23 +242,21 @@ function setMarkers(map) {
 
 				
 				setTimeout(function () {
-					$('#myModal').modal('toggle');
-					$('.hero').hide( "explode", {pieces: 16}, 3000 );
+					$('#myModal').modal('hide');
+					$('.hero').effect( "explode", {pieces: 16}, 3000 );
 				}, 3000);
             
 
 				lossCount++;
 				$("#lossCount").text("Losses: " +lossCount);
-				// $('.hero').effect('explode');
+
 
 			} else if (foeHP<=0) {
-				console.log(markers[clickedPoke].id);
+		
 				
 				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
 
-				// $('img.foe').css({
-				// 	'position':'relative'
-				// });
+		
 
 				$(document).on('mousedown', 'img.foe', function () {
 					$('img.foe').appendTo('#pen').css({
@@ -266,16 +266,17 @@ function setMarkers(map) {
 						containment: "parent",
 						grid: [ 10, 10 ],
 					});
-					$('img.foe').removeClass('foe');
 
-					$('#myModal').modal('toggle');
+					$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName.charAt(0).toUpperCase() + pokeName.slice(1));
+
+					$('#myModal').modal('hide');
 				});
 
-				
+
 
 				winCount++;
 				$("#winCount").text("Wins: " + winCount);
-				currentFoe.draggable();
+				
 
 			}
 		}
@@ -284,10 +285,6 @@ function setMarkers(map) {
 			var mover = $('.mover').position();
 
 			console.log(mover.left);
-
-
-	
-
 
 
 			if (heroHP>0 && foeHP>0) {
@@ -319,6 +316,4 @@ function setMarkers(map) {
 			speedModifier+=0.1;
 
 		});
-
-
 
