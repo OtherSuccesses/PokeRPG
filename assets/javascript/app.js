@@ -10,10 +10,13 @@ var animationSpeed = 4;
 var speedModifier = 1;
 var currentFoe = '';
 var pokeArray = [];
+var markers = [];
 var activePokemon = [];
 
 //PlayerName variable
 var playerName= [];
+var winCount;
+var lossCount
 //Number of Pokemon to capture
 var numberPokemon;
 
@@ -135,9 +138,11 @@ function setMarkers(map) {
 		}
 		var marker = new google.maps.Marker({
 		    position: new google.maps.LatLng(markerArray[i].latitude, markerArray[i].longitude),
+		    id: i,
 		    map: map,
 		    icon: icon
 		});
+		markers.push(marker);
 			// add click listener to each marker
 		   marker.addListener('click', function(event) {
 		   	$('.foeContainer').empty();
@@ -148,7 +153,6 @@ function setMarkers(map) {
 		   	foeURL = this.icon.url;
 		   	var index = foeURL.match(/[0-9]+/g);
 		   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
-		   	console.log(result);
 		   	$('.pokeName').text(result[0].name);
 		   	console.log('index+1: ',parseInt(index)+1);
 		   	var h4 = $('<h4>');
@@ -160,11 +164,11 @@ function setMarkers(map) {
 		   		'height': 200,
 		   		'class': 'foe'
 		   	});
-		   	
+		   	this.setMap(null);
 		   	$('.foeContainer').append(h4,currentFoe);
 	  		console.log(this.icon.url);
 	  	  	$('#myModal').modal('show');
-	
+			
 	  });
 	}
 	  // Marker sizes are expressed as a Size of X,Y where the origin of the image
@@ -243,7 +247,7 @@ function setMarkers(map) {
 		$(document).on('click','.modal' ,function () {
 			var mover = $('.mover').position();
 			console.log(mover.top, mover.right, mover.bottom, mover.left);
-
+			
 
 
 			if (heroHP>0 && foeHP>0) {
