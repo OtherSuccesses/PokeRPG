@@ -33,13 +33,7 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
-// var randomizePokemon = function(){
-// 	for(i = 0; i < 10; i++){
-// 		var tempId = Math.floor(Math.random()*150);
-// 		console.log(tempId);
-// 		activePokemon[i] = pokeArray[tempId];
-// 	}
-// }
+
 
  // add firebase data to local array
 database.ref().on("child_added", function(childSnapshot){
@@ -47,32 +41,56 @@ database.ref().on("child_added", function(childSnapshot){
 	});
 
 //Pokemon API Code
-var initializePokemonData = function(){
-	for(i = 0; i<150; i++){
-		var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
-		$.ajax({
-			url:queryURL,
-			method: "GET"
-		}).done(function(pokemon){
-			//number.stringify();
-//				activePoke[i] = Math.floor(Math.random()*150);
-			// console.log(pokemon);
-			// console.log(pokemon.sprites);
-			// console.log(pokemon.sprites.front_default);
-			database.ref().push({
-				id: pokemon.id,
-				name: pokemon.name,
-				sprite:pokemon.sprites.front_default
-			});
-			var sprite = $("<img>");
-			sprite.attr("src", pokemon.sprites.front_default);
-			pokeSprites = pokemon.sprites.front_default;
-			sprite.appendTo($("#poke-image"));
-		})
+
+
+	var initializePokemonData = function(){
+		for(i = 0; i<150; i++){
+			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
+			$.ajax({
+				url:queryURL,
+				method: "GET"
+			}).done(function(pokemon){
+				database.ref().push({
+					id: pokemon.id,
+					name: pokemon.name,
+					sprite:pokemon.sprites.front_default
+				});
+				console.log(pokemon);
+				var sprite = $("<img>");
+				sprite.attr("src", pokemon.sprites.front_default);
+				pokeSprites = pokemon.sprites.front_default;
+				sprite.appendTo($("#poke-image"));
+			})
+		}
 	}
 }
 
-//Pokemon initialize if Database fails to load
+	// setTimeout(function(){
+	// 	randomizePokemon();
+	// },3000);
+
+//Player Name Entry Modal JS
+	$(window).on('load',function(){
+        $('#playerNameEntryModal').modal('show');
+    });
+
+    $(document).on("click", "#playerNameButton",function(event){
+    	event.preventDefault();
+    	var str = $('#playerNameEntry').val();
+			if(/^[a-zA-Z- ]*$/.test(str) == false) {
+    			$(".professor-container").append('<br>Your name cannot contain numbers or special characters!');
+			}
+			else{
+	    	playerName = $("#playerNameEntry").val();
+	    	database.ref("/Players/" + playerName + "/").set({
+	    		name: playerName
+	    	});
+	    	$("#name").text("Name: " + playerName);
+	    	$("#playerNameEntryModal").modal('toggle');
+	    	}
+    });
+
+	//Pokemon initialize if Database fails to load
 setTimeout(function(){
  	if (pokeArray.length<149){
 		initializePokemonData();
@@ -87,7 +105,6 @@ var latArray = [];
 
 // Function to enerate coordinates for sprite markers
 function generateCoordinates() {
-	$("#name").text("Name: " + playerName)
 	$("#winCount").text("Wins: " + winCount);
 	$("#lossCount").text("Losses: " +lossCount);
 var numGen =  function(to, from, fixed) {
@@ -140,7 +157,7 @@ function setMarkers(map) {
 			// add click listener to each marker
 		   marker.addListener('click', function(event) {
 		   	$('.foeContainer').empty();
-		   	$()
+		   	$('.hero').show();
 		   	heroHP = 120;
 		   	foeHP = 120;
 		   	$('.heroHP').text(heroHP);
@@ -157,14 +174,12 @@ function setMarkers(map) {
 		   		'height': 200,
 		   		'class': 'foe'
 		   	});
-		   	this.setMap(null); 
+		   	this.setMap(null);
 		   	$('.foeContainer').append(h4,currentFoe);
+	  		console.log(this.icon.url);
 	  	  	$('#myModal').modal('show');
-	  });
-
 	}
-
-	}
+}
 
 	//////////////////////Javascript for fight mechanic//////////////////////
 
@@ -175,7 +190,6 @@ function reduceHP(character) {
 			return foeHP-=foeModifier;
 		}
 	}
-
 function writeHit() {
 	if (hit) {
 		foeHP = reduceHP('foe');
@@ -189,21 +203,50 @@ function writeHit() {
 function checkWin() {
 	if (heroHP<=0) {
 		$('.results').html('You Lose!');
+		setTimeout(function () {
+			$('#myModal').modal('toggle');
+			$('.hero').hide( "explode", {pieces: 16}, 3000 );
+		}, 3000);
+    
+
 		lossCount++;
 		$("#lossCount").text("Losses: " +lossCount);
 		// $('.hero').effect('explode');
+
 	} else if (foeHP<=0) {
+		console.log(markers[clickedPoke].id);
+		
 		$('.results').html('You Captured a Pokemon! Drag him to your Pen');
+
+		// $('img.foe').css({
+		// 	'position':'relative'
+		// });
+
+		$(document).on('mousedown', 'img.foe', function () {
+			$('img.foe').appendTo('#pen').css({
+				'height':'50px'
+			});
+			$('img.foe').draggable({
+				containment: "parent",
+				grid: [ 10, 10 ],
+			});
+			$('img.foe').removeClass('foe');
+
+			$('#myModal').modal('toggle');
+		});
+
+		
+
 		winCount++;
 		$("#winCount").text("Wins: " + winCount);
 		currentFoe.draggable();
+
 	}
 }
 
 $(document).on('click','.modal' ,function () {
 	var mover = $('.mover').position();
 	console.log(mover.left);
-	
 	if (heroHP>0 && foeHP>0) {
 
 		$('.hero').addClass('animateRight');
@@ -225,12 +268,12 @@ $(document).on('click','.modal' ,function () {
 		}
 		writeHit();
 	}
-		checkWin();
+
+	checkWin();
 
 	$('.mover').css({
 		'animation-duration': animationSpeed/speedModifier
 	});
 	speedModifier+=0.1;
-
 });
 
