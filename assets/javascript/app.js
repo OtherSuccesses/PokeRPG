@@ -163,13 +163,13 @@ function setMarkers(map) {
 		   		'height': 200,
 		   		'class': 'foe'
 		   	});
-		   	this.setMap(null);
 		   	$('.foeContainer').append(h4,currentFoe);
 	  		console.log(this.icon.url);
+	  		this.setMap(null);
 	  	  	$('#myModal').modal('show');
-			
 	  });
 	}
+
 	  // Marker sizes are expressed as a Size of X,Y where the origin of the image
 	  // (0,0) is located in the top left of the image.
 	  // Origins, anchor positions and coordinates of the marker increase in the X
@@ -240,6 +240,8 @@ function setMarkers(map) {
 				$("#lossCount").text("Losses: " +lossCount);
 				// $('.hero').effect('explode');
 			} else if (foeHP<=0) {
+				console.log(markers[clickedPoke].id);
+				
 				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
 				winCount++;
 				$("#winCount").text("Wins: " + winCount);
