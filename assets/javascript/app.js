@@ -34,13 +34,7 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
-// var randomizePokemon = function(){
-// 	for(i = 0; i < 10; i++){
-// 		var tempId = Math.floor(Math.random()*150);
-// 		console.log(tempId);
-// 		activePokemon[i] = pokeArray[tempId];
-// 	}
-// }
+
 
  // add firebase data to local array
 database.ref().on("child_added", function(childSnapshot){
@@ -48,42 +42,58 @@ database.ref().on("child_added", function(childSnapshot){
 	});
 
 //Pokemon API Code
-	var initializePokemonData = function(){
-		for(i = 0; i<150; i++){
-			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
-			$.ajax({
-				url:queryURL,
-				method: "GET"
-			}).done(function(pokemon){
-				//number.stringify();
-//				activePoke[i] = Math.floor(Math.random()*150);
-				// console.log(pokemon);
-				// console.log(pokemon.sprites);
-				// console.log(pokemon.sprites.front_default);
-				database.ref().push({
-					id: pokemon.id,
-					name: pokemon.name,
-					sprite:pokemon.sprites.front_default
-				});
-				console.log(pokemon);
-				var sprite = $("<img>");
-				sprite.attr("src", pokemon.sprites.front_default);
-				pokeSprites = pokemon.sprites.front_default;
-				sprite.appendTo($("#poke-image"));
-			})
-		}
+var initializePokemonData = function(){
+	for(i = 0; i<150; i++){
+		var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
+		$.ajax({
+			url:queryURL,
+			method: "GET"
+		}).done(function(pokemon){
+			database.ref().push({
+				id: pokemon.id,
+				name: pokemon.name,
+				sprite:pokemon.sprites.front_default
+			});
+			console.log(pokemon);
+			var sprite = $("<img>");
+			sprite.attr("src", pokemon.sprites.front_default);
+			pokeSprites = pokemon.sprites.front_default;
+			sprite.appendTo($("#poke-image"));
+		})
 	}
+}
 
 	// setTimeout(function(){
 	// 	randomizePokemon();
 	// },3000);
 
+//Player Name Entry Modal JS
+	$(window).on('load',function(){
+        $('#playerNameEntryModal').modal('show');
+    });
+
+    $(document).on("click", "#playerNameButton",function(event){
+    	event.preventDefault();
+    	var str = $('#playerNameEntry').val();
+			if(/^[a-zA-Z- ]*$/.test(str) == false) {
+    			$(".professor-container").append('<br>Your name cannot contain numbers or special characters!');
+			}
+			else{
+	    	playerName = $("#playerNameEntry").val();
+	    	database.ref("/Players/" + playerName + "/").set({
+	    		name: playerName
+	    	});
+	    	$("#name").text("Name: " + playerName);
+	    	$("#playerNameEntryModal").modal('toggle');
+	    	}
+    });
+
 	//Pokemon initialize if Database fails to load
- 	setTimeout(function(){
- 	 	if (pokeArray.length<149){
- 			initializePokemonData();
- 		}
- 	}, 5000);
+setTimeout(function(){
+ 	if (pokeArray.length<149){
+		initializePokemonData();
+	}
+}, 5000);
 
 /// Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
@@ -93,7 +103,6 @@ var latArray = [];
 
 // Function to enerate coordinates for sprite markers
 function generateCoordinates() {
-	$("#name").text("Name: " + playerName)
 	$("#winCount").text("Wins: " + winCount);
 	$("#lossCount").text("Losses: " +lossCount);
 var numGen =  function(to, from, fixed) {
@@ -156,6 +165,7 @@ function setMarkers(map) {
 		   	pokeName = result[0].name;
 		   	$('.pokeName').text(pokeName);
 		   	console.log('index+1: ',parseInt(index)+1);
+
 		   	var h4 = $('<h4>');
 		   	h4.addClass('foeHP');
 		   	h4.text(foeHP);
@@ -165,76 +175,65 @@ function setMarkers(map) {
 		   		'height': 200,
 		   		'class': 'foe'
 		   	});
-
+		   	this.setMap(null);
 		   	$('.foeContainer').append(h4,currentFoe);
 	  		console.log(this.icon.url);
-	  		this.setMap(null);
 	  	  	$('#myModal').modal('show');
-	  });
+		});
 	}
-
-	  // Marker sizes are expressed as a Size of X,Y where the origin of the image
-	  // (0,0) is located in the top left of the image.
-	  // Origins, anchor positions and coordinates of the marker increase in the X
-	  // direction to the right and in the Y direction down.
-
-	  // var image = new google.maps.MarkerImage(
-	    // pokeSprites, null, null, null,
-
-	    // This marker is 20 pixels wide by 32 pixels high.
-	    //size: new google.maps.Size(15, 15)
-	    // The origin for this image is (0, 0).
-	    //origin: new google.maps.Point(0, 0),
-	    // The anchor for this image is the base of the flagpole at (0, 32).
-	    //anchor: new google.maps.Point(0, 32)
-	    // new google.maps.Size(40,40)
-	  // );
-	  // Shapes define the clickable region of the icon. The type defines an HTML
-	  // <area> element 'poly' which traces out a polygon as a series of X,Y points.
-	  // The final coordinate closes the poly by connecting to the first coordinate.
-	  // var shape = {
-	  //   coords: [1, 1, 1, 20, 18, 20, 18, 1],
-	  //   type: 'poly'
-	  // };
-
-	  // markerArray.forEach(function(markerArray){
-
-	  //   var marker = new google.maps.Marker({
-	  //     position: {lat: markerArray.latitude, lng: markerArray.longitude },
-	  //     map: map,
-	  //     title: markerArray.name,
-	  //     icon: image,
-	  //     shape: shape,
-	  //   });
-
-
-	  //   marker.addListener('click', function(event) {
-	  // 	console.log(this);
-	  // 	  	$('#myModal').modal('show');
-	
-	  // });
-	  // });
-	}
-
+}
 
 	//////////////////////Javascript for fight mechanic//////////////////////
 
-	function reduceHP(character) {
-			if (character === 'hero') {
-				return heroHP-=heroModifier;
-			} else if ( character === 'foe') {
-				return foeHP-=foeModifier;
-			}
+function reduceHP(character) {
+		if (character === 'hero') {
+			return heroHP-=heroModifier;
+		} else if ( character === 'foe') {
+			return foeHP-=foeModifier;
 		}
-		function writeHit() {
-			if (hit) {
-				foeHP = reduceHP('foe');
-				$('.foeHP').html(foeHP);
-			} else {
-				heroHP = reduceHP('hero');
-				$('.heroHP').html(heroHP);
-			}
-		}
+	}
+function writeHit() {
+	if (hit) {
+		foeHP = reduceHP('foe');
+		$('.foeHP').html(foeHP);
+	} else {
+		heroHP = reduceHP('hero');
+		$('.heroHP').html(heroHP);
+	}
+}
+
+function checkWin() {
+	if (heroHP<=0) {
+		$('.results').html('You Lose!');
+		setTimeout(function () {
+			$('#myModal').modal('toggle');
+			$('.hero').hide( "explode", {pieces: 16}, 3000 );
+		}, 3000);
+    
+
+		lossCount++;
+		$("#lossCount").text("Losses: " +lossCount);
+		// $('.hero').effect('explode');
+
+	} else if (foeHP<=0) {
+		console.log(markers[clickedPoke].id);
+		
+		$('.results').html('You Captured a Pokemon! Drag him to your Pen');
+
+		// $('img.foe').css({
+		// 	'position':'relative'
+		// });
+
+		$(document).on('mousedown', 'img.foe', function () {
+			$('img.foe').appendTo('#pen').css({
+				'height':'50px'
+			});
+			$('img.foe').draggable({
+				containment: "parent",
+				grid: [ 10, 10 ],
+			});
+			$('img.foe').removeClass('foe');
+
 
 		function checkWin() {
 			if (heroHP<=0) {
@@ -278,8 +277,41 @@ function setMarkers(map) {
 				$("#winCount").text("Wins: " + winCount);
 				
 
-			}
+
+
+		winCount++;
+		$("#winCount").text("Wins: " + winCount);
+		currentFoe.draggable();
+	}
+}
+$(document).on('click','.modal' ,function () {
+	var mover = $('.mover').position();
+
+	console.log(mover.left);
+
+	if (heroHP>0 && foeHP>0) {
+
+		$('.hero').addClass('animateRight');
+		$('.foe').addClass('animateLeft');
+		$( ".hero" ).effect( "bounce", "slow" );
+		$( ".foe" ).effect( "bounce", "slow" );
+
+		setTimeout(function () {
+			$('.hero').removeClass('animateRight');
+			$('.foe').removeClass('animateLeft');
+		},600);
+
+		if (mover.left > 90 && mover.left < 110) {
+			hit = true;
+			
+		} else {
+			hit = false;
+			
 		}
+		writeHit();
+	}
+	checkWin();
+
 
 		$(document).on('click','.modal' ,function () {
 			var mover = $('.mover').position();
@@ -316,4 +348,13 @@ function setMarkers(map) {
 			speedModifier+=0.1;
 
 		});
+
+	$('.mover').css({
+		'animation-duration': animationSpeed/speedModifier
+	});
+	speedModifier+=0.1;
+
+});
+
+
 

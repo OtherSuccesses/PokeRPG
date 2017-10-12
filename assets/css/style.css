@@ -2,7 +2,7 @@
         height: 100%;
       }
       .map {
-      	width: 75%;
+      	width: 100%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -74,6 +74,34 @@
 		animation-duration: 600ms;
 		animation-iteration-count: 1;
 		animation-timing-function: ease-out;
+	}
+
+/*Player Name Modal CSS*/
+	#playerNameEntryHeader{
+		background-color: antiquewhite;
+		border-radius: 15px;
+		color: slategray;
+	}
+
+	#playerNameEntry{
+		color:black;
+	}
+
+	#playerNameEntryModal {
+		text-align:center;
+		color: white;
+		font-weight: bold;
+	}
+
+	#playerNameEntryFieldLabel{
+		color:white;
+	}
+
+	#playerNameButton{
+		color:black;
+		background-color: lightgreen;
+		border-color: darkgreen;
+		border-width: 3px;
 	}
 
 	@keyframes slide {

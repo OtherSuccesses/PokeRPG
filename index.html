@@ -26,7 +26,7 @@
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>Game Instructions</strong></h3> 
 				</div>
-				<p>Click the sprite to launch the capture window.<br>Clickhe green circle when it overlaps with the red circle to capture the sprite.<br>Once you capture the sprite, drag him to your sprite pen on the right.</p>
+				<p>Click the sprite to launch the capture window.<br>Click the green circle when it overlaps with the red circle to capture the sprite.<br>Once you capture the sprite, click the sprite to add it to your sprite pen. You can drag the sprites in the pen to rearrange them.</p>
 			</div>
 		</div>
 		<div class="col-lg-4">
@@ -52,6 +52,30 @@
 		</div>
 	</div>
 </div> <!-- end of container-->	
+
+<!-- Modal for player name entry -->
+<div class="container">
+	<div class="modal fade" id="playerNameEntryModal" role="dialog">
+	  <div class="modal-dialog modal-lg">
+		  <div id="playerNameEntryHeader" class="modal-header">
+		    <a class="close" data-dismiss="modal">×</a>
+		    <h3>Pokemon Trainer: Please Enter Your Name!</h3>
+		  </div>
+		  <div class="modal-body">
+		    	<div class="professor-container">
+		    		<img src="https://cdn.bulbagarden.net/upload/8/84/Professor_Oak_XY.png">
+		  		</div>
+		  		<div>
+		  			<form id="playerEntryField">
+		  				<label id="playerNameEntryFieldLabel" for="playerNameEntry">Name Input: </label>
+		  				<input type="text" id="playerNameEntry"><br>
+		  				<input type="submit" id="playerNameButton" value="Verify!">
+		  			</form>
+		  		</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="container">
   <!-- Modal -->
