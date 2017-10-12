@@ -11,6 +11,7 @@ var speedModifier = 1;
 var currentFoe = '';
 var pokeArray = [];
 var activePokemon = [];
+var pokeName = '';
 
 //PlayerName variable
 var playerName= [];
@@ -161,7 +162,10 @@ function setMarkers(map) {
 		   	foeURL = this.icon.url;
 		   	var index = foeURL.match(/[0-9]+/g);
 		   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
-		   	$('.pokeName').text(result[0].name);
+		   	pokeName = result[0].name;
+		   	$('.pokeName').text(pokeName);
+		   	console.log('index+1: ',parseInt(index)+1);
+
 		   	var h4 = $('<h4>');
 		   	h4.addClass('foeHP');
 		   	h4.text(foeHP);
@@ -230,8 +234,50 @@ function checkWin() {
 			});
 			$('img.foe').removeClass('foe');
 
-			$('#myModal').modal('toggle');
-		});
+
+		function checkWin() {
+			if (heroHP<=0) {
+				$('.results').html('You Lose!');
+
+				
+				setTimeout(function () {
+					$('#myModal').modal('hide');
+					$('.hero').effect( "explode", {pieces: 16}, 3000 );
+				}, 3000);
+            
+
+				lossCount++;
+				$("#lossCount").text("Losses: " +lossCount);
+
+
+			} else if (foeHP<=0) {
+		
+				
+				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
+
+		
+
+				$(document).on('mousedown', 'img.foe', function () {
+					$('img.foe').appendTo('#pen').css({
+						'height':'50px'
+					});
+					$('img.foe').draggable({
+						containment: "parent",
+						grid: [ 10, 10 ],
+					});
+
+					$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName.charAt(0).toUpperCase() + pokeName.slice(1));
+
+					$('#myModal').modal('hide');
+				});
+
+
+
+				winCount++;
+				$("#winCount").text("Wins: " + winCount);
+				
+
+
 
 		winCount++;
 		$("#winCount").text("Wins: " + winCount);
@@ -266,11 +312,49 @@ $(document).on('click','.modal' ,function () {
 	}
 	checkWin();
 
+
+		$(document).on('click','.modal' ,function () {
+			var mover = $('.mover').position();
+
+			console.log(mover.left);
+
+
+			if (heroHP>0 && foeHP>0) {
+
+				$('.hero').addClass('animateRight');
+				$('.foe').addClass('animateLeft');
+				$( ".hero" ).effect( "bounce", "slow" );
+				$( ".foe" ).effect( "bounce", "slow" );
+
+				setTimeout(function () {
+					$('.hero').removeClass('animateRight');
+					$('.foe').removeClass('animateLeft');
+				},600);
+
+				if (mover.left > 90 && mover.left < 110) {
+					hit = true;
+					
+				} else {
+					hit = false;
+					
+				}
+				writeHit();
+			}
+			checkWin();
+
+			$('.mover').css({
+				'animation-duration': animationSpeed/speedModifier
+			});
+			speedModifier+=0.1;
+
+		});
+
 	$('.mover').css({
 		'animation-duration': animationSpeed/speedModifier
 	});
 	speedModifier+=0.1;
 
 });
+
 
 
