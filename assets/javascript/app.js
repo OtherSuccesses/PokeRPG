@@ -41,27 +41,24 @@ database.ref().on("child_added", function(childSnapshot){
 	});
 
 //Pokemon API Code
-
-
-	var initializePokemonData = function(){
-		for(i = 0; i<150; i++){
-			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
-			$.ajax({
-				url:queryURL,
-				method: "GET"
-			}).done(function(pokemon){
-				database.ref().push({
-					id: pokemon.id,
-					name: pokemon.name,
-					sprite:pokemon.sprites.front_default
-				});
-				console.log(pokemon);
-				var sprite = $("<img>");
-				sprite.attr("src", pokemon.sprites.front_default);
-				pokeSprites = pokemon.sprites.front_default;
-				sprite.appendTo($("#poke-image"));
-			})
-		}
+var initializePokemonData = function(){
+	for(i = 0; i<150; i++){
+		var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
+		$.ajax({
+			url:queryURL,
+			method: "GET"
+		}).done(function(pokemon){
+			database.ref().push({
+				id: pokemon.id,
+				name: pokemon.name,
+				sprite:pokemon.sprites.front_default
+			});
+			console.log(pokemon);
+			var sprite = $("<img>");
+			sprite.attr("src", pokemon.sprites.front_default);
+			pokeSprites = pokemon.sprites.front_default;
+			sprite.appendTo($("#poke-image"));
+		})
 	}
 }
 
@@ -178,6 +175,7 @@ function setMarkers(map) {
 		   	$('.foeContainer').append(h4,currentFoe);
 	  		console.log(this.icon.url);
 	  	  	$('#myModal').modal('show');
+		});
 	}
 }
 
@@ -235,18 +233,16 @@ function checkWin() {
 			$('#myModal').modal('toggle');
 		});
 
-		
-
 		winCount++;
 		$("#winCount").text("Wins: " + winCount);
 		currentFoe.draggable();
-
 	}
 }
-
 $(document).on('click','.modal' ,function () {
 	var mover = $('.mover').position();
+
 	console.log(mover.left);
+
 	if (heroHP>0 && foeHP>0) {
 
 		$('.hero').addClass('animateRight');
@@ -268,12 +264,13 @@ $(document).on('click','.modal' ,function () {
 		}
 		writeHit();
 	}
-
 	checkWin();
 
 	$('.mover').css({
 		'animation-duration': animationSpeed/speedModifier
 	});
 	speedModifier+=0.1;
+
 });
+
 
