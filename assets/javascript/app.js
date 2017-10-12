@@ -4,12 +4,13 @@
 
 var hit = '';
 var foeURL = '';
-		var heroHP = 120;
-		var heroModifier = heroHP / 3;
-		var foeHP = 120;
-		var foeModifier = foeHP / 3;
-		var animationSpeed = 4;
-		var speedModifier = 1;
+var heroHP = 120;
+var heroModifier = heroHP / 3;
+var foeHP = 120;
+var foeModifier = foeHP / 3;
+var animationSpeed = 4;
+var speedModifier = 1;
+var currentFoe = '';
 var pokeArray = [];
 
 // REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
@@ -21,6 +22,7 @@ var playerName= [];
 var numberPokemon;
 
 var url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI"
+
 
 
 //Firebase Code
@@ -150,13 +152,30 @@ var numGen =  function(to, from, fixed) {
 		    map: map,
 		    icon: icon
 		});
-
+			// console.log(pokeArray);
 		   marker.addListener('click', function(event) {
+		   	$('.foeContainer').empty();
+		   	$()
+		   	heroHP = 120;
+		   	foeHP = 120;
+		   	$('.heroHP').text(heroHP);
 		   	foeURL = this.icon.url;
-		   	var img = $('<img>');
-		   	img.attr('src', foeURL);
-		   	img.addClass('foe');
-		   	$('.foeContainer').append(img);
+		   	var index = foeURL.match(/[0-9]+/g);
+		   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
+		   	console.log(result);
+		   	$('.pokeName').text(result[0].name);
+		   	console.log('index+1: ',parseInt(index)+1);
+		   	var h4 = $('<h4>');
+		   	h4.addClass('foeHP');
+		   	h4.text(foeHP);
+		   	var currentFoe = $('<img>');
+		   	currentFoe.attr({
+		   		'src': foeURL,
+		   		'height': 200,
+		   		'class': 'foe'
+		   	});
+		   	
+		   	$('.foeContainer').append(h4,currentFoe);
 	  		console.log(this.icon.url);
 	  	  	$('#myModal').modal('show');
 	
@@ -231,11 +250,11 @@ var numGen =  function(to, from, fixed) {
 				// $('.hero').effect('explode');
 			} else if (foeHP<=0) {
 				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
-				$('.foe').draggable();
+				currentFoe.draggable();
 			}
 		}
 
-		$('.modal').on('click', function () {
+		$(document).on('click','.modal' ,function () {
 			var mover = $('.mover').position();
 			console.log(mover.top, mover.right, mover.bottom, mover.left);
 

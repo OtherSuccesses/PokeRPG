@@ -15,12 +15,12 @@
 
       	.heroContainer {
 		display: inline-block;
-		margin-left: 10%;
+		margin-left: 5%;
 	}
 
 	.foeContainer {
 		display: inline-block;
-		margin-right: 10%;
+		margin-right: 5%;
 	}
 
 	.results {
