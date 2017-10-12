@@ -144,7 +144,7 @@ function setMarkers(map) {
 			// add click listener to each marker
 		   marker.addListener('click', function(event) {
 		   	$('.foeContainer').empty();
-		   	$()
+		   	$('.hero').show();
 		   	heroHP = 120;
 		   	foeHP = 120;
 		   	$('.heroHP').text(heroHP);
@@ -161,8 +161,15 @@ function setMarkers(map) {
 		   		'height': 200,
 		   		'class': 'foe'
 		   	});
+<<<<<<< HEAD
 		   	this.setMap(null); 
 		   	$('.foeContainer').append(h4,currentFoe);
+=======
+
+		   	$('.foeContainer').append(h4,currentFoe);
+	  		console.log(this.icon.url);
+	  		this.setMap(null);
+>>>>>>> badf6b8cc0949a804d7e37594202ad82d1b70e55
 	  	  	$('#myModal').modal('show');
 	  });
 
@@ -233,21 +240,62 @@ function setMarkers(map) {
 		function checkWin() {
 			if (heroHP<=0) {
 				$('.results').html('You Lose!');
+
+				
+				setTimeout(function () {
+					$('#myModal').modal('toggle');
+					$('.hero').hide( "explode", {pieces: 16}, 3000 );
+				}, 3000);
+            
+
 				lossCount++;
 				$("#lossCount").text("Losses: " +lossCount);
 				// $('.hero').effect('explode');
+
 			} else if (foeHP<=0) {
+				console.log(markers[clickedPoke].id);
+				
 				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
+
+				// $('img.foe').css({
+				// 	'position':'relative'
+				// });
+
+				$(document).on('mousedown', 'img.foe', function () {
+					$('img.foe').appendTo('#pen').css({
+						'height':'50px'
+					});
+					$('img.foe').draggable({
+						containment: "parent",
+						grid: [ 10, 10 ],
+					});
+					$('img.foe').removeClass('foe');
+
+					$('#myModal').modal('toggle');
+				});
+
+				
+
 				winCount++;
 				$("#winCount").text("Wins: " + winCount);
 				currentFoe.draggable();
+
 			}
 		}
 
 		$(document).on('click','.modal' ,function () {
 			var mover = $('.mover').position();
+<<<<<<< HEAD
 			console.log(mover.left);
 			
+=======
+
+			console.log(mover.left);
+
+
+	
+
+>>>>>>> badf6b8cc0949a804d7e37594202ad82d1b70e55
 
 
 			if (heroHP>0 && foeHP>0) {
@@ -279,4 +327,6 @@ function setMarkers(map) {
 			speedModifier+=0.1;
 
 		});
+
+
 

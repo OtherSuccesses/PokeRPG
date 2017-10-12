@@ -40,11 +40,14 @@
 			</div>
 		</div>
 		<div class="col-lg-4">
-			<div class="panel panel-primary">
+			<div class="panel panel-primary ">
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>Poke-Pen</strong></h3> 
 				</div>
-			<p>captured pokemon go here</p>
+				<div class="panel-body" id="pen">
+					
+				</div>
+			
 			</div>
 		</div>
 	</div>
@@ -52,7 +55,7 @@
 
 <div class="container">
   <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -64,18 +67,15 @@
           	<h4 class="heroHP"></h4>
           	<img src="https://www.models-resource.com/resources/big_icons/4/3683.png" alt="" height="200" class="hero">
           </div>
-		<div class="results text-center"></div>
-          <div class="foeContainer pull-right">
-          	
-  
-          </div>
+		  <div class="results text-center"></div>
+          <div class="foeContainer pull-right"></div>
         </div>
         <div class="modal-footer">
         	<div class="slider">
           	<div class="target"></div>
           	<div class="mover"></div>
           </div>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    
         </div>
       </div>
     </div>
