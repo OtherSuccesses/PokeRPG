@@ -7,24 +7,18 @@
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI&callback=initMap"
-    async defer></script>
+  	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+ 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/javascript/app.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-	
-</head>
 <body>
+
 <header class="page-heading">
 	<div class="container">
 		<h1>Poke-Map Challenge</h1>
 	</div>
-
 </header>
+
 <div class="container">
 	<div class="row">
 	    <div class="col-lg-4">
@@ -32,7 +26,7 @@
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>Game Instructions</strong></h3> 
 				</div>
-				<p>instructions go here</p>
+				<p>Click the sprite to launch the capture window.<br>Clickhe green circle when it overlaps with the red circle to capture the sprite.<br>Once you capture the sprite, drag him to your sprite pen on the right.</p>
 			</div>
 		</div>
 		<div class="col-lg-4">
@@ -40,7 +34,9 @@
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>User Info</strong></h3> 
 				</div>
-			<p id="poke-image">User stats go here</p>
+			<div id="name"></div>
+			<div id="winCount"></div>
+			<div id="lossCount"></div>
 			</div>
 		</div>
 		<div class="col-lg-4">
@@ -55,7 +51,7 @@
 			</div>
 		</div>
 	</div>
-</div>	
+</div> <!-- end of container-->	
 
 <div class="container">
   <!-- Modal -->

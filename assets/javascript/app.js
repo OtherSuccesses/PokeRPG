@@ -1,5 +1,3 @@
-
-
 // Global Variables
 
 var hit = '';
@@ -12,22 +10,17 @@ var animationSpeed = 4;
 var speedModifier = 1;
 var currentFoe = '';
 var pokeArray = [];
-
-// REPLACE THIS WITH FIREBASE INFO OF SPRITE NAME
 var activePokemon = [];
 
 //PlayerName variable
 var playerName= [];
+var winCount = 0;
+var lossCount = 0;
 //Number of Pokemon to capture
 var numberPokemon;
 
-var url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI"
-
-
-
 //Firebase Code
 // Initialize Firebase
-
 var config = {
     apiKey: "AIzaSyC8kW0gKpIoL8W_JizTdOyuq0J0QdY7Zq0",
     authDomain: "group-project-1-b61de.firebaseapp.com",
@@ -47,16 +40,13 @@ var database = firebase.database();
 // 		activePokemon[i] = pokeArray[tempId];
 // 	}
 // }
+
  // add firebase data to local array
-
- database.ref().on("child_added", function(childSnapshot){
-	 pokeArray.push(childSnapshot.val());
-	 });
- console.log(pokeArray);
-
+database.ref().on("child_added", function(childSnapshot){
+	pokeArray.push(childSnapshot.val());
+	});
 
 //Pokemon API Code
-
 	var initializePokemonData = function(){
 		for(i = 0; i<150; i++){
 			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
@@ -94,19 +84,17 @@ var database = firebase.database();
  		}
  	}, 5000);
 
-
-
-var map;
-
-
-  
 /// Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
 var markerArray = [];
 var longArray = [];
 var latArray = [];
 
+// Function to enerate coordinates for sprite markers
 function generateCoordinates() {
+	$("#name").text("Name: " + playerName)
+	$("#winCount").text("Wins: " + winCount);
+	$("#lossCount").text("Losses: " +lossCount);
 var numGen =  function(to, from, fixed) {
 	return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
 	};
@@ -116,7 +104,6 @@ var numGen =  function(to, from, fixed) {
 		latArray.push(lat);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
-	
 	}};
 	var longitude = function(){
 		for (i = 0; i<50; i++) {
@@ -124,35 +111,38 @@ var numGen =  function(to, from, fixed) {
 		longArray.push(long);
 		markerArray[i].longitude = long;
 	}};
+	// generate sprite coordinates
 	latitude ();
 	longitude();
 	}
 
-	function initMap() {
+// initialize google maps api
+function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 40.765981527712825, lng: -78.78111690000003},
         mapTypeId: 'satellite',
         zoom: 4
         });
         window.onload = setMarkers(map);
-      }
+      };
 
-
-	function setMarkers(map) {
+// initialize markers on map
+var map; 
+function setMarkers(map) {
 	  // Adds markers to the map.
 	generateCoordinates();
 	for (var i = 1; i<50; i++){
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
 		    scaledSize: new google.maps.Size(50, 50)
-		};
-
+		}
 		var marker = new google.maps.Marker({
 		    position: new google.maps.LatLng(markerArray[i].latitude, markerArray[i].longitude),
+		    id: i,
 		    map: map,
 		    icon: icon
 		});
-			// console.log(pokeArray);
+			// add click listener to each marker
 		   marker.addListener('click', function(event) {
 		   	$('.foeContainer').empty();
 		   	$('.hero').show();
@@ -162,7 +152,6 @@ var numGen =  function(to, from, fixed) {
 		   	foeURL = this.icon.url;
 		   	var index = foeURL.match(/[0-9]+/g);
 		   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
-		   	console.log(result);
 		   	$('.pokeName').text(result[0].name);
 		   	console.log('index+1: ',parseInt(index)+1);
 		   	var h4 = $('<h4>');
@@ -174,13 +163,14 @@ var numGen =  function(to, from, fixed) {
 		   		'height': 200,
 		   		'class': 'foe'
 		   	});
-		   	console.log(currentFoe);
+
 		   	$('.foeContainer').append(h4,currentFoe);
 	  		console.log(this.icon.url);
+	  		this.setMap(null);
 	  	  	$('#myModal').modal('show');
-	
 	  });
 	}
+
 	  // Marker sizes are expressed as a Size of X,Y where the origin of the image
 	  // (0,0) is located in the top left of the image.
 	  // Origins, anchor positions and coordinates of the marker increase in the X
@@ -247,14 +237,23 @@ var numGen =  function(to, from, fixed) {
 		function checkWin() {
 			if (heroHP<=0) {
 				$('.results').html('You Lose!');
+
 				
 				setTimeout(function () {
 					$('#myModal').modal('toggle');
 					$('.hero').hide( "explode", {pieces: 16}, 3000 );
 				}, 3000);
             
+
+				lossCount++;
+				$("#lossCount").text("Losses: " +lossCount);
+				// $('.hero').effect('explode');
+
 			} else if (foeHP<=0) {
+				console.log(markers[clickedPoke].id);
+				
 				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
+
 				// $('img.foe').css({
 				// 	'position':'relative'
 				// });
@@ -273,12 +272,21 @@ var numGen =  function(to, from, fixed) {
 				});
 
 				
+
+				winCount++;
+				$("#winCount").text("Wins: " + winCount);
+				currentFoe.draggable();
+
 			}
 		}
 
 		$(document).on('click','.modal' ,function () {
 			var mover = $('.mover').position();
+
 			console.log(mover.left);
+
+
+	
 
 
 
