@@ -33,13 +33,7 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
-// var randomizePokemon = function(){
-// 	for(i = 0; i < 10; i++){
-// 		var tempId = Math.floor(Math.random()*150);
-// 		console.log(tempId);
-// 		activePokemon[i] = pokeArray[tempId];
-// 	}
-// }
+
 
  // add firebase data to local array
 database.ref().on("child_added", function(childSnapshot){
@@ -54,11 +48,6 @@ database.ref().on("child_added", function(childSnapshot){
 				url:queryURL,
 				method: "GET"
 			}).done(function(pokemon){
-				//number.stringify();
-//				activePoke[i] = Math.floor(Math.random()*150);
-				// console.log(pokemon);
-				// console.log(pokemon.sprites);
-				// console.log(pokemon.sprites.front_default);
 				database.ref().push({
 					id: pokemon.id,
 					name: pokemon.name,
@@ -84,12 +73,18 @@ database.ref().on("child_added", function(childSnapshot){
 
     $(document).on("click", "#playerNameButton",function(event){
     	event.preventDefault();
-    	playerName = $("#playerNameEntry").val();
-    	database.ref("/Players/" + playerName + "/").set({
-    		name: playerName
-    	});
-    	$("#name").text("Name: " + playerName);
-    	$("#playerNameEntryModal").modal('toggle');
+    	var str = $('#playerNameEntry').val();
+			if(/^[a-zA-Z- ]*$/.test(str) == false) {
+    			$(".professor-container").append('<br>Your name cannot contain numbers or special characters!');
+			}
+			else{
+	    	playerName = $("#playerNameEntry").val();
+	    	database.ref("/Players/" + playerName + "/").set({
+	    		name: playerName
+	    	});
+	    	$("#name").text("Name: " + playerName);
+	    	$("#playerNameEntryModal").modal('toggle');
+	    	}
     });
 
 	//Pokemon initialize if Database fails to load
