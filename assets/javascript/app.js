@@ -251,7 +251,7 @@ function writeHit() {
 
 		winCount++;
 		$("#winCount").text("Wins: " + winCount);
-		currentFoe.draggable();
+
 	}
 }
 $(document).on('click','.modal' ,function () {
