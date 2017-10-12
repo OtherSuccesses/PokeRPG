@@ -64,7 +64,6 @@ database.ref().on("child_added", function(childSnapshot){
 					name: pokemon.name,
 					sprite:pokemon.sprites.front_default
 				});
-				console.log(pokemon);
 				var sprite = $("<img>");
 				sprite.attr("src", pokemon.sprites.front_default);
 				pokeSprites = pokemon.sprites.front_default;
@@ -153,7 +152,6 @@ function setMarkers(map) {
 		   	var index = foeURL.match(/[0-9]+/g);
 		   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
 		   	$('.pokeName').text(result[0].name);
-		   	console.log('index+1: ',parseInt(index)+1);
 		   	var h4 = $('<h4>');
 		   	h4.addClass('foeHP');
 		   	h4.text(foeHP);
@@ -163,13 +161,13 @@ function setMarkers(map) {
 		   		'height': 200,
 		   		'class': 'foe'
 		   	});
-		   	this.setMap(null);
+		   	this.setMap(null); 
 		   	$('.foeContainer').append(h4,currentFoe);
-	  		console.log(this.icon.url);
 	  	  	$('#myModal').modal('show');
-			
 	  });
+
 	}
+
 	  // Marker sizes are expressed as a Size of X,Y where the origin of the image
 	  // (0,0) is located in the top left of the image.
 	  // Origins, anchor positions and coordinates of the marker increase in the X
@@ -213,7 +211,6 @@ function setMarkers(map) {
 	  // });
 	}
 
-
 	//////////////////////Javascript for fight mechanic//////////////////////
 
 	function reduceHP(character) {
@@ -249,7 +246,7 @@ function setMarkers(map) {
 
 		$(document).on('click','.modal' ,function () {
 			var mover = $('.mover').position();
-			console.log(mover.top, mover.right, mover.bottom, mover.left);
+			console.log(mover.left);
 			
 
 
