@@ -54,16 +54,7 @@ var database = firebase.database();
 
 
 //Pokemon API Code
-// var pokeIDs = [];
-// 	var idPush = function(){
-// 		for (i= 1; i<151; i++){
-// 			pokeIDs.push(i);
-// //			console.log(pokeIDs[i-1]);
-// 		}
-// 	}
 
-// 	var Pokemon = [];
-// 	var pokeSprites = database.ref("150")
 	var initializePokemonData = function(){
 		for(i = 0; i<150; i++){
 			var queryURL = "https://pokeapi.co/api/v2/pokemon/"+i;
@@ -100,9 +91,7 @@ var database = firebase.database();
  			initializePokemonData();
  		}
  	}, 5000);
-// 	database.ref("150").on("child_added", function(snapshot){
-// 		console.log(snapshot.val());
-// 	})
+
 
 
 var map;
