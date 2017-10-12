@@ -10,7 +10,6 @@ var animationSpeed = 4;
 var speedModifier = 1;
 var currentFoe = '';
 var pokeArray = [];
-var markers = [];
 var activePokemon = [];
 
 //PlayerName variable
@@ -142,7 +141,6 @@ function setMarkers(map) {
 		    map: map,
 		    icon: icon
 		});
-		markers.push(marker);
 			// add click listener to each marker
 		   marker.addListener('click', function(event) {
 		   	$('.foeContainer').empty();
