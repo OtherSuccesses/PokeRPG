@@ -77,6 +77,21 @@ database.ref().on("child_added", function(childSnapshot){
 	// 	randomizePokemon();
 	// },3000);
 
+//Player Name Entry Modal JS
+	$(window).on('load',function(){
+        $('#playerNameEntryModal').modal('show');
+    });
+
+    $(document).on("click", "#playerNameButton",function(event){
+    	event.preventDefault();
+    	playerName = $("#playerNameEntry").val();
+    	database.ref("/Players/" + playerName + "/").set({
+    		name: playerName
+    	});
+    	$("#name").text("Name: " + playerName);
+    	$("#playerNameEntryModal").modal('toggle');
+    });
+
 	//Pokemon initialize if Database fails to load
  	setTimeout(function(){
  	 	if (pokeArray.length<149){
@@ -92,7 +107,6 @@ var latArray = [];
 
 // Function to enerate coordinates for sprite markers
 function generateCoordinates() {
-	$("#name").text("Name: " + playerName)
 	$("#winCount").text("Wins: " + winCount);
 	$("#lossCount").text("Losses: " +lossCount);
 var numGen =  function(to, from, fixed) {
