@@ -76,6 +76,34 @@
 		animation-timing-function: ease-out;
 	}
 
+/*Player Name Modal CSS*/
+	#playerNameEntryHeader{
+		background-color: antiquewhite;
+		border-radius: 15px;
+		color: slategray;
+	}
+
+	#playerNameEntry{
+		color:black;
+	}
+
+	#playerNameEntryModal {
+		text-align:center;
+		color: white;
+		font-weight: bold;
+	}
+
+	#playerNameEntryFieldLabel{
+		color:white;
+	}
+
+	#playerNameButton{
+		color:black;
+		background-color: lightgreen;
+		border-color: darkgreen;
+		border-width: 3px;
+	}
+
 	@keyframes slide {
 		0% {
 			transform: translateX(0px);
