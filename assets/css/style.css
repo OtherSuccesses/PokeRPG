@@ -8,3 +8,113 @@
         margin: 35px;
         padding: 0;
       }
+
+      /*************************fight animation styling*************************/
+
+      	.heroContainer {
+		display: inline-block;
+		margin-left: 10%;
+	}
+
+	.foeContainer {
+		display: inline-block;
+		margin-right: 10%;
+	}
+
+	.results {
+		width: 30%;
+		height: 100%;
+		display: inline-block;
+		margin: 0 auto;
+		font-size: 20px;
+	}
+
+	.mover {
+		height: 20px;
+		width: 20px;
+		background: #BADA55;
+		border-radius:50%;
+		animation-name: slide;
+		animation-duration: 4s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+	}
+
+	.target {
+		position: absolute;
+		content: ' ';
+		height: 20px;
+		width: 20px;
+		background: red;
+		transform: translateX(-10px);
+		left: 50%;
+		border-radius:50%;
+	}
+
+	.slider {
+		position: relative;
+		height: 20px;
+		width: 220px;
+		background: #777;
+		border-radius: 10px;
+		margin: 0 auto;
+	}
+
+	.animateRight {
+		animation-name: animateRight;
+		animation-duration: 600ms;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-out;
+	}
+
+	.animateLeft {
+		animation-name: animateLeft;
+		animation-duration: 600ms;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-out;
+	}
+
+	@keyframes slide {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(200px);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+		
+	}
+
+	@keyframes animateRight {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(200px);			
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+	@keyframes animateLeft {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(-200px);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+/*****************************end fight animation styling*****************************/
