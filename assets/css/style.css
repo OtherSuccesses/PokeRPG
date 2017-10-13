@@ -13,23 +13,18 @@
       }
 
       /*************************fight animation styling*************************/
-
-      	.heroContainer {
-		/*max-width: 33%;			*/
-		/*display: inline-block;*/
+	
+	.modal-title {
+		font-size: 30px;
 	}
 
-	.foeContainer {
-		/*max-width: 33%;	*/
-		/*display: inline-block;*/
-		/*margin-right: -1%;*/
+	.pokeName {
+		color: blue;
+		text-shadow: 3px 3px 3px rgba(0,0,255,0.5);
 	}
 
 	.results {
-		/*max-width: 33%;*/
 		height: 100%;
-		/*display: inline-block;*/
-		/*margin: 0 auto;*/
 		font-size: 20px;
 	}
 
@@ -44,7 +39,7 @@
 
 	.target {
 		position: absolute;
-		content: ' ';
+		/*content: ' ';*/
 		height: 20px;
 		width: 20px;
 		background: red;
@@ -62,6 +57,15 @@
 		border: 1px outset black;
 		border-radius: 10px;
 		margin: 0 auto;
+	}
+
+	.HP {
+		/*display: inline-block;*/
+		background:red;
+		color: white;
+		margin: 0 auto;
+		padding: 3px 5px;
+		border-radius: 10px;
 	}
 
 /*Player Name Modal CSS*/
@@ -92,7 +96,7 @@
 		border-width: 3px;
 	}
 
-
+	
 
 
 
