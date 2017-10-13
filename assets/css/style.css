@@ -15,36 +15,31 @@
       /*************************fight animation styling*************************/
 
       	.heroContainer {
-		display: inline-block;
-		margin-left: 1%;
+		/*max-width: 33%;			*/
+		/*display: inline-block;*/
 	}
 
 	.foeContainer {
-		display: inline-block;
-		margin-right: 1%;
+		/*max-width: 33%;	*/
+		/*display: inline-block;*/
+		/*margin-right: -1%;*/
 	}
 
 	.results {
-		width: 30%;
+		/*max-width: 33%;*/
 		height: 100%;
-		display: inline-block;
-		margin: 0 auto;
+		/*display: inline-block;*/
+		/*margin: 0 auto;*/
 		font-size: 20px;
 	}
 
 	.mover {
 		height: 20px;
 		width: 20px;
-		background: #BADA55;
+		background: green;
 		border-radius:50%;
-		animation-name: slide;
-		animation-duration: 4s;
-		animation-iteration-count: infinite;
-		animation-timing-function: linear;
-		-webkit-animation-name: slide;
-		-webkit-animation-duration: 4s;
-		-webkit-animation-iteration-count: infinite;
-		-webkit-animation-timing-function: linear;
+		border: 1px solid black;
+		
 	}
 
 	.target {
@@ -56,29 +51,17 @@
 		transform: translateX(-10px);
 		left: 50%;
 		border-radius:50%;
+		border: 1px solid black;
 	}
 
 	.slider {
 		position: relative;
-		height: 20px;
+		height: 21px;
 		width: 220px;
-		background: #777;
+		background: white;
+		border: 1px outset black;
 		border-radius: 10px;
 		margin: 0 auto;
-	}
-
-	.animateRight {
-		animation-name: animateRight;
-		animation-duration: 600ms;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-	}
-
-	.animateLeft {
-		animation-name: animateLeft;
-		animation-duration: 600ms;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
 	}
 
 /*Player Name Modal CSS*/
@@ -109,6 +92,89 @@
 		border-width: 3px;
 	}
 
+
+
+
+
+
+
+
+
+	/**************************************animation code**************************************/
+	.mover {
+		animation-name: slide;
+		animation-duration: 4s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		-webkit-animation-name: slide;
+		-webkit-animation-duration: 4s;
+		-webkit-animation-iteration-count: infinite;
+		-webkit-animation-timing-function: linear;
+		-moz-animation-name: slide;
+		-moz-animation-duration: 4s;
+		-moz-animation-iteration-count: infinite;
+		-moz-animation-timing-function: linear;
+		-o-animation-name: slide;
+		-o-animation-duration: 4s;
+		-o-animation-iteration-count: infinite;
+		-o-animation-timing-function: linear;
+		-ms-animation-name: slide;
+		-ms-animation-duration: 4s;
+		-ms-animation-iteration-count: infinite;
+		-ms-animation-timing-function: linear;
+	}
+
+	.animateRight {
+		animation-name: animateRight;
+		animation-duration: 600ms;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-out;
+		-webkit-animation-name: animateRight;
+		-webkit-animation-duration: 600ms;
+		-webkit-animation-iteration-count: 1;
+		-webkit-animation-timing-function: ease-out;
+		-moz-animation-name: animateRight;
+		-moz-animation-duration: 600ms;
+		-moz-animation-iteration-count: 1;
+		-moz-animation-timing-function: ease-out;
+		-o-animation-name: animateRight;
+		-o-animation-duration: 600ms;
+		-o-animation-iteration-count: 1;
+		-o-animation-timing-function: ease-out;
+		-ms-animation-name: animateRight;
+		-ms-animation-duration: 600ms;
+		-ms-animation-iteration-count: 1;
+		-ms-animation-timing-function: ease-out;
+	}
+
+	.animateLeft {
+		animation-name: animateLeft;
+		animation-duration: 600ms;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-out;
+		-webkit-animation-name: animateLeft;
+		-webkit-animation-duration: 600ms;
+		-webkit-animation-iteration-count: 1;
+		-webkit-animation-timing-function: ease-out;
+		-moz-animation-name: animateLeft;
+		-moz-animation-duration: 600ms;
+		-moz-animation-iteration-count: 1;
+		-moz-animation-timing-function: ease-out;
+		-o-animation-name: animateLeft;
+		-o-animation-duration: 600ms;
+		-o-animation-iteration-count: 1;
+		-o-animation-timing-function: ease-out;
+		-ms-animation-name: animateLeft;
+		-ms-animation-duration: 600ms;
+		-ms-animation-iteration-count: 1;
+		-ms-animation-timing-function: ease-out;
+	}
+
+
+
+
+
+
 	@keyframes slide {
 		0% {
 			transform: translateX(0px);
@@ -124,19 +190,110 @@
 		
 	}
 
+	@-webkit-keyframes slide {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(200px);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+		
+	}
+
+	@-moz-keyframes slide {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(200px);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+		
+	}
+
+	@-o-keyframes slide {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(200px);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+		
+	}
+
+
+
 	@keyframes animateRight {
 		0% {
 			transform: translateX(0px);
 		}
 
 		50% {
-			transform: translateX(200px);			
+			transform: translateX(150%);			
 		}
 
 		100% {
 			transform: translateX(0px);
 		}
 	}
+
+	@-webkit-keyframes animateRight {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(150%);			
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+	@-moz-keyframes animateRight {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(150%);			
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+	@-o-keyframes animateRight {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(150%);			
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+
 
 	@keyframes animateLeft {
 		0% {
@@ -144,7 +301,7 @@
 		}
 
 		50% {
-			transform: translateX(-200px);
+			transform: translateX(-150%);
 		}
 
 		100% {
@@ -152,4 +309,46 @@
 		}
 	}
 
-/*****************************end fight animation styling*****************************/
+	@-webkit-keyframes animateLeft {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(-150%);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+	@-moz-keyframes animateLeft {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(-150%);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+	@-o-keyframes animateLeft {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(-150%);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+/*****************************end of animation code*****************************/
