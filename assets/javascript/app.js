@@ -12,16 +12,19 @@ var currentFoe = '';
 var pokeArray = [];
 var activePokemon = [];
 var pokeName = '';
-
+var battleEnd = false;
 //PlayerName variable
 var playerName= [];
 var winCount = 0;
 var lossCount = 0;
+
+var mover = document.getElementsByClassName('mover'); 
 //Number of Pokemon to capture
 var numberPokemon;
 
 //Firebase Code
 // Initialize Firebase
+
 var config = {
     apiKey: "AIzaSyC8kW0gKpIoL8W_JizTdOyuq0J0QdY7Zq0",
     authDomain: "group-project-1-b61de.firebaseapp.com",
@@ -154,6 +157,10 @@ function setMarkers(map) {
 		});
 			// add click listener to each marker
 		   marker.addListener('click', function(event) {
+		   	$('.mover').css({
+				'-webkit-animation-duration': animationSpeed+'s'
+			});
+		   	battleEnd = false;
 		   	$('.foeContainer').empty();
 		   	$('.hero').show();
 		   	heroHP = 120;
@@ -163,6 +170,7 @@ function setMarkers(map) {
 		   	var index = foeURL.match(/[0-9]+/g);
 		   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
 		   	pokeName = result[0].name;
+		   	pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
 		   	$('.pokeName').text(pokeName);
 		   	console.log('index+1: ',parseInt(index)+1);
 
@@ -206,7 +214,12 @@ function writeHit() {
 
 
 		function checkWin() {
+
+
 			if (heroHP<=0) {
+
+				battleEnd = true;
+				console.log(battleEnd);
 				$('.results').html('You Lose!');
 
 				
@@ -221,7 +234,9 @@ function writeHit() {
 
 
 			} else if (foeHP<=0) {
-		
+				battleEnd = true;
+				console.log(battleEnd);
+				// $('.modal').data().events.click = null;
 				
 				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
 
@@ -236,7 +251,7 @@ function writeHit() {
 						grid: [ 10, 10 ],
 					});
 
-					$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName.charAt(0).toUpperCase() + pokeName.slice(1));
+					$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName);
 
 					$('#myModal').modal('hide');
 				});
@@ -245,16 +260,19 @@ function writeHit() {
 
 				winCount++;
 				$("#winCount").text("Wins: " + winCount);
+				speedModifier+=.05;
+				animationSpeed = animationSpeed / speedModifier;
 				
-
-
-
-		winCount++;
-		$("#winCount").text("Wins: " + winCount);
 
 	}
 }
+
+
+
 $(document).on('click','.modal' ,function () {
+	
+	if (!battleEnd) {
+	console.log('battle end in click event: ',battleEnd);
 	var mover = $('.mover').position();
 
 	console.log(mover.left);
@@ -276,7 +294,6 @@ $(document).on('click','.modal' ,function () {
 			
 		} else {
 			hit = false;
-			
 		}
 		writeHit();
 	}
@@ -284,13 +301,17 @@ $(document).on('click','.modal' ,function () {
 
 
 
+	
 
-	$('.mover').css({
-		'animation-duration': animationSpeed/speedModifier
-	});
-	speedModifier+=0.1;
+	
+
+	// mover.style.webkitAnimationDuration = animationSpeed;
+	console.log('animationSpeed: ',animationSpeed);
+
+	}
 
 });
+
 
 
 

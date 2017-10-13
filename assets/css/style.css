@@ -40,6 +40,10 @@
 		animation-duration: 4s;
 		animation-iteration-count: infinite;
 		animation-timing-function: linear;
+		-webkit-animation-name: slide;
+		-webkit-animation-duration: 4s;
+		-webkit-animation-iteration-count: infinite;
+		-webkit-animation-timing-function: linear;
 	}
 
 	.target {
