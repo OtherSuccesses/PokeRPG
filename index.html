@@ -64,6 +64,7 @@
 		  <div class="modal-body">
 		    	<div class="professor-container">
 		    		<img src="https://cdn.bulbagarden.net/upload/8/84/Professor_Oak_XY.png">
+		    		<p class="validationTxt"></p>
 		  		</div>
 		  		<div>
 		  			<form id="playerEntryField">
@@ -78,32 +79,31 @@
 </div>
 
 <div class="container">
-  <!-- Modal -->
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-center">Capture the <span class="pokeName"></span>!</h4>
-        </div>
-        <div class="modal-body">
-          <div class="heroContainer">
-          	<h4 class="heroHP"></h4>
-          	<img src="https://www.models-resource.com/resources/big_icons/4/3683.png" alt="" height="200" class="hero">
-          </div>
-		  <div class="results text-center"></div>
-          <div class="foeContainer pull-right"></div>
-        </div>
-        <div class="modal-footer">
-        	<div class="slider">
-          	<div class="target"></div>
-          	<div class="mover"></div>
-          </div>
-    
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" id="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title text-center">Capture the <span class="pokeName"></span> !</h4>
+				</div>
+				<div class="modal-body row">
+					<div class="heroContainer col-xs-4 text-center">
+						<h4 class="heroHP text-center HP"></h4>
+						<img src="https://www.models-resource.com/resources/big_icons/4/3683.png" alt="" height="200" class="hero img-responsive">
+					</div>
+					<div class="results text-center col-xs-4"></div>
+					<div class="foeContainer col-xs-4 text-center"></div>
+				</div>
+				<div class="modal-footer" id="modal-footer">
+					<div class="slider">
+						<div class="target"></div>
+						<div class="mover "></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </div><!-- end of container -->
 
