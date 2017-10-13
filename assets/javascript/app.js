@@ -11,6 +11,7 @@ var speedModifier = 1;
 var currentFoe = '';
 var pokeArray = [];
 var activePokemon = [];
+var markerArray = [];
 var pokeName = '';
 var battleEnd = false;
 //PlayerName variable
@@ -104,9 +105,8 @@ setTimeout(function(){
 
 /// Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
-var markerArray = [];
-var longArray = [];
-var latArray = [];
+
+
 
 
 var numGen =  function(to, from, fixed) {
@@ -121,14 +121,12 @@ function generateCoordinates() {
 	var latitude = function(){
 		for (i = 0; i<50; i++) {
 		var lat = numGen(27, 48, 3);
-		// latArray.push(lat);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
 	}};
 	var longitude = function(){
 		for (i = 0; i<50; i++) {
 		var long = numGen(-60, -125, 3);
-		// longArray.push(long);
 		markerArray[i].longitude = long;
 	}};
 	// generate sprite coordinates
@@ -187,13 +185,13 @@ function setMarkers(map) {
 		   	console.log('index+1: ',parseInt(index)+1);
 
 		   	var h4 = $('<h4>');
-		   	h4.addClass('foeHP text-center');
+		   	h4.addClass('foeHP text-center HP');
 		   	h4.text(foeHP);
 		   	var currentFoe = $('<img>');
 		   	currentFoe.attr({
 		   		'src': foeURL,
-		   		// 'height': 200,
-		   		'class': 'foe img-responsive'
+		   		'height': 200,
+		   		'class': 'foe'
 		   	});
 		   	this.setMap(null);
 		   	$('.foeContainer').append(h4,currentFoe);
@@ -236,19 +234,16 @@ function checkLives() {
 
 
 function checkWin() {
-
-
 	if (heroHP<=0) {
 
 		battleEnd = true;
-		console.log(battleEnd);
 		$('.results').html('You Lose!');
 
-		
+		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
 			$('#myModal').modal('hide');
 			$('.hero').effect( "explode", {pieces: 16}, 1000 );
-		}, 3000);
+		}, 1000 * 3);
     
 
 		lives--;
@@ -257,44 +252,47 @@ function checkWin() {
 
 
 	} else if (foeHP<=0) {
+		//ensures that foeHP never displays less than 0
 		foeHP = 0;
 		$('.foeHP').text(foeHP)
 		battleEnd = true;
 	
 
-		
+		//delays writing the message by 500ms to allow animation to complete
 		setTimeout(function() {
 			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
 		},500)
-
+		//mousedown event to trigger foe going to pen
 		$(document).on('mousedown', 'img.foe', function () {
+			//controls height of foe in pen
 			$('img.foe').appendTo('#pen').css({
 				'height':'50px'
 			});
 			$('img.foe').draggable({
 				containment: "parent",
+				//controls grid size for drag movement
 				grid: [ 10, 10 ],
 			});
-
+			//creates titles for poke's in pen on hover
 			$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName);
 
 			$('#myModal').modal('hide');
 		});
-
 		winCount++;
 		$("#winCount").text("Wins: " + winCount);
+
+		//controls increase of .slide animation
 		animationSpeed = 4;
 		speedModifier+=.05;
 		animationSpeed = animationSpeed / speedModifier;
-	}
 
+	}//end of else if conditional
 	if (battleEnd) {$('.slider').hide();}
-}
+}//end of checkwin
 
 
-
+//main click event for fight sequence
 $(document).on('click','.modal' ,function () {
-	
 	if (!battleEnd) {
 	var mover = $('.mover').position();
 	console.log(mover.left);
