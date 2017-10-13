@@ -1,9 +1,15 @@
- #map {
+ body {
+ 	background-image: url('https://images7.alphacoders.com/592/thumb-1920-592678.jpg');
+ 	background-repeat: no-repeat;
+ }
+
+ #map, #map_container {
         height: 100%;
       }
       .map {
-      	height: 70%;
-      	width: 100%;
+      	height: 60%;
+      	width: 100%
+      	margin: auto;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
