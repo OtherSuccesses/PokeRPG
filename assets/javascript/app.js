@@ -16,9 +16,10 @@ var pokeName = '';
 //PlayerName variable
 var playerName= [];
 var winCount = 0;
-var lossCount = 0;
-//Number of Pokemon to capture
-var numberPokemon;
+var lives = 10;
+//Number of Pokemon caught
+var numberPokemon = 0;
+var score = 0;
 
 //Firebase Code
 // Initialize Firebase
@@ -104,7 +105,7 @@ var latArray = [];
 // Function to enerate coordinates for sprite markers
 function generateCoordinates() {
 	$("#winCount").text("Wins: " + winCount);
-	$("#lossCount").text("Losses: " +lossCount);
+	$("#lossCount").text("Lives: " +lives);
 var numGen =  function(to, from, fixed) {
 	return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
 	};
@@ -202,7 +203,15 @@ function writeHit() {
 	}
 }
 
-
+function checkLives() {
+	if (lives <= 0){
+		score = (winCount * 100) + (lives * 1000);
+		$("#lossModal").modal('show');
+		$("#name-loss").text(playerName);
+		$("#poke-number").text(winCount);
+		$("#score-span").text(score);
+	}
+}
 
 
 		function checkWin() {
@@ -216,11 +225,13 @@ function writeHit() {
 				}, 3000);
             
 
-				lossCount++;
-				$("#lossCount").text("Losses: " +lossCount);
+				lives--;
+				$("#lossCount").text("Lives: " +lives);
+				checkLives();
 
 
 			} else if (foeHP<=0) {
+				
 		
 				
 				$('.results').html('You Captured a Pokemon! Drag him to your Pen');
