@@ -72,6 +72,9 @@ var initializePokemonData = function(){
 	// 	randomizePokemon();
 	// },3000);
 
+//High scores JS
+//	$(document).on("click", "#")
+
 //Restart Button JS
 	$(document).on("click", "#restart-btn", function(event){
 		location.reload();
@@ -262,6 +265,7 @@ function checkLives() {
 		}
 	}
 
+
 	if (numberPokemon<= 0){
 		$("#lossModal").modal('show');
 		$("#name-loss").text(playerName);
@@ -274,9 +278,9 @@ function checkLives() {
 				highScore: score	
 			});
 			$("#score-span").append("<br>You've achieved a new high score!");
+		}
 	}
 }
-
 
 function checkWin() {
 	if (heroHP<=0) {
