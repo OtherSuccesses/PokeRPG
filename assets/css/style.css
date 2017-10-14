@@ -1,36 +1,38 @@
-.page-heading{
- 	z-position: 5;
- }
- #map{
-	 height: 100%; 
-	 width: 100%; 
-	 position:absolute; 
-	 top: 0; 
-	 left: 0; 
-	 z-index: 0;
-      }
+#map{
+	height: 100%; 
+	width: 100%; 
+	position:absolute; 
+	top: 0; 
+	left: 0; 
+	z-index: 0;
+   	}
 
 .map {
-	height: 60%;
+	height: 100%;
 	width: 100%
-	margin: auto;
 }
+
+.page-heading {
+ 	z-position: 1;
+ 	background-color: white;
+ }
 
 .panel-body {
 	padding: 10px;
 }
 
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 35px;
-        padding: 0;
-      }
-      .container {
-      	z-index: 1;
-      }
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 35px;
+  padding: 0;
+}
 
-      /*************************fight animation styling*************************/
+.container {
+	z-index: 1;
+}
+
+    /*************************fight animation styling*************************/
 
 	#myModal .modal-content {
 		background-image: url('../images/fight_background.jpg');
