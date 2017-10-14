@@ -120,13 +120,13 @@ function generateCoordinates() {
 	
 	var latitude = function(){
 		for (i = 0; i<50; i++) {
-		var lat = numGen(27, 48, 3);
+		var lat = numGen(80, -80, 3);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
 	}};
 	var longitude = function(){
 		for (i = 0; i<50; i++) {
-		var long = numGen(-60, -125, 3);
+		var long = numGen(-180, 180, 3);
 		markerArray[i].longitude = long;
 	}};
 	// generate sprite coordinates
@@ -139,7 +139,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 40.765981527712825, lng: -78.78111690000003},
         mapTypeId: 'satellite',
-        zoom: 4
+        zoom: 3
         });
         window.onload = setMarkers(map);
       };
@@ -152,7 +152,7 @@ function setMarkers(map) {
 	for (var i = 1; i<50; i++){
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
-		    scaledSize: new google.maps.Size(50, 50)
+		    scaledSize: new google.maps.Size(75, 75)
 		}
 		var marker = new google.maps.Marker({
 		    position: new google.maps.LatLng(markerArray[i].latitude, markerArray[i].longitude),

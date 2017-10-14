@@ -1,21 +1,30 @@
- body {
- 	background-image: url('https://images7.alphacoders.com/592/thumb-1920-592678.jpg');
- 	background-repeat: no-repeat;
- }
+ #map{
+          height: 100%; 
+  width: 100%; 
+  position:absolute; 
+  top: 0; 
+  left: 0; 
+  z-index: 0;
+      }
 
- #map, #map_container {
-        height: 100%;
-      }
-      .map {
-      	height: 60%;
-      	width: 100%
-      	margin: auto;
-      }
+.map {
+	height: 60%;
+	width: 100%
+	margin: auto;
+}
+ 
+.panel{
+	height: 175px;
+	padding: 10px;
+}
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
         margin: 35px;
         padding: 0;
+      }
+      .container {
+      	z-index: 1;
       }
 
       /*************************fight animation styling*************************/
