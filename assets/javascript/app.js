@@ -74,23 +74,42 @@ var initializePokemonData = function(){
 
 //Player Name Entry Modal JS
 	$(window).on('load',function(){
-		//added backdrop static to keep player from clicking outside modal to close it
-		$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false}) 
         $('#playerNameEntryModal').modal('show');
     });
 
     $(document).on("click", "#playerNameButton",function(event){
     	event.preventDefault();
-    	var str = $('#playerNameEntry').val().trim();
-    		$('.validationTxt').text('');
-			if(/^[a-zA-Z- ]*$/.test(str) === false) {
-				$('.validationTxt').text('Your name cannot contain numbers or special characters!');
+    	var str = $('#playerNameEntry').val();
+			if(/^[a-zA-Z- ]*$/.test(str) == false) {
+    			$(".professor-container").append('<br>Your name cannot contain numbers or special characters!');
+			}
+			else if(str==""){
+				$(".professor-container").append('<br>You must have a name! If you do not have one, please enter Binky.');
+
 			}
 			else{
-		    	playerName = str;
-		    	database.ref("/Players/" + playerName + "/").push({
-		    		name: playerName
-		    	});
+				playerName = $("#playerNameEntry").val();
+		    	database.ref("/Players/").once("value", function(snapshot){
+		    		console.log(snapshot);
+		    		console.log(snapshot.name);
+		    		if (!snapshot.val()[playerName]){
+		    			var playerDataRef = database.ref("/Players/" + playerName +"/");
+		    			console.log("valid name");
+		    			playerDataRef
+				    	.set({
+				    		name: playerName,
+		    				highScore: 0
+				    	});
+				    	database.ref("/Players/").once("value", function(snapshot){
+				    	playerObj=snapshot.val();
+				    	console.log(playerObj);
+				    });
+		    		}
+		    		else{
+		    			playerObj=snapshot.val();
+		    			console.log(playerObj);
+		    		}
+		    	})
 		    	$("#name").text("Name: " + playerName);
 		    	$("#playerNameEntryModal").modal('toggle');
 	    	}
