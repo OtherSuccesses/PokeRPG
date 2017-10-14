@@ -242,7 +242,7 @@ function checkWin() {
 		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
 			$('#myModal').modal('hide');
-			$('.hero').effect( "explode", {pieces: 16}, 1000 );
+			$('.hero').hide("explode", {pieces: 16}, 3000 );
 		}, 1000 * 3);
     
 
@@ -256,25 +256,25 @@ function checkWin() {
 		foeHP = 0;
 		$('.foeHP').text(foeHP)
 		battleEnd = true;
-	
+		//creates titles for poke's in pen on hover
+		$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName);
 
 		//delays writing the message by 500ms to allow animation to complete
 		setTimeout(function() {
 			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
 		},500)
 		//mousedown event to trigger foe going to pen
-		$(document).on('mousedown', 'img.foe', function () {
+		$(document).on('mousedown', 'img.caught', function () {
 			//controls height of foe in pen
-			$('img.foe').appendTo('#pen').css({
+			$('img.caught').appendTo('#pen').css({
 				'height':'50px'
 			});
-			$('img.foe').draggable({
+			$('img.caught').draggable({
 				containment: "parent",
 				//controls grid size for drag movement
 				grid: [ 10, 10 ],
-			});
-			//creates titles for poke's in pen on hover
-			$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName);
+			}).sortable();
+			
 
 			$('#myModal').modal('hide');
 		});
