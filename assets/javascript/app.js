@@ -134,6 +134,7 @@ var numGen =  function(to, from, fixed) {
 
 // Function to generate coordinates for sprite markers
 function generateCoordinates() {
+	$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 	$("#winCount").text("Wins: " + winCount);
 	$("#lossCount").text("Lives: " +lives);
 	
@@ -217,7 +218,6 @@ function setMarkers(map) {
 	  		console.log(this.icon.url);
 	  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
 	  	  	$('#myModal').modal('show');
-
 		});
 	}
 }
