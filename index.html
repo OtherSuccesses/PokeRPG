@@ -19,20 +19,31 @@
 	</div>
 	<div id="map">	</div>
 	<div class="row">
-	    <div class="col-lg-2 pull-right">
-	        <div class=" panel panel-primary" >
+	    <div class="col-lg-2 pull-right accordion">
+	    	<h3 class="accordionHeader"><strong>Instructions</strong></h3>
+	    	<div class="accordionBody"><p>Drag the map around to find all the Sprites. <br>Click the Sprite to launch the capture window.<br>Click the green circle when it overlaps with the red circle to capture the Sprite.<br>Once you capture the Sprite, click it to add it to your sprite pen. You can drag the Sprites in the pen to rearrange them.</p></div>
+	    	<h3 class="accordionHeader"><strong>User Info</strong></h3>
+	    	<div class="accordionBody">
+				<div id="name"></div>
+				<div id="numberPokes"></div>
+				<div id="winCount"></div>
+				<div id="lossCount"></div>
+	    	</div>
+	    	<h3 class="accordionHeader">Poke-Pen</h3>
+	    	<div class="accordionBody"><div class="panel-body" id="pen"></div>
+	    <!--     <div class=" panel panel-primary" >
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>Game Instructions</strong></h3> 
 				</div>
 				<div class="panel-body">
 					<p>Drag the map around to find all the Sprites. <br>Click the Sprite to launch the capture window.<br>Click the green circle when it overlaps with the red circle to capture the Sprite.<br>Once you capture the Sprite, click it to add it to your sprite pen. You can drag the Sprites in the pen to rearrange them.</p>
 				</div>
-			</div>
-		</div>
+			</div> -->
+	<!-- 	</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-2 pull-right">
-			<div class="panel panel-primary">
+		<div class="col-lg-2 pull-right"> -->
+			<!-- <div class="panel panel-primary">
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>User Info</strong></h3> 
 				</div>
@@ -42,12 +53,12 @@
 					<div id="winCount"></div>
 					<div id="lossCount"></div>
 				</div>
-			</div>
-		</div>
+			</div> -->
+<!-- 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-2 pull-right">
-			<div class="panel panel-primary pokePen">
+		<div class="col-lg-2 pull-right"> -->
+			<!-- <div class="panel panel-primary pokePen">
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>Poke-Pen</strong></h3> 
 				</div>
@@ -55,7 +66,7 @@
 					
 				</div>
 			
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div> <!-- end of container-->	
@@ -85,8 +96,9 @@
 	</div>
 </div>
 
+
+<!-- Fight Modal -->
 <div class="container">
-	<!-- Modal -->
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -105,7 +117,7 @@
 				<div class="modal-footer" id="modal-footer">
 					<div class="slider">
 						<div class="target"></div>
-						<div class="mover "></div>
+						<div class="mover  ui-icon ui-icon-arrowthickstop-1-s"></div>
 					</div>
 				</div>
 			</div>

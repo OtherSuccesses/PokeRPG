@@ -1,7 +1,13 @@
 @font-face {
   font-family: 'PokemonSolid';
-  src:  url('C:/Users/marco/Desktop/BootcampWork/Homework/PokeRPG/assets/css/Pokemon-Solid.ttf') format('ttf');
+  src:  url('C:/Users/marco/Desktop/BootcampWork/Homework/PokeRPG/assets/css/pokemonsolid.woff') format('woff');
         /*url('../fonts/myfont.Pokemon Solid.ttf') format('ttf');*/
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 20px;
 }
 
 #map{
@@ -23,53 +29,63 @@
  	z-index: 1;
  	/*text-align: center;*/
  	color: black;
- 	opacity: 0.8;
+ 	/*opacity: 0.8;*/
  	transform: rotate(-90deg) translateX(-50%);
  }
 
-h1#mainTitle {
- 	
-	background: red; /* For browsers that do not support gradients */
-	background: -webkit-linear-gradient(left top, blue, lightblue); /* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(bottom right, blue, lightblue); /* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(bottom right, blue, lightblue); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(to bottom right, blue, lightblue); /* Standard syntax */
+h1#mainTitle { /* Standard syntax */
  	padding: 5px 10px;
  	border-radius: 5px;
- 	margin-top: -55%;
- 	color: rgba(0,0,0,0.7);
- 	font-size: 50px;
- 	letter-spacing:7px;
+ 	color: #ffcb05;
+ 	font-size: 60px;
+ 	letter-spacing:5px;
  	font-weight: bold;
  	font-family: "PokemonSolid";
- 	/*text-shadow: 5px 5px 10px rgba(255,0,0,0.9);*/
+	-webkit-text-stroke: 1px  #3c5aa6;
+ 	margin-top: -55%;
  }
 
  #thisPanel.panel {
  	 	background: none;
-
+		/*visibility: hidden;*/
  }
 
- .panel {
- 	opacity: 0.8;
+ .accordionHeader {
+ 	background-color: #2a75bb;
+ 	border-bottom:1px solid black;
+ 	padding: 10px;
+ 	color: #ffcb05;
+ 	border-radius: 5px 5px 0 0;
+ 	text-align: center;
+ 	margin-bottom: 0;
+ 	margin-top: 0;
+ 	font-family: 'PokemonSolid';
+ 	-webkit-text-stroke: 1px #3c5aa6;
  }
+
+ .accordionBody {
+ 	background-color: white;
+ 	padding: 10px;
+	height: 30%;
+	font-size: 18px;
+ }
+
 
  .panel-title {
  	text-align: center;
  }
 
 .panel-body {
-	padding: 10px;
-	background: white;
+	/*padding: 10px;*/
+	/*background: white;*/
 }
 
 /* Optional: Makes the sample page fill the window. */
-html, body {
-  height: 100%;
-  margin: 35px;
-  padding: 0;
+/*html, body {
+  
+  padding: 20px;
 }
-
+*/
 .container {
 	z-index: 1;
 }

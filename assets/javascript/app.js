@@ -83,6 +83,18 @@ var initializePokemonData = function(){
 //Player Name Entry Modal JS
 	$(window).on('load',function(){
         $('#playerNameEntryModal').modal('show');
+        $( ".accordion" ).accordion({
+			active: 0,
+			classes: {
+				"ui-accordion": "highlight"
+			},
+			event: "mouseover",
+			heightStyle: "fill",
+			icons: {
+				"header": "ui-icon-caret-2-n-s",
+				"activeHeader": "ui-icon-minus"
+			}
+		});
     });
 
     $(document).on("click", "#playerNameButton",function(event){
@@ -96,6 +108,7 @@ var initializePokemonData = function(){
 				$(".validationTxt").append('<br>You must have a name! If you do not have one, please enter Binky.');
 			}
 			else{
+				$('#thisPanel.panel').show('slow');
 				playerName = $("#playerNameEntry").val();
 		    	database.ref("/Players/").once("value", function(snapshot){
 		    		console.log(snapshot);
@@ -230,7 +243,7 @@ function setMarkers(map) {
 	
 }
 
-	//////////////////////Javascript for fight mechanic//////////////////////
+//////////////////////Javascript for fight mechanic//////////////////////
 
 function reduceHP(character) {
 		if (character === 'hero') {
@@ -304,9 +317,7 @@ function checkWin() {
 
 
 	} else if (foeHP<=0) {
-
 		numberPokemon--;
-
 		//ensures that foeHP never displays less than 0
 		foeHP = 0;
 		$('.foeHP').text(foeHP)
