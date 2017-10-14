@@ -72,6 +72,11 @@ var initializePokemonData = function(){
 	// 	randomizePokemon();
 	// },3000);
 
+//Restart Button JS
+	$(document).on("click", "#restart-btn", function(event){
+		location.reload();
+	});
+
 //Player Name Entry Modal JS
 	$(window).on('load',function(){
         $('#playerNameEntryModal').modal('show');
