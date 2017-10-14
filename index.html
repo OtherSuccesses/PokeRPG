@@ -12,37 +12,40 @@
     <script type="text/javascript" src="assets/javascript/app.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <body>
-
-
-
-<header class="page-heading">
-	<div class="container">
-		<h1>Poke-Map Challenge</h1>
-	</div>
-</header>
-
+<div class="page-heading">
+	<h1>Poke-Map Challenge</h1>
+</div>
 <div class="container-fluid">
+
 	<div id="map"></div>
 	<div class="row">
-	    <div class="col-lg-4">
+	    <div class="col-lg-2 pull-right">
 	        <div class="panel panel-primary">
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>Game Instructions</strong></h3> 
 				</div>
-				<p>Drag the map around to find all the Sprites. <br>Click the Sprite to launch the capture window.<br>Click the green circle when it overlaps with the red circle to capture the Sprite.<br>Once you capture the Sprite, click it to add it to your sprite pen. You can drag the Sprites in the pen to rearrange them.</p>
+				<div class="panel-body">
+					<p>Drag the map around to find all the Sprites. <br>Click the Sprite to launch the capture window.<br>Click the green circle when it overlaps with the red circle to capture the Sprite.<br>Once you capture the Sprite, click it to add it to your sprite pen. You can drag the Sprites in the pen to rearrange them.</p>
+				</div>
 			</div>
 		</div>
-		<div class="col-lg-4">
+	</div>
+	<div class="row">
+		<div class="col-lg-2 pull-right">
 			<div class="panel panel-primary">
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>User Info</strong></h3> 
 				</div>
-			<div id="name"></div>
-			<div id="winCount"></div>
-			<div id="lossCount"></div>
+				<div class="panel-body">
+					<div id="name"></div>
+					<div id="winCount"></div>
+					<div id="lossCount"></div>
+				</div>
 			</div>
 		</div>
-		<div class="col-lg-4">
+	</div>
+	<div class="row">
+		<div class="col-lg-2 pull-right">
 			<div class="panel panel-primary pokePen">
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>Poke-Pen</strong></h3> 
