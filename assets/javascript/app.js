@@ -17,7 +17,7 @@ var battleEnd = false;
 //PlayerName variable
 var playerName= [];
 var winCount = 0;
-
+var playerObj;
 var lives = 10;
 //Number of Pokemon caught
 var numberPokemon = 0;
@@ -84,29 +84,30 @@ var initializePokemonData = function(){
 			}
 			else if(str==""){
 				$(".professor-container").append('<br>You must have a name! If you do not have one, please enter Binky.');
-
 			}
 			else{
 				playerName = $("#playerNameEntry").val();
 		    	database.ref("/Players/").once("value", function(snapshot){
 		    		console.log(snapshot);
 		    		console.log(snapshot.name);
+		    		var playerDataRef = database.ref("/Players/" + playerName +"/");
 		    		if (!snapshot.val()[playerName]){
-		    			var playerDataRef = database.ref("/Players/" + playerName +"/");
 		    			console.log("valid name");
 		    			playerDataRef
 				    	.set({
 				    		name: playerName,
 		    				highScore: 0
 				    	});
-				    	database.ref("/Players/").once("value", function(snapshot){
-				    	playerObj=snapshot.val();
-				    	console.log(playerObj);
-				    });
+				    	playerDataRef.once("value", function(snapshot){
+					    	playerObj=snapshot.val();
+					    	console.log(playerObj);
+				    	});
 		    		}
 		    		else{
-		    			playerObj=snapshot.val();
-		    			console.log(playerObj);
+					    playerDataRef.once("value", function(snapshot){
+					    	playerObj=snapshot.val();
+					    	console.log(playerObj);
+				    	});
 		    		}
 		    	})
 		    	$("#name").text("Name: " + playerName);
@@ -242,9 +243,17 @@ function checkLives() {
 	if (lives <= 0){
 		score = (winCount * 100) + (lives * 1000);
 		$("#lossModal").modal('show');
-		$("#name").text(playerName);
-		$("#poke-number").text(winCount);
+		$("#name-loss").text(playerName);
+		$("#poke-number-caught").text(winCount);
 		$("#score-span").text(score);
+		if (score > playerObj.highScore){
+			playerObj.highScore = score;
+			database.ref("/Players/" + playerName + "/").set({
+				name: playerName,
+				highScore: score	
+			});
+			$("#score-span").append("<br>You've achieved a new high score!");
+		}
 	}
 }
 
@@ -294,7 +303,7 @@ function checkWin() {
 				containment: "parent",
 				//controls grid size for drag movement
 				grid: [ 10, 10 ],
-			}).sortable();
+			});
 			
 
 			$('#myModal').modal('hide');
