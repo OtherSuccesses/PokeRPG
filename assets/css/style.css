@@ -100,6 +100,33 @@ html, body {
 		border-radius: 10px;
 	}
 
+/*Loss Screen Modal CSS*/
+	#lossHeader{
+		background-color: antiquewhite;
+		border-radius: 15px;
+		color: slategray;
+	}
+
+	#lossModal{
+		text-align:center;
+		font-weight: bold;
+	}
+
+	.loss-body{
+		display:inline-block;
+	}
+
+	.loss-modal-buttons{
+		padding:3px;
+		padding-left:7px;
+		padding-right:7px;
+		margin:10px;
+		color:black;
+		background-color: lightgreen;
+		border-color: darkgreen;
+		border-width: 3px;
+	}
+
 /*Player Name Modal CSS*/
 	#playerNameEntryHeader{
 		background-color: antiquewhite;
