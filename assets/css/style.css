@@ -13,8 +13,19 @@
 }
 
 .page-heading {
- 	z-position: 1;
- 	background-color: white;
+ 	background-color: #d30e0e;
+ 	z-index: 1;
+ 	text-align: center;
+ 	color: #d30e0e;
+ 	opacity: 0.8;
+ }
+
+ .panel {
+ 	opacity: 0.8;
+ }
+
+ .panel-title {
+ 	text-align: center;
  }
 
 .panel-body {
