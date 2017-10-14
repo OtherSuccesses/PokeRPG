@@ -134,10 +134,8 @@ var numGen =  function(to, from, fixed) {
 
 // Function to generate coordinates for sprite markers
 function generateCoordinates() {
-	$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 	$("#winCount").text("Wins: " + winCount);
 	$("#lossCount").text("Lives: " +lives);
-	
 	var latitude = function(){
 		for (i = 0; i<50; i++) {
 		var lat = numGen(80, -80, 3);
@@ -169,7 +167,8 @@ var map;
 function setMarkers(map) {
 	  // Adds markers to the map.
 	generateCoordinates();
-	for (var i = 1; i<50; i++){
+	for (var i = 1; i<=50; i++){
+		numberPokemon++;
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
 		    scaledSize: new google.maps.Size(75, 75)
@@ -219,7 +218,9 @@ function setMarkers(map) {
 	  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
 	  	  	$('#myModal').modal('show');
 		});
+		   $("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 	}
+	
 }
 
 	//////////////////////Javascript for fight mechanic//////////////////////
@@ -245,7 +246,7 @@ function checkLives() {
 	if (lives <= 0){
 		score = (winCount * 100) + (lives * 1000);
 		$("#lossModal").modal('show');
-		$("#name-loss").text(playerName);
+		$("#name").text(playerName);
 		$("#poke-number").text(winCount);
 		$("#score-span").text(score);
 	}
@@ -264,13 +265,18 @@ function checkWin() {
 			$('.hero').hide("explode", {pieces: 16}, 3000 );
 		}, 1000 * 3);
     
-
+		numberPokemon--;
+		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 		lives--;
+
 		$("#lossCount").text("Lives: " +lives);
 		checkLives();
 
 
 	} else if (foeHP<=0) {
+
+			numberPokemon--;
+	$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 		//ensures that foeHP never displays less than 0
 		foeHP = 0;
 		$('.foeHP').text(foeHP)
