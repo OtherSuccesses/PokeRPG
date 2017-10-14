@@ -14,10 +14,11 @@ var activePokemon = [];
 var markerArray = [];
 var pokeName = '';
 var battleEnd = false;
+loopCount = 50;
 //PlayerName variable
 var playerName= [];
 var winCount = 0;
-
+var playerObj;
 var lives = 10;
 //Number of Pokemon caught
 var numberPokemon = 0;
@@ -59,7 +60,6 @@ var initializePokemonData = function(){
 				name: pokemon.name,
 				sprite:pokemon.sprites.front_default
 			});
-			console.log(pokemon);
 			var sprite = $("<img>");
 			sprite.attr("src", pokemon.sprites.front_default);
 			pokeSprites = pokemon.sprites.front_default;
@@ -85,29 +85,30 @@ var initializePokemonData = function(){
 			}
 			else if(str==""){
 				$(".professor-container").append('<br>You must have a name! If you do not have one, please enter Binky.');
-
 			}
 			else{
 				playerName = $("#playerNameEntry").val();
 		    	database.ref("/Players/").once("value", function(snapshot){
 		    		console.log(snapshot);
 		    		console.log(snapshot.name);
+		    		var playerDataRef = database.ref("/Players/" + playerName +"/");
 		    		if (!snapshot.val()[playerName]){
-		    			var playerDataRef = database.ref("/Players/" + playerName +"/");
 		    			console.log("valid name");
 		    			playerDataRef
 				    	.set({
 				    		name: playerName,
 		    				highScore: 0
 				    	});
-				    	database.ref("/Players/").once("value", function(snapshot){
-				    	playerObj=snapshot.val();
-				    	console.log(playerObj);
-				    });
+				    	playerDataRef.once("value", function(snapshot){
+					    	playerObj=snapshot.val();
+					    	console.log(playerObj);
+				    	});
 		    		}
 		    		else{
-		    			playerObj=snapshot.val();
-		    			console.log(playerObj);
+					    playerDataRef.once("value", function(snapshot){
+					    	playerObj=snapshot.val();
+					    	console.log(playerObj);
+				    	});
 		    		}
 		    	})
 		    	$("#name").text("Name: " + playerName);
@@ -124,10 +125,6 @@ setTimeout(function(){
 
 /// Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
-
-
-
-
 var numGen =  function(to, from, fixed) {
 		return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
 	};
@@ -137,13 +134,13 @@ function generateCoordinates() {
 	$("#winCount").text("Wins: " + winCount);
 	$("#lossCount").text("Lives: " +lives);
 	var latitude = function(){
-		for (i = 0; i<50; i++) {
+		for (i = 0; i<loopCount; i++) {
 		var lat = numGen(80, -80, 3);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
 	}};
 	var longitude = function(){
-		for (i = 0; i<50; i++) {
+		for (i = 0; i<loopCount; i++) {
 		var long = numGen(-180, 180, 3);
 		markerArray[i].longitude = long;
 	}};
@@ -160,6 +157,7 @@ function initMap() {
         zoom: 3
         });
         window.onload = setMarkers(map);
+        $("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
       };
 
 // initialize markers on map
@@ -167,7 +165,9 @@ var map;
 function setMarkers(map) {
 	  // Adds markers to the map.
 	generateCoordinates();
-	for (var i = 1; i<=50; i++){
+
+	for (var i = 1; i<loopCount; i++){
+
 		numberPokemon++;
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
@@ -201,7 +201,6 @@ function setMarkers(map) {
 		   	pokeName = result[0].name;
 		   	pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
 		   	$('.pokeName').text(pokeName);
-		   	console.log('index+1: ',parseInt(index)+1);
 
 		   	var h4 = $('<h4>');
 		   	h4.addClass('foeHP text-center HP');
@@ -214,7 +213,6 @@ function setMarkers(map) {
 		   	});
 		   	this.setMap(null);
 		   	$('.foeContainer').append(h4,currentFoe);
-	  		console.log(this.icon.url);
 	  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
 	  	  	$('#myModal').modal('show');
 		});
@@ -246,19 +244,41 @@ function checkLives() {
 	if (lives <= 0){
 		score = (winCount * 100) + (lives * 1000);
 		$("#lossModal").modal('show');
-		$("#name").text(playerName);
-		$("#poke-number").text(winCount);
+		$("#name-loss").text(playerName);
+		$("#poke-number-caught").text(winCount);
 		$("#score-span").text(score);
+		if (score > playerObj.highScore){
+			playerObj.highScore = score;
+			database.ref("/Players/" + playerName + "/").set({
+				name: playerName,
+				highScore: score	
+			});
+			$("#score-span").append("<br>You've achieved a new high score!");
+		}
+	}
+
+	if (numberPokemon<= 0){
+		$("#lossModal").modal('show');
+		$("#name-loss").text(playerName);
+		$("#poke-number-caught").text(winCount);
+		$("#score-span").text(score);
+		if (score > playerObj.highScore){
+			playerObj.highScore = score;
+			database.ref("/Players/" + playerName + "/").set({
+				name: playerName,
+				highScore: score	
+			});
+			$("#score-span").append("<br>You've achieved a new high score!");
 	}
 }
 
 
 function checkWin() {
 	if (heroHP<=0) {
-
+		numberPokemon--;
 		battleEnd = true;
 		$('.results').html('You Lose!');
-
+		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
 			$('#myModal').modal('hide');
@@ -275,15 +295,15 @@ function checkWin() {
 
 	} else if (foeHP<=0) {
 
-			numberPokemon--;
-	$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
+		numberPokemon--;
+
 		//ensures that foeHP never displays less than 0
 		foeHP = 0;
 		$('.foeHP').text(foeHP)
 		battleEnd = true;
 		//creates titles for poke's in pen on hover
 		$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName);
-
+		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 		//delays writing the message by 500ms to allow animation to complete
 		setTimeout(function() {
 			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
@@ -298,7 +318,7 @@ function checkWin() {
 				containment: "parent",
 				//controls grid size for drag movement
 				grid: [ 10, 10 ],
-			}).sortable();
+			});
 			
 
 			$('#myModal').modal('hide');
@@ -323,7 +343,6 @@ $(document).on('click','#myModal' ,function () {
 	console.log(mover.left);
 
 	if (heroHP>0 && foeHP>0) {
-
 		$('.hero').addClass('animateRight');
 		$('.foe').addClass('animateLeft');
 		$( ".hero" ).effect( "bounce", "slow" );
@@ -345,7 +364,6 @@ $(document).on('click','#myModal' ,function () {
 	checkWin();
 
 	}
-
 });
 
 
