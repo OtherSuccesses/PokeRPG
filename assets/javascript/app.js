@@ -317,7 +317,7 @@ function checkWin() {
 
 
 //main click event for fight sequence
-$(document).on('click','.modal' ,function () {
+$(document).on('click','#myModal' ,function () {
 	if (!battleEnd) {
 	var mover = $('.mover').position();
 	console.log(mover.left);
@@ -343,15 +343,6 @@ $(document).on('click','.modal' ,function () {
 		writeHit();
 	}
 	checkWin();
-
-
-
-	
-
-	
-
-	// mover.style.webkitAnimationDuration = animationSpeed;
-	console.log('animationSpeed: ',animationSpeed);
 
 	}
 
