@@ -59,7 +59,6 @@ var initializePokemonData = function(){
 				name: pokemon.name,
 				sprite:pokemon.sprites.front_default
 			});
-			console.log(pokemon);
 			var sprite = $("<img>");
 			sprite.attr("src", pokemon.sprites.front_default);
 			pokeSprites = pokemon.sprites.front_default;
@@ -124,10 +123,6 @@ setTimeout(function(){
 
 /// Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
-
-
-
-
 var numGen =  function(to, from, fixed) {
 		return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
 	};
@@ -160,6 +155,7 @@ function initMap() {
         zoom: 3
         });
         window.onload = setMarkers(map);
+        $("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
       };
 
 // initialize markers on map
@@ -167,7 +163,9 @@ var map;
 function setMarkers(map) {
 	  // Adds markers to the map.
 	generateCoordinates();
-	for (var i = 1; i<=50; i++){
+
+	for (var i = 1; i<50; i++){
+
 		numberPokemon++;
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
@@ -201,7 +199,6 @@ function setMarkers(map) {
 		   	pokeName = result[0].name;
 		   	pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
 		   	$('.pokeName').text(pokeName);
-		   	console.log('index+1: ',parseInt(index)+1);
 
 		   	var h4 = $('<h4>');
 		   	h4.addClass('foeHP text-center HP');
@@ -214,7 +211,6 @@ function setMarkers(map) {
 		   	});
 		   	this.setMap(null);
 		   	$('.foeContainer').append(h4,currentFoe);
-	  		console.log(this.icon.url);
 	  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
 	  	  	$('#myModal').modal('show');
 		});
@@ -255,10 +251,10 @@ function checkLives() {
 
 function checkWin() {
 	if (heroHP<=0) {
-
+		numberPokemon--;
 		battleEnd = true;
 		$('.results').html('You Lose!');
-
+		
 		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
 			$('#myModal').modal('hide');
@@ -275,8 +271,8 @@ function checkWin() {
 
 	} else if (foeHP<=0) {
 
-			numberPokemon--;
-	$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
+		numberPokemon--;
+
 		//ensures that foeHP never displays less than 0
 		foeHP = 0;
 		$('.foeHP').text(foeHP)
@@ -317,13 +313,12 @@ function checkWin() {
 
 
 //main click event for fight sequence
-$(document).on('click','.modal' ,function () {
+$(document).on('click','#myModal' ,function () {
 	if (!battleEnd) {
 	var mover = $('.mover').position();
 	console.log(mover.left);
 
 	if (heroHP>0 && foeHP>0) {
-
 		$('.hero').addClass('animateRight');
 		$('.foe').addClass('animateLeft');
 		$( ".hero" ).effect( "bounce", "slow" );
@@ -343,18 +338,7 @@ $(document).on('click','.modal' ,function () {
 		writeHit();
 	}
 	checkWin();
-
-
-
-	
-
-	
-
-	// mover.style.webkitAnimationDuration = animationSpeed;
-	console.log('animationSpeed: ',animationSpeed);
-
 	}
-
 });
 
 
