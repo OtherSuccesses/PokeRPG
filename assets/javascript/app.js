@@ -151,6 +151,8 @@ function setMarkers(map) {
 	  // Adds markers to the map.
 	generateCoordinates();
 	for (var i = 1; i<50; i++){
+		numberPokemon++;
+		console.log(numberPokemon);
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
 		    scaledSize: new google.maps.Size(75, 75)
@@ -235,10 +237,9 @@ function checkLives() {
 
 function checkWin() {
 	if (heroHP<=0) {
-
 		battleEnd = true;
 		$('.results').html('You Lose!');
-
+		numberPokemon--;
 		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
 			$('#myModal').modal('hide');
@@ -252,6 +253,7 @@ function checkWin() {
 
 
 	} else if (foeHP<=0) {
+		numberPokemon--;
 		//ensures that foeHP never displays less than 0
 		foeHP = 0;
 		$('.foeHP').text(foeHP)
