@@ -1,10 +1,13 @@
+.page-heading{
+ 	z-position: 5;
+ }
  #map{
-          height: 100%; 
-  width: 100%; 
-  position:absolute; 
-  top: 0; 
-  left: 0; 
-  z-index: 0;
+	 height: 100%; 
+	 width: 100%; 
+	 position:absolute; 
+	 top: 0; 
+	 left: 0; 
+	 z-index: 0;
       }
 
 .map {
@@ -12,11 +15,11 @@
 	width: 100%
 	margin: auto;
 }
- 
-.panel{
-	height: 175px;
+
+.panel-body {
 	padding: 10px;
 }
+
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;

@@ -88,7 +88,7 @@ var initializePokemonData = function(){
 			}
 			else{
 		    	playerName = str;
-		    	database.ref("/Players/" + playerName + "/").set({
+		    	database.ref("/Players/" + playerName + "/").push({
 		    		name: playerName
 		    	});
 		    	$("#name").text("Name: " + playerName);
