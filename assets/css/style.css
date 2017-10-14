@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Pokemon-Solid';
-  src:  url('/fonts/Pokemon-Solid.ttf') format('ttf');
+  font-family: 'PokemonSolid';
+  src:  url('C:/Users/marco/Desktop/BootcampWork/Homework/PokeRPG/assets/css/Pokemon-Solid.ttf') format('ttf');
         /*url('../fonts/myfont.Pokemon Solid.ttf') format('ttf');*/
 }
 
@@ -41,7 +41,7 @@ h1#mainTitle {
  	font-size: 50px;
  	letter-spacing:7px;
  	font-weight: bold;
- 	font-family: "Pokemon-Solid";
+ 	font-family: "PokemonSolid";
  	/*text-shadow: 5px 5px 10px rgba(255,0,0,0.9);*/
  }
 
