@@ -73,23 +73,42 @@ var initializePokemonData = function(){
 
 //Player Name Entry Modal JS
 	$(window).on('load',function(){
-		//added backdrop static to keep player from clicking outside modal to close it
-		$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false}) 
         $('#playerNameEntryModal').modal('show');
     });
 
     $(document).on("click", "#playerNameButton",function(event){
     	event.preventDefault();
-    	var str = $('#playerNameEntry').val().trim();
-    		$('.validationTxt').text('');
-			if(/^[a-zA-Z- ]*$/.test(str) === false) {
-				$('.validationTxt').text('Your name cannot contain numbers or special characters!');
+    	var str = $('#playerNameEntry').val();
+			if(/^[a-zA-Z- ]*$/.test(str) == false) {
+    			$(".professor-container").append('<br>Your name cannot contain numbers or special characters!');
+			}
+			else if(str==""){
+				$(".professor-container").append('<br>You must have a name! If you do not have one, please enter Binky.');
+
 			}
 			else{
-		    	playerName = str;
-		    	database.ref("/Players/" + playerName + "/").push({
-		    		name: playerName
-		    	});
+				playerName = $("#playerNameEntry").val();
+		    	database.ref("/Players/").once("value", function(snapshot){
+		    		console.log(snapshot);
+		    		console.log(snapshot.name);
+		    		if (!snapshot.val()[playerName]){
+		    			var playerDataRef = database.ref("/Players/" + playerName +"/");
+		    			console.log("valid name");
+		    			playerDataRef
+				    	.set({
+				    		name: playerName,
+		    				highScore: 0
+				    	});
+				    	database.ref("/Players/").once("value", function(snapshot){
+				    	playerObj=snapshot.val();
+				    	console.log(playerObj);
+				    });
+		    		}
+		    		else{
+		    			playerObj=snapshot.val();
+		    			console.log(playerObj);
+		    		}
+		    	})
 		    	$("#name").text("Name: " + playerName);
 		    	$("#playerNameEntryModal").modal('toggle');
 	    	}
@@ -112,7 +131,6 @@ var numGen =  function(to, from, fixed) {
 function generateCoordinates() {
 	$("#winCount").text("Wins: " + winCount);
 	$("#lossCount").text("Lives: " +lives);
-	
 	var latitude = function(){
 		for (i = 0; i<50; i++) {
 		var lat = numGen(80, -80, 3);
@@ -145,7 +163,9 @@ var map;
 function setMarkers(map) {
 	  // Adds markers to the map.
 	generateCoordinates();
+
 	for (var i = 1; i<50; i++){
+
 		numberPokemon++;
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
@@ -194,7 +214,9 @@ function setMarkers(map) {
 	  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
 	  	  	$('#myModal').modal('show');
 		});
+		   $("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 	}
+	
 }
 
 	//////////////////////Javascript for fight mechanic//////////////////////
@@ -220,7 +242,7 @@ function checkLives() {
 	if (lives <= 0){
 		score = (winCount * 100) + (lives * 1000);
 		$("#lossModal").modal('show');
-		$("#name-loss").text(playerName);
+		$("#name").text(playerName);
 		$("#poke-number").text(winCount);
 		$("#score-span").text(score);
 	}
@@ -239,14 +261,18 @@ function checkWin() {
 			$('.hero').hide("explode", {pieces: 16}, 3000 );
 		}, 1000 * 3);
     
-
+		numberPokemon--;
+		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 		lives--;
+
 		$("#lossCount").text("Lives: " +lives);
 		checkLives();
 
 
 	} else if (foeHP<=0) {
+
 		numberPokemon--;
+
 		//ensures that foeHP never displays less than 0
 		foeHP = 0;
 		$('.foeHP').text(foeHP)
