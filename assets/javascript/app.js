@@ -232,7 +232,7 @@ function checkWin() {
 		numberPokemon--;
 		battleEnd = true;
 		$('.results').html('You Lose!');
-		
+		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
 			$('#myModal').modal('hide');
@@ -253,7 +253,7 @@ function checkWin() {
 		battleEnd = true;
 		//creates titles for poke's in pen on hover
 		$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName);
-
+		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 		//delays writing the message by 500ms to allow animation to complete
 		setTimeout(function() {
 			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
