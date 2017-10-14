@@ -88,7 +88,7 @@ var initializePokemonData = function(){
 			classes: {
 				"ui-accordion": "highlight"
 			},
-			event: "mouseover",
+			event: "click",
 			heightStyle: "fill",
 			icons: {
 				"header": "ui-icon-caret-2-n-s",
