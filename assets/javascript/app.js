@@ -87,12 +87,13 @@ var initializePokemonData = function(){
 
     $(document).on("click", "#playerNameButton",function(event){
     	event.preventDefault();
+    	$(".validationTxt").empty();
     	var str = $('#playerNameEntry').val();
 			if(/^[a-zA-Z- ]*$/.test(str) == false) {
-    			$(".professor-container").append('<br>Your name cannot contain numbers or special characters!');
+    			$(".validationTxt").append('<br>Your name cannot contain numbers or special characters!');
 			}
 			else if(str==""){
-				$(".professor-container").append('<br>You must have a name! If you do not have one, please enter Binky.');
+				$(".validationTxt").append('<br>You must have a name! If you do not have one, please enter Binky.');
 			}
 			else{
 				playerName = $("#playerNameEntry").val();
@@ -316,6 +317,7 @@ function checkWin() {
 		//delays writing the message by 500ms to allow animation to complete
 		setTimeout(function() {
 			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
+			$('.caught').removeClass('animateLeft')
 		},500)
 		//mousedown event to trigger foe going to pen
 		$(document).on('mousedown', 'img.caught', function () {
