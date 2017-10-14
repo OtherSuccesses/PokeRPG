@@ -14,6 +14,7 @@ var activePokemon = [];
 var markerArray = [];
 var pokeName = '';
 var battleEnd = false;
+loopCount = 50;
 //PlayerName variable
 var playerName= [];
 var winCount = 0;
@@ -133,13 +134,13 @@ function generateCoordinates() {
 	$("#winCount").text("Wins: " + winCount);
 	$("#lossCount").text("Lives: " +lives);
 	var latitude = function(){
-		for (i = 0; i<50; i++) {
+		for (i = 0; i<loopCount; i++) {
 		var lat = numGen(80, -80, 3);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
 	}};
 	var longitude = function(){
-		for (i = 0; i<50; i++) {
+		for (i = 0; i<loopCount; i++) {
 		var long = numGen(-180, 180, 3);
 		markerArray[i].longitude = long;
 	}};
@@ -165,7 +166,7 @@ function setMarkers(map) {
 	  // Adds markers to the map.
 	generateCoordinates();
 
-	for (var i = 1; i<50; i++){
+	for (var i = 1; i<loopCount; i++){
 
 		numberPokemon++;
 		var icon = {
@@ -254,6 +255,20 @@ function checkLives() {
 			});
 			$("#score-span").append("<br>You've achieved a new high score!");
 		}
+	}
+
+	if (numberPokemon<= 0){
+		$("#lossModal").modal('show');
+		$("#name-loss").text(playerName);
+		$("#poke-number-caught").text(winCount);
+		$("#score-span").text(score);
+		if (score > playerObj.highScore){
+			playerObj.highScore = score;
+			database.ref("/Players/" + playerName + "/").set({
+				name: playerName,
+				highScore: score	
+			});
+			$("#score-span").append("<br>You've achieved a new high score!");
 	}
 }
 
