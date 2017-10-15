@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Poke-Maps Game</title>
+	<title>Poke-Map Challenge</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link href="assets/css/reset.css" type="text/css" rel="stylesheet">
-	<link href="assets/css/style.css" type="text/css" rel="stylesheet">
+	
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- <script type="text/javascript" src="assets/javascript/app.js"></script> -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link href="assets/css/style.css" type="text/css" rel="stylesheet">
 <body>
 
 <div class="container-fluid">
@@ -19,9 +20,9 @@
 		<h1 id="mainTitle">Poke-Map Challenge</h1>
 	</div>
 	<div id="map">	</div>
-	<div class="row">
-	    <div class="col-lg-3 pull-right accordion">
-	    	<h3 class="accordionHeader"><strong>Instructions</strong></h3>
+	<div class="row" id="accordionRow">
+	    <div class="col-sm-10 col-md-3 pull-right accordion">
+	    	<h3 class="accordionHeader">Instructions</h3>
 	    	<!-- <div > -->
 	
 	    			<ul id="instructions-ul" class="accordionBody">
@@ -32,7 +33,7 @@
 	    			</ul>
 	    		
 	    	<!-- </div> -->
-	    	<h3 class="accordionHeader"><strong>User Info</strong></h3>
+	    	<h3 class="accordionHeader">User Info</h3>
 	    	<div class="accordionBody">
 				<div id="name"></div>
 				<div id="numberPokes"></div>
@@ -93,23 +94,39 @@
 <!-- Modal for player name entry -->
 <div class="container">
 	<div class="modal fade" id="playerNameEntryModal" role="dialog">
-	  <div class="modal-dialog modal-lg">
+	  <div class="modal-dialog">
 		  <div id="playerNameEntryHeader" class="modal-header">
 		    <a class="close" data-dismiss="modal">×</a>
-		    <h3>Pokemon Trainer: Please Enter Your Name!</h3>
+		    <h3 class="trainerTitle">Pokemon Trainer: Please Enter Your Name!</h3>
 		  </div>
 		  <div class="modal-body">
 		    	<div class="professor-container">
 		    		<img src="https://cdn.bulbagarden.net/upload/8/84/Professor_Oak_XY.png">
 		    		
 		  		</div>
-		  		<div><!-- 
-		  			<form id="playerEntryField"> -->
+		  		<div>
+					
+					<!-- commented out to test new input group.  Do not delete -->
+
+		  			<!-- <form id="playerEntryField">
 		  				<label id="playerNameEntryFieldLabel" for="playerNameEntry">Name Input: </label>
 		  				<input type="text" id="playerNameEntry">
 		  				<input type="submit" id="playerNameButton" value="Verify!">
 		  				<p class="validationTxt"></p>
-		  			<!-- </form> -->
+		  			</form>
+ -->
+
+		  			<form id="playerEntryField">
+					  <div class="input-group">
+					    <input type="text" class="form-control" placeholder="Enter your name!" id="playerNameEntry">
+					    <div class="input-group-btn">
+					      <button class="btn btn-success" type="submit" id="playerNameButton">Verify!</button>
+					    </div>
+					  </div>
+					  <p class="validationTxt"></p>
+					</form>
+
+
 		  		</div>
 			</div>
 		</div>
@@ -137,7 +154,7 @@
 				<div class="modal-footer" id="modal-footer">
 					<div class="slider">
 						<div class="target"></div>
-						<div class="mover  ui-icon ui-icon-arrowthickstop-1-s"></div>
+						<div class="mover "></div>
 					</div>
 				</div>
 			</div>
