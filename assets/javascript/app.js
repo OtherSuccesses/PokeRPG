@@ -80,9 +80,35 @@ var initializePokemonData = function(){
 		location.reload();
 	});
 
+	function letterBounce(element, duration, increase) {
+	var title = $(element);
+	var titleText = title.html();
+	title.empty();
+	for (var i = 0; i<titleText.length; i++) {
+		
+		var letter = titleText.charAt(i);
+		if (letter===" "){
+			var newLetter = $('<span class="space"> </span>');
+		} else {
+			var newLetter = $('<span class="letterAnimation '+i+'">'+letter+'</span>')
+		}
+		console.log(element+'.'+i);
+		title.append(newLetter);
+	}
+	var delay=0;
+	for (var i = 0; i<titleText.length; i++) {
+		
+		delay+=increase;
+		$('.'+i).css({
+			'animation-delay': ''+delay+'ms',
+			'animation-duration': duration
+		});
+	}
+}
+
 //Player Name Entry Modal JS
 	$(window).on('load',function(){
-
+		letterBounce('#mainTitle','5s', 500);
 		$("#winCount").text("Wins: " + winCount);
 		$("#lossCount").text("Lives: " +lives);
 		//added to stop user from clicking outside modal to bypass
@@ -242,7 +268,7 @@ function setMarkers(map) {
 		   	currentFoe.attr({
 		   		'src': foeURL,
 		   		'height': 200,
-		   		'class': 'foe'
+		   		'class': 'foe letterAnimation'
 		   	});
 		   	this.setMap(null);
 		   	$('.foeContainer').append(h4,currentFoe);
@@ -253,6 +279,11 @@ function setMarkers(map) {
 	}
 	
 }
+
+
+
+////////title animation//////////
+
 
 
 
