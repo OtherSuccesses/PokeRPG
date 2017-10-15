@@ -7,6 +7,8 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 20px;
+	font-family: 'Press Start 2P', cursive;
+	font-size: 12px;
 }
 
 #map{
@@ -32,7 +34,7 @@ html, body {
 h1#mainTitle {
 	border-radius: 5px;
 	color: #ffcb05;
-	font-size: 60px;
+	font-size: 50px;
 	letter-spacing:5px;
 	font-weight: bold;
 	font-family: "PokemonSolid";
@@ -69,7 +71,7 @@ h1#mainTitle {
 	background-color: white;
 	padding: 10px;
 	height: 30%;
-	font-size: 18px;
+	/*font-size: 15px;*/
 	padding: 10px 30px;
 }
 
@@ -108,7 +110,7 @@ h1#mainTitle {
 }
 
 .modal-title {
-	font-size: 30px;
+	font-size: 20px;
 	color: white;
 }
 
@@ -120,7 +122,8 @@ h1#mainTitle {
 .results {
 	color: #2a75bb;
 	height: 100%;
-	font-size: 20px;
+	font-size: 15px;
+	font-family: 'Press Start 2P', cursive;
 }
 
 
@@ -208,7 +211,7 @@ h1#mainTitle {
 }*/
 
 .validationTxt {
-	font-size: 18px;
+	font-size: 15px;
 	background:rgba(255,0,0,0.8);
 	display: inline-block;
 	line-height:18px;
@@ -236,6 +239,23 @@ h1#mainTitle {
 .space{
 	width: 15px;
 	white-space: pre;
+}
+
+.hitTextBox {
+	color: white;
+
+	width:50%;
+	padding: 10px 0 10px 15px;
+	margin: 20px auto;
+	font-size: 20px;
+}
+
+.hit {
+	background: green;
+}
+
+.miss {
+	background: red;	
 }
 
 
@@ -570,7 +590,7 @@ h1#mainTitle {
 		margin-bottom: 0;
 		margin-top: 0;
 		/*padding: 10px;*/
-		font-size: 16px;
+		font-size: 15px;
 	}
 
 	#instructions-ul.accordionBody.a.b.c.d {
@@ -592,6 +612,7 @@ h1#mainTitle {
 
 	.modal-content {
 		height: 200%;
+
 	}
 
 	.slider {
