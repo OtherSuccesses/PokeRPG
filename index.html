@@ -5,6 +5,7 @@
 	<link href="assets/css/reset.css" type="text/css" rel="stylesheet">
 	<link href="assets/css/style.css" type="text/css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
@@ -19,9 +20,18 @@
 	</div>
 	<div id="map">	</div>
 	<div class="row">
-	    <div class="col-lg-2 pull-right accordion">
+	    <div class="col-lg-3 pull-right accordion">
 	    	<h3 class="accordionHeader"><strong>Instructions</strong></h3>
-	    	<div class="accordionBody"><p>Drag the map around to find all the Sprites. <br>Click the Sprite to launch the capture window.<br>Click the green circle when it overlaps with the red circle to capture the Sprite.<br>Once you capture the Sprite, click it to add it to your sprite pen. You can drag the Sprites in the pen to rearrange them.</p></div>
+	    	<!-- <div > -->
+	
+	    			<ul id="instructions-ul" class="accordionBody">
+	    				<li>Explore the map and find all the Pokemon.</li>
+	    				<li>Click the Pokemon to fight!</li>
+	    				<li>Once you defeat the Pokemon, click it to capture it. </li>
+	    				<li>Drag the Pokemon around your pen arrange and display them.</li>
+	    			</ul>
+	    		
+	    	<!-- </div> -->
 	    	<h3 class="accordionHeader"><strong>User Info</strong></h3>
 	    	<div class="accordionBody">
 				<div id="name"></div>
@@ -31,6 +41,11 @@
 	    	</div>
 	    	<h3 class="accordionHeader">Poke-Pen</h3>
 	    	<div class="accordionBody"><div class="panel-body" id="pen"></div>
+
+
+			<!-- commented out and saved in case we want to revert to old panel UI -->
+
+
 	    <!--     <div class=" panel panel-primary" >
 	            <div class="panel-heading">
 	              <h3 class="panel-title"><strong>Game Instructions</strong></h3> 
@@ -67,6 +82,10 @@
 				</div>
 			
 			</div> -->
+
+
+
+
 		</div>
 	</div>
 </div> <!-- end of container-->	
@@ -82,14 +101,15 @@
 		  <div class="modal-body">
 		    	<div class="professor-container">
 		    		<img src="https://cdn.bulbagarden.net/upload/8/84/Professor_Oak_XY.png">
-		    		<p class="validationTxt"></p>
+		    		
 		  		</div>
-		  		<div>
-		  			<form id="playerEntryField">
+		  		<div><!-- 
+		  			<form id="playerEntryField"> -->
 		  				<label id="playerNameEntryFieldLabel" for="playerNameEntry">Name Input: </label>
-		  				<input type="text" id="playerNameEntry"><br>
+		  				<input type="text" id="playerNameEntry">
 		  				<input type="submit" id="playerNameButton" value="Verify!">
-		  			</form>
+		  				<p class="validationTxt"></p>
+		  			<!-- </form> -->
 		  		</div>
 			</div>
 		</div>

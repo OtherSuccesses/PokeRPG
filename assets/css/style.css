@@ -1,7 +1,6 @@
 @font-face {
-  font-family: 'PokemonSolid';
-  src:  url('C:/Users/marco/Desktop/BootcampWork/Homework/PokeRPG/assets/css/pokemonsolid.woff') format('woff');
-        /*url('../fonts/myfont.Pokemon Solid.ttf') format('ttf');*/
+	font-family: 'PokemonSolid';
+	src:  url('pokemonsolid.woff') format('woff');
 }
 
 html, body {
@@ -17,7 +16,7 @@ html, body {
 	top: 0; 
 	left: 0; 
 	z-index: 0;
-   	}
+}
 
 .map {
 	height: 100%;
@@ -25,424 +24,452 @@ html, body {
 }
 
 .page-heading {
- 	/*background-color: transparent;*/
- 	z-index: 1;
- 	/*text-align: center;*/
- 	color: black;
- 	/*opacity: 0.8;*/
- 	transform: rotate(-90deg) translateX(-50%);
- }
+	z-index: 1;
+	color: black;
+	transform: rotate(-90deg) translateX(-50%);
+}
 
 h1#mainTitle { /* Standard syntax */
- 	padding: 5px 10px;
- 	border-radius: 5px;
- 	color: #ffcb05;
- 	font-size: 60px;
- 	letter-spacing:5px;
- 	font-weight: bold;
- 	font-family: "PokemonSolid";
+	padding: 5px 10px;
+	border-radius: 5px;
+	color: #ffcb05;
+	font-size: 60px;
+	letter-spacing:5px;
+	font-weight: bold;
+	font-family: "PokemonSolid";
 	-webkit-text-stroke: 1px  #3c5aa6;
- 	margin-top: -55%;
- }
+	margin-top: -55%;
+}
 
- #thisPanel.panel {
- 	 	background: none;
-		/*visibility: hidden;*/
- }
+#thisPanel.panel {
+	background: none;
+}
 
- .accordionHeader {
- 	background-color: #2a75bb;
- 	border-bottom:1px solid black;
- 	padding: 10px;
- 	color: #ffcb05;
- 	border-radius: 5px 5px 0 0;
- 	text-align: center;
- 	margin-bottom: 0;
- 	margin-top: 0;
- 	font-family: 'PokemonSolid';
- 	-webkit-text-stroke: 1px #3c5aa6;
- }
+.accordion {
+	opacity: 0.2;
+	transition: opacity 300ms ease ;
+}
 
- .accordionBody {
- 	background-color: white;
- 	padding: 10px;
+.accordion:hover {
+	opacity: 1;
+}
+
+.accordionHeader {
+	background-color: #2a75bb;
+	border-bottom:1px solid black;
+	padding: 10px;
+	color: #ffcb05;
+	border-radius: 5px 5px 0 0;
+	text-align: center;
+	margin-bottom: 0;
+	margin-top: 0;
+	font-family: 'PokemonSolid';
+	-webkit-text-stroke: 1px #3c5aa6;
+}
+
+.accordionBody {
+	background-color: white;
+	padding: 10px;
 	height: 30%;
 	font-size: 18px;
- }
-
-
- .panel-title {
- 	text-align: center;
- }
-
-.panel-body {
-	/*padding: 10px;*/
-	/*background: white;*/
+	padding: 10px 30px;
 }
 
-/* Optional: Makes the sample page fill the window. */
-/*html, body {
-  
-  padding: 20px;
+#instructions-ul {
+	list-style: circle;
+	margin-bottom: 0px;
 }
-*/
+
+li {
+	margin: 20px 0;
+}
+
+.zoom {
+	transition: transform 300ms ease;
+}
+
+.zoom:hover {
+	transform: scale(1.7);
+}
+
+.panel-title {
+	text-align: center;
+}
+
 .container {
 	z-index: 1;
 }
 
-    /*************************fight animation styling*************************/
+/*************************fight animation styling*************************/
 
-	#myModal .modal-content {
-		background-image: url('../images/fight_background.jpg');
-		background-size: contain;
-		/*opacity: 0.9;*/
-	}
+#myModal .modal-content {
+	background-image: url('../images/fight_background.jpg');
+	background-size: contain;
+}
 
-	#modal-header.modal-header, #modal-footer.modal-footer {
-		border: none;
-	}
-	
-	.modal-title {
-		font-size: 30px;
-		color: white;
-	}
+#modal-header.modal-header, #modal-footer.modal-footer {
+	border: none;
+}
 
-	.pokeName {
-		color: blue;
-		text-shadow: 5px 5px 10px rgba(0,0,255,0.7);
-	}
+.modal-title {
+	font-size: 30px;
+	color: white;
+}
 
-	.results {
-		color: white;
-		height: 100%;
-		font-size: 20px;
-	}
+.pokeName {
+	color: blue;
+	text-shadow: 5px 5px 10px rgba(0,0,255,0.7);
+}
 
-	.mover {
-		height: 20px;
-		width: 20px;
-		background: green;
-		border-radius:50%;
-		border: 1px solid black;
-		
-	}
+.results {
+	color: #2a75bb;
+	height: 100%;
+	font-size: 20px;
+}
 
-	.target {
-		position: absolute;
-		/*content: ' ';*/
-		height: 20px;
-		width: 20px;
-		background: red;
-		transform: translateX(-10px);
-		left: 50%;
-		border-radius:50%;
-		border: 1px solid black;
-	}
 
-	.slider {
-		position: relative;
-		height: 21px;
-		width: 220px;
-		background: white;
-		border: 1px outset black;
-		border-radius: 10px;
-		margin: 0 auto;
-	}
+.mover {
+	height: 20px;
+	width: 20px;
+	background: green;
+	border-radius:50%;
+	border: 1px solid black;
+}
 
-	.HP {
-		/*display: inline-block;*/
-		background:red;
-		color: white;
-		margin: 0 auto;
-		padding: 3px 5px;
-		border-radius: 10px;
-	}
+.target {
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	background: red;
+	transform: translateX(-10px);
+	left: 50%;
+	border-radius:50%;
+	border: 1px solid black;
+}
+
+.slider {
+	position: relative;
+	height: 21px;
+	width: 220px;
+	background: white;
+	border: 1px outset black;
+	border-radius: 10px;
+	margin: 0 auto;
+}
+
+.HP {
+	background:red;
+	color: white;
+	margin: 0 auto;
+	padding: 3px 5px;
+	border-radius: 10px;
+}
 
 /*Player Name Modal CSS*/
-	#playerNameEntryHeader{
-		background-color: antiquewhite;
-		border-radius: 15px;
-		color: slategray;
-	}
+#playerNameEntryHeader{
+	background-color: antiquewhite;
+	border-radius: 15px;
+	color: slategray;
+}
 
-	#playerNameEntry{
-		color:black;
-	}
+#playerNameEntry{
+	color:black;
 
-	#playerNameEntryModal {
-		text-align:center;
-		color: white;
-		font-weight: bold;
-	}
+}
 
-	#playerNameEntryFieldLabel{
-		color:white;
-	}
+#playerNameEntryModal {
+	text-align:center;
+	color: white;
+	font-weight: bold;
+}
 
-	#playerNameButton{
-		color:black;
-		background-color: lightgreen;
-		border-color: darkgreen;
-		border-width: 3px;
-	}
+#playerNameEntryFieldLabel{
+	color:white;
+}
 
-	
+#playerNameButton{
+	color:black;
+	background-color: lightgreen;
+	border-color: darkgreen;
+	border-width: 3px;
+	transition:all 300ms ease;
+	transform: scale(1);
+	opacity: 0.8;
+	font-size: 23px;
+}
 
+#playerNameButton:hover {
+	color: white;
+	background-color: darkgreen;
+	border-color: lightgreen;
+	/*transform: scale(1.1);*/
+}
 
+#playerNameButton:active {
+	transform: scale(1);
+}
 
-
+.validationTxt {
+	font-size: 18px;
+	background:rgba(255,0,0,0.8);
+	display: inline-block;
+	line-height:18px;
+	padding: 0 10px 15px 10px;
+	border-radius: 5px;
+	border:1px dashed white;
+}
 
 
 
 	/**************************************animation code**************************************/
-	.mover {
-		animation-name: slide;
-		animation-duration: 4s;
-		animation-iteration-count: infinite;
-		animation-timing-function: linear;
-		-webkit-animation-name: slide;
-		-webkit-animation-duration: 4s;
-		-webkit-animation-iteration-count: infinite;
-		-webkit-animation-timing-function: linear;
-		-moz-animation-name: slide;
-		-moz-animation-duration: 4s;
-		-moz-animation-iteration-count: infinite;
-		-moz-animation-timing-function: linear;
-		-o-animation-name: slide;
-		-o-animation-duration: 4s;
-		-o-animation-iteration-count: infinite;
-		-o-animation-timing-function: linear;
-		-ms-animation-name: slide;
-		-ms-animation-duration: 4s;
-		-ms-animation-iteration-count: infinite;
-		-ms-animation-timing-function: linear;
+.mover {
+	animation-name: slide;
+	animation-duration: 4s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-name: slide;
+	-webkit-animation-duration: 4s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+	-moz-animation-name: slide;
+	-moz-animation-duration: 4s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: linear;
+	-o-animation-name: slide;
+	-o-animation-duration: 4s;
+	-o-animation-iteration-count: infinite;
+	-o-animation-timing-function: linear;
+	-ms-animation-name: slide;
+	-ms-animation-duration: 4s;
+	-ms-animation-iteration-count: infinite;
+	-ms-animation-timing-function: linear;
+}
+
+.animateRight {
+	animation-name: animateRight;
+	animation-duration: 600ms;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	-webkit-animation-name: animateRight;
+	-webkit-animation-duration: 600ms;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: ease-out;
+	-moz-animation-name: animateRight;
+	-moz-animation-duration: 600ms;
+	-moz-animation-iteration-count: 1;
+	-moz-animation-timing-function: ease-out;
+	-o-animation-name: animateRight;
+	-o-animation-duration: 600ms;
+	-o-animation-iteration-count: 1;
+	-o-animation-timing-function: ease-out;
+	-ms-animation-name: animateRight;
+	-ms-animation-duration: 600ms;
+	-ms-animation-iteration-count: 1;
+	-ms-animation-timing-function: ease-out;
+}
+
+.animateLeft {
+	animation-name: animateLeft;
+	animation-duration: 600ms;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	-webkit-animation-name: animateLeft;
+	-webkit-animation-duration: 600ms;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: ease-out;
+	-moz-animation-name: animateLeft;
+	-moz-animation-duration: 600ms;
+	-moz-animation-iteration-count: 1;
+	-moz-animation-timing-function: ease-out;
+	-o-animation-name: animateLeft;
+	-o-animation-duration: 600ms;
+	-o-animation-iteration-count: 1;
+	-o-animation-timing-function: ease-out;
+	-ms-animation-name: animateLeft;
+	-ms-animation-duration: 600ms;
+	-ms-animation-iteration-count: 1;
+	-ms-animation-timing-function: ease-out;
+}
+
+
+
+
+
+
+@keyframes slide {
+	0% {
+		transform: translateX(0px);
 	}
 
-	.animateRight {
-		animation-name: animateRight;
-		animation-duration: 600ms;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		-webkit-animation-name: animateRight;
-		-webkit-animation-duration: 600ms;
-		-webkit-animation-iteration-count: 1;
-		-webkit-animation-timing-function: ease-out;
-		-moz-animation-name: animateRight;
-		-moz-animation-duration: 600ms;
-		-moz-animation-iteration-count: 1;
-		-moz-animation-timing-function: ease-out;
-		-o-animation-name: animateRight;
-		-o-animation-duration: 600ms;
-		-o-animation-iteration-count: 1;
-		-o-animation-timing-function: ease-out;
-		-ms-animation-name: animateRight;
-		-ms-animation-duration: 600ms;
-		-ms-animation-iteration-count: 1;
-		-ms-animation-timing-function: ease-out;
+	50% {
+		transform: translateX(200px);
 	}
 
-	.animateLeft {
-		animation-name: animateLeft;
-		animation-duration: 600ms;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		-webkit-animation-name: animateLeft;
-		-webkit-animation-duration: 600ms;
-		-webkit-animation-iteration-count: 1;
-		-webkit-animation-timing-function: ease-out;
-		-moz-animation-name: animateLeft;
-		-moz-animation-duration: 600ms;
-		-moz-animation-iteration-count: 1;
-		-moz-animation-timing-function: ease-out;
-		-o-animation-name: animateLeft;
-		-o-animation-duration: 600ms;
-		-o-animation-iteration-count: 1;
-		-o-animation-timing-function: ease-out;
-		-ms-animation-name: animateLeft;
-		-ms-animation-duration: 600ms;
-		-ms-animation-iteration-count: 1;
-		-ms-animation-timing-function: ease-out;
+	100% {
+		transform: translateX(0px);
+	}
+	
+}
+
+@-webkit-keyframes slide {
+	0% {
+		transform: translateX(0px);
 	}
 
-
-
-
-
-
-	@keyframes slide {
-		0% {
-			transform: translateX(0px);
-		}
-
-		50% {
-			transform: translateX(200px);
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
-		
+	50% {
+		transform: translateX(200px);
 	}
 
-	@-webkit-keyframes slide {
-		0% {
-			transform: translateX(0px);
-		}
+	100% {
+		transform: translateX(0px);
+	}
+	
+}
 
-		50% {
-			transform: translateX(200px);
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
-		
+@-moz-keyframes slide {
+	0% {
+		transform: translateX(0px);
 	}
 
-	@-moz-keyframes slide {
-		0% {
-			transform: translateX(0px);
-		}
-
-		50% {
-			transform: translateX(200px);
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
-		
+	50% {
+		transform: translateX(200px);
 	}
 
-	@-o-keyframes slide {
-		0% {
-			transform: translateX(0px);
-		}
+	100% {
+		transform: translateX(0px);
+	}
+	
+}
 
-		50% {
-			transform: translateX(200px);
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
-		
+@-o-keyframes slide {
+	0% {
+		transform: translateX(0px);
 	}
 
-
-
-	@keyframes animateRight {
-		0% {
-			transform: translateX(0px);
-		}
-
-		50% {
-			transform: translateX(150%);			
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
+	50% {
+		transform: translateX(200px);
 	}
 
-	@-webkit-keyframes animateRight {
-		0% {
-			transform: translateX(0px);
-		}
+	100% {
+		transform: translateX(0px);
+	}
+	
+}
 
-		50% {
-			transform: translateX(150%);			
-		}
 
-		100% {
-			transform: translateX(0px);
-		}
+
+@keyframes animateRight {
+	0% {
+		transform: translateX(0px);
 	}
 
-	@-moz-keyframes animateRight {
-		0% {
-			transform: translateX(0px);
-		}
-
-		50% {
-			transform: translateX(150%);			
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
+	50% {
+		transform: translateX(150%);			
 	}
 
-	@-o-keyframes animateRight {
-		0% {
-			transform: translateX(0px);
-		}
+	100% {
+		transform: translateX(0px);
+	}
+}
 
-		50% {
-			transform: translateX(150%);			
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
+@-webkit-keyframes animateRight {
+	0% {
+		transform: translateX(0px);
 	}
 
-
-
-	@keyframes animateLeft {
-		0% {
-			transform: translateX(0px);
-		}
-
-		50% {
-			transform: translateX(-150%);
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
+	50% {
+		transform: translateX(150%);			
 	}
 
-	@-webkit-keyframes animateLeft {
-		0% {
-			transform: translateX(0px);
-		}
+	100% {
+		transform: translateX(0px);
+	}
+}
 
-		50% {
-			transform: translateX(-150%);
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
+@-moz-keyframes animateRight {
+	0% {
+		transform: translateX(0px);
 	}
 
-	@-moz-keyframes animateLeft {
-		0% {
-			transform: translateX(0px);
-		}
-
-		50% {
-			transform: translateX(-150%);
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
+	50% {
+		transform: translateX(150%);			
 	}
 
-	@-o-keyframes animateLeft {
-		0% {
-			transform: translateX(0px);
-		}
-
-		50% {
-			transform: translateX(-150%);
-		}
-
-		100% {
-			transform: translateX(0px);
-		}
+	100% {
+		transform: translateX(0px);
 	}
+}
+
+@-o-keyframes animateRight {
+	0% {
+		transform: translateX(0px);
+	}
+
+	50% {
+		transform: translateX(150%);			
+	}
+
+	100% {
+		transform: translateX(0px);
+	}
+}
+
+
+
+@keyframes animateLeft {
+	0% {
+		transform: translateX(0px);
+	}
+
+	50% {
+		transform: translateX(-150%);
+	}
+
+	100% {
+		transform: translateX(0px);
+	}
+}
+
+@-webkit-keyframes animateLeft {
+	0% {
+		transform: translateX(0px);
+	}
+
+	50% {
+		transform: translateX(-150%);
+	}
+
+	100% {
+		transform: translateX(0px);
+	}
+}
+
+@-moz-keyframes animateLeft {
+	0% {
+		transform: translateX(0px);
+	}
+
+	50% {
+		transform: translateX(-150%);
+	}
+
+	100% {
+		transform: translateX(0px);
+	}
+}
+
+@-o-keyframes animateLeft {
+	0% {
+		transform: translateX(0px);
+	}
+
+	50% {
+		transform: translateX(-150%);
+	}
+
+	100% {
+		transform: translateX(0px);
+	}
+}
 
 /*****************************end of animation code*****************************/
