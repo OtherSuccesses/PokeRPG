@@ -29,8 +29,7 @@ html, body {
 	transform: rotate(-90deg) translateX(-50%);
 }
 
-h1#mainTitle { /* Standard syntax */
-	padding: 5px 10px;
+h1#mainTitle {
 	border-radius: 5px;
 	color: #ffcb05;
 	font-size: 60px;
@@ -57,14 +56,13 @@ h1#mainTitle { /* Standard syntax */
 .accordionHeader {
 	background-color: #2a75bb;
 	border-bottom:1px solid black;
-	padding: 10px;
 	color: #ffcb05;
-	border-radius: 5px 5px 0 0;
 	text-align: center;
 	margin-bottom: 0;
 	margin-top: 0;
 	font-family: 'PokemonSolid';
 	-webkit-text-stroke: 1px #3c5aa6;
+	padding: 10px;
 }
 
 .accordionBody {
@@ -80,9 +78,7 @@ h1#mainTitle { /* Standard syntax */
 	margin-bottom: 0px;
 }
 
-li {
-	margin: 20px 0;
-}
+
 
 .zoom {
 	transition: transform 300ms ease;
@@ -187,7 +183,9 @@ li {
 	color:white;
 }
 
-#playerNameButton{
+/*commented out in case we want to go back to different name input*/
+
+/*#playerNameButton{
 	color:black;
 	background-color: lightgreen;
 	border-color: darkgreen;
@@ -202,12 +200,12 @@ li {
 	color: white;
 	background-color: darkgreen;
 	border-color: lightgreen;
-	/*transform: scale(1.1);*/
+	transform: scale(1.1);
 }
 
 #playerNameButton:active {
 	transform: scale(1);
-}
+}*/
 
 .validationTxt {
 	font-size: 18px;
@@ -217,6 +215,22 @@ li {
 	padding: 0 10px 15px 10px;
 	border-radius: 5px;
 	border:1px dashed white;
+}
+
+.trainerTitle {
+	position: relative;
+	display: inline-block;
+}
+
+.trainerTitle:after {
+	content: ' ';
+	position: absolute;
+	height: 0px;
+	width: 0px;
+	border: 15px solid transparent;
+	border-top: 15px solid antiquewhite;
+	bottom: -55px;
+	right: 50%;
 }
 
 
@@ -473,3 +487,93 @@ li {
 }
 
 /*****************************end of animation code*****************************/
+
+
+
+
+
+
+
+
+/*********************************media queries*********************************/
+
+
+@media (max-width: 992px){
+	#instructions-ul {
+	}
+
+	#instructions-ul li {
+		display: inline-block;
+		margin: 5px 0;
+	}
+
+	.accordionBody {
+		background-color: white;
+		padding: 105px;
+		height: 100%;
+		font-size: 15px;
+		padding: 10px 30px;
+	}
+
+	.accordion {
+		position: absolute;
+		bottom: -10%;
+		left: 50%;
+		width: 100%;
+		height:15%;
+		transform: translateX(-50%);
+	}
+
+
+	.page-heading {
+		z-index: 100;
+		/*color: black;*/
+		transform: rotate(0deg);
+	}
+
+	h1#mainTitle {
+		letter-spacing:5px;
+		font-size:3.5em;
+		margin-top: -5%;
+	}
+
+	.accordionHeader {
+		height: 10%;
+		margin-bottom: 0;
+		margin-top: 0;
+		/*padding: 10px;*/
+		font-size: 16px;
+	}
+
+	#instructions-ul.accordionBody.a.b.c.d {
+		height:20%;
+	}
+
+	#instructions-ul {
+	text-align: center; 	
+	}
+
+	.ui-accordion {
+	height: 45%;
+	}
+
+	.modal-dialog {
+		margin-top: 10%;
+		height: 20%;
+	}
+
+	.modal-content {
+		height: 200%;
+	}
+
+	.slider {
+	
+		margin: -14% auto;
+	}
+
+	.customHeight {
+		height: 50%;
+	}
+
+
+}

@@ -97,10 +97,6 @@ var initializePokemonData = function(){
 			},
 			event: "click",
 			heightStyle: "fill",
-			icons: {
-				"header": "ui-icon-caret-2-n-s",
-				"activeHeader": "ui-icon-minus"
-			}
 		});
     });
 
