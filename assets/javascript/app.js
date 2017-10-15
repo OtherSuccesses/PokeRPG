@@ -76,11 +76,12 @@ var initializePokemonData = function(){
 //	$(document).on("click", "#")
 
 //Restart Button JS
-	$(document).on("click", "#restart-btn", function(event){
-		location.reload();
-	});
+$(document).on("click", "#restart-btn", function(event){
+	location.reload();
+});
 
-	function letterBounce(element, duration, increase) {
+function letterBounce(element, duration, increase) {
+	var delay=0;
 	var title = $(element);
 	var titleText = title.html();
 	title.empty();
@@ -92,10 +93,9 @@ var initializePokemonData = function(){
 		} else {
 			var newLetter = $('<span class="letterAnimation '+i+'">'+letter+'</span>')
 		}
-		console.log(element+'.'+i);
 		title.append(newLetter);
 	}
-	var delay=0;
+	
 	for (var i = 0; i<titleText.length; i++) {
 		
 		delay+=increase;
@@ -107,68 +107,68 @@ var initializePokemonData = function(){
 }
 
 //Player Name Entry Modal JS
-	$(window).on('load',function(){
-		letterBounce('#mainTitle','5s', 500);
-		$("#winCount").text("Wins: " + winCount);
-		$("#lossCount").text("Lives: " +lives);
-		//added to stop user from clicking outside modal to bypass
-  		$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false})
-        $('#playerNameEntryModal').modal('show');
-        //hides error text div on load
-        $('.validationTxt').hide();
-        $( ".accordion" ).accordion({
-			active: 0,
-			classes: {
-				"ui-accordion": "highlight"
-			},
-			event: "click",
-			heightStyle: "fill",
-		});
-    });
+$(window).on('load',function(){
+	letterBounce('#mainTitle','5s', 500);
+	$("#winCount").text("Wins: " + winCount);
+	$("#lossCount").text("Lives: " +lives);
+	//added to stop user from clicking outside modal to bypass
+		$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false})
+    $('#playerNameEntryModal').modal('show');
+    //hides error text div on load
+    $('.validationTxt').hide();
+    $( ".accordion" ).accordion({
+		active: 0,
+		classes: {
+			"ui-accordion": "highlight"
+		},
+		event: "click",
+		heightStyle: "fill",
+	});
+});
 
-    $(document).on("click", "#playerNameButton",function(event){
-    	event.preventDefault();
-    	//added to prevent text from piling up
-    	$(".validationTxt").empty();
-    	var str = $('#playerNameEntry').val();
-			if(/^[a-zA-Z- ]*$/.test(str) == false) {
-    			$(".validationTxt").append('<br>Your name cannot contain numbers or special characters!');
-				$('.validationTxt').show();
-			}
-			else if(str==""){
-				$(".validationTxt").append('<br>You must have a name! If you do not have one, please enter "Binky".');
-				$('.validationTxt').show();
-			}
-			else{
-				$('#thisPanel.panel').show('slow');
-				playerName = $("#playerNameEntry").val();
-		    	database.ref("/Players/").once("value", function(snapshot){
-		    		console.log(snapshot);
-		    		console.log(snapshot.name);
-		    		var playerDataRef = database.ref("/Players/" + playerName +"/");
-		    		if (!snapshot.val()[playerName]){
-		    			console.log("valid name");
-		    			playerDataRef
-				    	.set({
-				    		name: playerName,
-		    				highScore: 0
-				    	});
-				    	playerDataRef.once("value", function(snapshot){
-					    	playerObj=snapshot.val();
-					    	console.log(playerObj);
-				    	});
-		    		}
-		    		else{
-					    playerDataRef.once("value", function(snapshot){
-					    	playerObj=snapshot.val();
-					    	console.log(playerObj);
-				    	});
-		    		}
-		    	})
-		    	$("#name").text("Name: " + playerName);
-		    	$("#playerNameEntryModal").modal('toggle');
-	    	}
-    });
+$(document).on("click", "#playerNameButton",function(event){
+	event.preventDefault();
+	//added to prevent text from piling up
+	$(".validationTxt").empty();
+	var str = $('#playerNameEntry').val();
+		if(/^[a-zA-Z- ]*$/.test(str) == false) {
+			$(".validationTxt").append('<br>Your name cannot contain numbers or special characters!');
+			$('.validationTxt').show();
+		}
+		else if(str==""){
+			$(".validationTxt").append('<br>You must have a name! If you do not have one, please enter "Binky".');
+			$('.validationTxt').show();
+		}
+		else{
+			$('#thisPanel.panel').show('slow');
+			playerName = $("#playerNameEntry").val();
+	    	database.ref("/Players/").once("value", function(snapshot){
+	    		console.log(snapshot);
+	    		console.log(snapshot.name);
+	    		var playerDataRef = database.ref("/Players/" + playerName +"/");
+	    		if (!snapshot.val()[playerName]){
+	    			console.log("valid name");
+	    			playerDataRef
+			    	.set({
+			    		name: playerName,
+	    				highScore: 0
+			    	});
+			    	playerDataRef.once("value", function(snapshot){
+				    	playerObj=snapshot.val();
+				    	console.log(playerObj);
+			    	});
+	    		}
+	    		else{
+				    playerDataRef.once("value", function(snapshot){
+				    	playerObj=snapshot.val();
+				    	console.log(playerObj);
+			    	});
+	    		}
+	    	})
+	    	$("#name").text("Name: " + playerName);
+	    	$("#playerNameEntryModal").modal('toggle');
+    	}
+});
 
 	//Pokemon initialize if Database fails to load
 setTimeout(function(){
@@ -262,6 +262,7 @@ function setMarkers(map) {
 		   	$('.pokeName').text(pokeName);
 
 		   	var h4 = $('<h4>');
+		   	var miss = $('<h4>');
 		   	h4.addClass('foeHP text-center HP');
 		   	h4.text(foeHP);
 		   	var currentFoe = $('<img>');
@@ -271,7 +272,7 @@ function setMarkers(map) {
 		   		'class': 'foe letterAnimation'
 		   	});
 		   	this.setMap(null);
-		   	$('.foeContainer').append(h4,currentFoe);
+		   	$('.foeContainer').prepend(h4,currentFoe);
 	  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
 	  	  	$('#myModal').modal('show');
 		});
@@ -368,12 +369,12 @@ function checkWin() {
 		$('.foeHP').text(foeHP)
 		battleEnd = true;
 		//creates titles for poke's in pen on hover
-		$('img.foe').removeClass('foe').addClass('caught').attr('title', pokeName);
+		$('img.foe').removeClass('foe letterAnimation').addClass('caught').attr('title', pokeName);
 		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
 		//delays writing the message by 500ms to allow animation to complete
 		setTimeout(function() {
 			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
-			$('.caught').removeClass('animateLeft')
+			// $('.caught').removeClass('animateLeft')
 		},500);
 		//mousedown event to trigger foe going to pen
 		$(document).on('mousedown', 'img.caught', function () {
@@ -408,6 +409,17 @@ function checkWin() {
 	
 }//end of checkwin
 
+function hitText(text,status) {
+	if ($('#hitText')) {
+		$('#hitText').remove();
+	}
+	var $hitText = $('<h4 id="hitText"></h4>');
+	$hitText.text(text).addClass(status+' hitTextBox').appendTo('.results');
+
+	setTimeout(function () {
+		$('#hitText').fadeOut('slow');
+	}, 1000);
+}
 
 //main click event for fight sequence
 $(document).on('click','#myModal' ,function () {
@@ -417,20 +429,26 @@ $(document).on('click','#myModal' ,function () {
 
 	if (heroHP>0 && foeHP>0) {
 		$('.hero').addClass('animateRight');
-		$('.foe').addClass('animateLeft');
+		// $('.foe').addClass('animateLeft');
 		$( ".hero" ).effect( "bounce", "slow" );
-		$( ".foe" ).effect( "bounce", "slow" );
+
 
 		setTimeout(function () {
 			$('.hero').removeClass('animateRight');
-			$('.foe').removeClass('animateLeft');
+			// $('.foe').removeClass('animateLeft');
 		},600);
 
 		if (mover.left > 85 && mover.left < 115) {
 			hit = true;
+			setTimeout(function () {
+				$( ".foe" ).effect( "bounce", "slow" );
+			},300);
+			hitText('Hit!','hit');
+			
 			
 		} else {
 			hit = false;
+			hitText('Miss!', 'miss');
 		}
 		writeHit();
 	}
