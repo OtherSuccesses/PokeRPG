@@ -82,7 +82,14 @@ var initializePokemonData = function(){
 
 //Player Name Entry Modal JS
 	$(window).on('load',function(){
+
+		$("#winCount").text("Wins: " + winCount);
+		$("#lossCount").text("Lives: " +lives);
+		//added to stop user from clicking outside modal to bypass
+  		$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false})
         $('#playerNameEntryModal').modal('show');
+        //hides error text div on load
+        $('.validationTxt').hide();
         $( ".accordion" ).accordion({
 			active: 0,
 			classes: {
@@ -99,13 +106,16 @@ var initializePokemonData = function(){
 
     $(document).on("click", "#playerNameButton",function(event){
     	event.preventDefault();
+    	//added to prevent text from piling up
     	$(".validationTxt").empty();
     	var str = $('#playerNameEntry').val();
 			if(/^[a-zA-Z- ]*$/.test(str) == false) {
     			$(".validationTxt").append('<br>Your name cannot contain numbers or special characters!');
+				$('.validationTxt').show();
 			}
 			else if(str==""){
-				$(".validationTxt").append('<br>You must have a name! If you do not have one, please enter Binky.');
+				$(".validationTxt").append('<br>You must have a name! If you do not have one, please enter "Binky".');
+				$('.validationTxt').show();
 			}
 			else{
 				$('#thisPanel.panel').show('slow');
@@ -153,8 +163,7 @@ var numGen =  function(to, from, fixed) {
 
 // Function to generate coordinates for sprite markers
 function generateCoordinates() {
-	$("#winCount").text("Wins: " + winCount);
-	$("#lossCount").text("Lives: " +lives);
+
 	var latitude = function(){
 		for (i = 0; i<loopCount; i++) {
 		var lat = numGen(80, -80, 3);
@@ -204,13 +213,19 @@ function setMarkers(map) {
 			// add click listener to each marker
 		   marker.addListener('click', function(event) {
 		   	$('.mover').css({
-				'-webkit-animation-duration': animationSpeed+'s'
+		   		'animation-duration': animationSpeed+'s',
+		   		'-webkit-animation-duration': animationSpeed+'s',
+		   		'-moz-animation-duration': animationSpeed+'s',
+				'-o-animation-duration': animationSpeed+'s'
 			});
 		   	battleEnd = false;
 		   	$('.foeContainer').empty();
 		   	$('.results').empty();
-		   	$('.hero').show();
-		   	$('.slider').show();
+		   	$('.results').text('Click the screen when the green dot is covering the red dot to hit the pokemon.')
+   			$('.hero').animate({opacity:1}, 100);
+		   	$('.slider').css({
+		   		'opacity': 1
+		   	});
 		   	heroHP = 120;
 		   	//randomizes foeHP
 		   	foeHP = numGen(80, 160, 0);
@@ -242,6 +257,8 @@ function setMarkers(map) {
 	}
 	
 }
+
+
 
 //////////////////////Javascript for fight mechanic//////////////////////
 
@@ -302,10 +319,11 @@ function checkWin() {
 		battleEnd = true;
 		$('.results').html('You Lose!');
 		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
+		$('.hero').animate({opacity:0}, 2000);
 		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
 			$('#myModal').modal('hide');
-			$('.hero').hide("explode", {pieces: 16}, 3000 );
+			// $('.hero').fadeIn(10);
 		}, 1000 * 3);
     
 		numberPokemon--;
@@ -329,13 +347,13 @@ function checkWin() {
 		setTimeout(function() {
 			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
 			$('.caught').removeClass('animateLeft')
-		},500)
+		},500);
 		//mousedown event to trigger foe going to pen
 		$(document).on('mousedown', 'img.caught', function () {
 			//controls height of foe in pen
 			$('img.caught').appendTo('#pen').css({
 				'height':'50px'
-			});
+			}).addClass('zoom');
 			$('img.caught').draggable({
 				containment: "parent",
 				//controls grid size for drag movement
@@ -354,7 +372,13 @@ function checkWin() {
 		animationSpeed = animationSpeed / speedModifier;
 
 	}//end of else if conditional
-	if (battleEnd) {$('.slider').hide();}
+	if (battleEnd) {
+		$('.slider').css({'opacity':0}, 1000)
+		setTimeout(function () {
+			// $('.slider').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0}, 200);
+		}, 300)
+	}
+	
 }//end of checkwin
 
 
