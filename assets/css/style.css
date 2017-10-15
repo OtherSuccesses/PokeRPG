@@ -233,6 +233,11 @@ h1#mainTitle {
 	right: 50%;
 }
 
+.space{
+	width: 15px;
+	white-space: pre;
+}
+
 
 
 	/**************************************animation code**************************************/
@@ -305,7 +310,18 @@ h1#mainTitle {
 	-ms-animation-timing-function: ease-out;
 }
 
+.letterAnimation{
+	/*display: inline;*/
+	display: inline-block;
+	animation-name: letterAnimation;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: ease-in-out;
+	animation-delay: 0s;
+	position: relative;
 
+}
 
 
 
@@ -484,6 +500,18 @@ h1#mainTitle {
 	100% {
 		transform: translateX(0px);
 	}
+}
+
+
+@keyframes letterAnimation {
+	0%, {
+		transform: translateY(-20px);
+	}
+
+	100% {
+		transform: translateY(20px);
+	}
+
 }
 
 /*****************************end of animation code*****************************/
