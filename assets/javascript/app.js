@@ -109,8 +109,8 @@ function letterBounce(element, duration, increase) {
 //Player Name Entry Modal JS
 $(window).on('load',function(){
 	letterBounce('#mainTitle','5s', 500);
-	$("#winCount").text("Wins: " + winCount);
-	$("#lossCount").text("Lives: " +lives);
+	$("#winCount").text(winCount);
+	$("#lossCount").text(lives);
 	//added to stop user from clicking outside modal to bypass
 		$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false})
     $('#playerNameEntryModal').modal('show');
@@ -143,8 +143,8 @@ $(document).on("click", "#playerNameButton",function(event){
 			$('#thisPanel.panel').show('slow');
 			playerName = $("#playerNameEntry").val();
 	    	database.ref("/Players/").once("value", function(snapshot){
-	    		console.log(snapshot);
-	    		console.log(snapshot.name);
+	    		console.log(snapshot.val());
+	    		console.log(snapshot.val().name);
 	    		var playerDataRef = database.ref("/Players/" + playerName +"/");
 	    		if (!snapshot.val()[playerName]){
 	    			console.log("valid name");
@@ -165,7 +165,7 @@ $(document).on("click", "#playerNameButton",function(event){
 			    	});
 	    		}
 	    	})
-	    	$("#name").text("Name: " + playerName);
+	    	$("#name").text(playerName);
 	    	$("#playerNameEntryModal").modal('toggle');
     	}
 });
@@ -210,7 +210,6 @@ function initMap() {
         zoom: 3
         });
         window.onload = setMarkers(map);
-        $("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
       };
 
 // initialize markers on map
@@ -219,7 +218,7 @@ function setMarkers(map) {
 	  // Adds markers to the map.
 	generateCoordinates();
 
-	for (var i = 1; i<loopCount; i++){
+	for (var i = 1; i<=loopCount; i++){
 
 		numberPokemon++;
 		var icon = {
@@ -276,7 +275,9 @@ function setMarkers(map) {
 	  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
 	  	  	$('#myModal').modal('show');
 		});
-		   $("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
+		   //converting numberPokemon to Number and adding 1 to display 50
+		   pokeRemain = Number(numberPokemon)+1;
+		   $("#numberPokes").text(pokeRemain);
 	}
 	
 }
@@ -346,7 +347,7 @@ function checkWin() {
 		numberPokemon--;
 		battleEnd = true;
 		$('.results').html('You Lose!');
-		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
+		$("#numberPokes").text(numberPokemon);
 		$('.hero').animate({opacity:0}, 2000);
 		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
@@ -355,10 +356,10 @@ function checkWin() {
 		}, 1000 * 3);
     
 		numberPokemon--;
-		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
+		$("#numberPokes").text(numberPokemon);
 		lives--;
 
-		$("#lossCount").text("Lives: " +lives);
+		$("#lossCount").text(lives);
 		checkLives();
 
 
@@ -370,7 +371,7 @@ function checkWin() {
 		battleEnd = true;
 		//creates titles for poke's in pen on hover
 		$('img.foe').removeClass('foe letterAnimation').addClass('caught').attr('title', pokeName);
-		$("#numberPokes").text("Pokemon Remaining: " + numberPokemon);
+		$("#numberPokes").text(numberPokemon);
 		//delays writing the message by 500ms to allow animation to complete
 		setTimeout(function() {
 			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
@@ -392,7 +393,7 @@ function checkWin() {
 			$('#myModal').modal('hide');
 		});
 		winCount++;
-		$("#winCount").text("Wins: " + winCount);
+		$("#winCount").text(winCount);
 
 		//controls increase of .slide animation
 		animationSpeed = 4;

@@ -248,6 +248,7 @@ h1#mainTitle {
 	padding: 10px 0 10px 15px;
 	margin: 20px auto;
 	font-size: 20px;
+	opacity:0.7;
 }
 
 .hit {
@@ -256,6 +257,10 @@ h1#mainTitle {
 
 .miss {
 	background: red;	
+}
+
+.hero {
+	z-index: 100;
 }
 
 
