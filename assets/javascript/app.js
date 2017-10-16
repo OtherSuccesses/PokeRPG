@@ -143,8 +143,8 @@ $(document).on("click", "#playerNameButton",function(event){
 			$('#thisPanel.panel').show('slow');
 			playerName = $("#playerNameEntry").val();
 	    	database.ref("/Players/").once("value", function(snapshot){
-	    		console.log(snapshot);
-	    		console.log(snapshot.name);
+	    		console.log(snapshot.val());
+	    		console.log(snapshot.val().name);
 	    		var playerDataRef = database.ref("/Players/" + playerName +"/");
 	    		if (!snapshot.val()[playerName]){
 	    			console.log("valid name");
