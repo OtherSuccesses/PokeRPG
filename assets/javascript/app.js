@@ -449,7 +449,7 @@ $(document).on('click','#myModal' ,function () {
 			//conditional checks if mover is within the hitbox.  If so, sets
 			//hit flag to true and allows bounce animation.  Also writes 'hit' to screen
 			if (mover.left > 85 && mover.left < 115) {
-				var index = numGen(0,2,0);
+				var index = numGen(1,3,0);
 				playSound('hit'+Number(index));
 				hit = true;
 				setTimeout(function () {
@@ -459,7 +459,7 @@ $(document).on('click','#myModal' ,function () {
 
 			//if not in hit box, sets hit to false and writes 'miss' to screen
 			} else {
-				var index = numGen(0,3,0);
+				var index = numGen(1,4,0);
 				playSound('miss'+Number(index));
 				hit = false;
 				hitText('Miss!', 'miss');
