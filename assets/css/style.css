@@ -27,7 +27,6 @@ html, body {
 
 .page-heading {
 	z-index: 1;
-	color: black;
 	transform: rotate(-90deg) translateX(-50%);
 }
 
@@ -43,7 +42,7 @@ h1#mainTitle {
 }
 
 #thisPanel.panel {
-	background: none;
+	background: transparent;
 }
 
 .accordion {
@@ -257,6 +256,11 @@ h1#mainTitle {
 
 .hero {
 	z-index: 100;
+}
+
+input[type='range'] {
+	background: green;
+	z-index: 185;
 }
 
 

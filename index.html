@@ -15,8 +15,10 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link href="assets/css/style.css" type="text/css" rel="stylesheet">
 <body>
+<input type="range" min="0" max="1" step="0.1" id="slider">
 
 <div class="container-fluid">
+	
 	<div class="page-heading panel col-lg-6 text-center" id="thisPanel">
 		<h1 id="mainTitle">Poke-Map Challenge</h1>
 	</div>
@@ -43,7 +45,7 @@
 	    	<div class="accordionBody"><div class="panel-body" id="pen"></div>
 
 
-			<!-- commented out and saved in case we want to revert to old panel UI -->
+		<!-- commented out and saved in case we want to revert to old panel UI -->
 
 
 	    <!--     <div class=" panel panel-primary" >
@@ -101,29 +103,14 @@
 		  <div class="modal-body">
 		    	<div class="professor-container">
 		    		<img src="https://cdn.bulbagarden.net/upload/8/84/Professor_Oak_XY.png">
-		    		
 		  		</div>
 		  		<div>
-					
-					<!-- commented out to test new input group.  Do not delete -->
-
 		  			<form id="playerEntryField">
 		  				<label id="playerNameEntryFieldLabel" for="playerNameEntry">Name Input: </label>
 		  				<input type="text" id="playerNameEntry">
 		  				<input type="submit" id="playerNameButton" value="Verify!">
 		  				<p class="validationTxt"></p>
 		  			</form>
-
-<!-- 
-		  			<form id="playerEntryField">
-					  <div class="input-group">
-					    <input type="text" class="form-control" placeholder="Enter your name!" id="playerNameEntry">
-					    <div class="input-group-btn">
-					      <button class="btn btn-success" type="submit" id="playerNameButton">Verify!</button>
-					    </div>
-					  </div>
-					  <p class="validationTxt"></p>
-					</form> -->
 		  		</div>
 			</div>
 		</div>
@@ -186,7 +173,23 @@
 		</div>
 	</div>
 </div>
-			
+
+
+
+<audio id="audio1" loop>
+  <!-- <source src="http://www.w3schools.com/html5/song.ogg" type="audio/ogg" /> -->
+  <source src="assets/audio/background.mp3" type="audio/mpeg" />
+Your browser does not support the audio element.
+</audio>
+<!-- <audio  id="background" autoplay>
+	<source src="background.ogg" type="audio/ogg">
+  	<source src="assets/audio/background.mp3"  type="audio/mpeg">
+</audio>	 -->
+	<!-- <audio src="/assets/audio/background.mp3" id="background" loop></audio>	 -->
+
+
+  
+
 </body>
     <script type="text/javascript" src="assets/javascript/app.js"></script>
     	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI&callback=initMap"

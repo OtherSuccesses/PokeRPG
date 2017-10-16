@@ -24,6 +24,15 @@ var lives = 10;
 var numberPokemon = 0;
 var score = 0;
 
+var playSound = function (source) {
+	var snd  = new Audio();
+	var src  = document.createElement("source");
+	src.type = "audio/mpeg";
+	src.src  = "assets/audio/"+ source +".mp3";
+	console.log(src.src);
+	snd.appendChild(src);
+	snd.play();
+}
 
 //Firebase Code
 // Initialize Firebase
@@ -94,7 +103,7 @@ function letterSway(element, duration, increase) {
 		}
 		title.append(newLetter);
 	}
-	
+
 	for (var i = 0; i<titleText.length; i++) {
 		
 		delay+=increase;
@@ -111,7 +120,7 @@ $(window).on('load',function(){
 	$("#winCount").text(winCount);
 	$("#lossCount").text(lives);
 	//added to stop user from clicking outside modal to bypass
-		$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false})
+	$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false})
     $('#playerNameEntryModal').modal('show');
     //hides error text div on load
     $('.validationTxt').hide();
@@ -130,46 +139,55 @@ $(document).on("click", "#playerNameButton",function(event){
 	//added to prevent text from piling up
 	$(".validationTxt").empty();
 	var str = $('#playerNameEntry').val();
-		if(/^[a-zA-Z- ]*$/.test(str) == false) {
-			$(".validationTxt").append('<br>Your name cannot contain numbers or special characters!');
-			$('.validationTxt').show();
-		}
-		else if(str==""){
-			$(".validationTxt").append('<br>You must have a name! If you do not have one, please enter "Binky".');
-			$('.validationTxt').show();
-		}
-		else{
-			$('#thisPanel.panel').show('slow');
-			playerName = $("#playerNameEntry").val();
-	    	database.ref("/Players/").once("value", function(snapshot){
-	    		console.log(snapshot.val());
-	    		console.log(snapshot.val().name);
-	    		var playerDataRef = database.ref("/Players/" + playerName +"/");
-	    		if (!snapshot.val()[playerName]){
-	    			console.log("valid name");
-	    			playerDataRef
-			    	.set({
-			    		name: playerName,
-	    				highScore: 0
-			    	});
-			    	playerDataRef.once("value", function(snapshot){
-				    	playerObj=snapshot.val();
-				    	console.log(playerObj);
-			    	});
-	    		}
-	    		else{
-				    playerDataRef.once("value", function(snapshot){
-				    	playerObj=snapshot.val();
-				    	console.log(playerObj);
-			    	});
-	    		}
-	    	})
-	    	$("#name").text(playerName);
-	    	$("#playerNameEntryModal").modal('toggle');
-    	}
+	if(/^[a-zA-Z- ]*$/.test(str) == false) {
+		$(".validationTxt").append('<br>Your name cannot contain numbers or special characters!');
+		$('.validationTxt').show();
+	}
+	else if(str==""){
+		$(".validationTxt").append('<br>You must have a name! If you do not have one, please enter "Binky".');
+		$('.validationTxt').show();
+	}
+	else {
+		//plays background music
+		var audio1 = document.getElementById('audio1')
+		audio1.volume = 0.1;
+		audio1.play();
+
+		$('input[type=range]').on('input', function () {
+		    console.log($(this).val());
+		    audio1.volume = $(this).val();
+		});
+		$('#thisPanel.panel').show('slow');
+		playerName = $("#playerNameEntry").val();
+    	database.ref("/Players/").once("value", function(snapshot){
+    		console.log(snapshot.val());
+    		console.log(snapshot.val().name);
+    		var playerDataRef = database.ref("/Players/" + playerName +"/");
+    		if (!snapshot.val()[playerName]){
+    			console.log("valid name");
+    			playerDataRef
+		    	.set({
+		    		name: playerName,
+    				highScore: 0
+		    	});
+		    	playerDataRef.once("value", function(snapshot){
+			    	playerObj=snapshot.val();
+			    	console.log(playerObj);
+		    	});
+    		}
+    		else {
+			    playerDataRef.once("value", function(snapshot){
+			    	playerObj=snapshot.val();
+			    	console.log(playerObj);
+		    	});
+    		}
+    	})
+    	$("#name").text(playerName);
+    	$("#playerNameEntryModal").modal('toggle');
+	}
 });
 
-	//Pokemon initialize if Database fails to load
+//Pokemon initialize if Database fails to load
 setTimeout(function(){
  	if (pokeArray.length<149){
 		initializePokemonData();
@@ -180,11 +198,10 @@ setTimeout(function(){
 // order in which these markers should display on top of each other.
 var numGen =  function(to, from, fixed) {
 		return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
-	};
+};
 
 // Function to generate coordinates for sprite markers
 function generateCoordinates() {
-
 	var latitude = function(){
 		for (i = 0; i<loopCount; i++) {
 		var lat = numGen(80, -80, 3);
@@ -197,7 +214,7 @@ function generateCoordinates() {
 		markerArray[i].longitude = long;
 	}};
 	// generate sprite coordinates
-	latitude ();
+	latitude();
 	longitude();
 }
 
@@ -209,7 +226,7 @@ function initMap() {
         zoom: 3
         });
         window.onload = setMarkers(map);
-      };
+};
 
 // Adds markers to the map. 
 function setMarkers(map) {
@@ -230,48 +247,53 @@ function setMarkers(map) {
 		    icon: icon
 		});
 			// add click listener to each marker
-		   marker.addListener('click', function(event) {
-		   	$('.mover').css({
-		   		'animation-duration': animationSpeed+'s',
-		   		'-webkit-animation-duration': animationSpeed+'s',
-		   		'-moz-animation-duration': animationSpeed+'s',
-				'-o-animation-duration': animationSpeed+'s'
-			});
-		   	battleEnd = false;
-		   	$('.foeContainer').empty();
-		   	$('.results').empty();
-		   	$('.results').text('Click the screen when the green dot is covering the red dot to hit the pokemon.')
-   			$('.hero').animate({opacity:1}, 100);
-		   	$('.slider').css({
-		   		'opacity': 1
-		   	});
-		   	heroHP = 120;
-		   	//randomizes foeHP
-		   	foeHP = numGen(80, 160, 0);
-		   	//randomizes the amount of damage each hit does to foe
-		   	foeModifier = Math.floor(foeHP / numGen(2,4,0));
-		   	$('.heroHP').text(heroHP);
+		marker.addListener('click', function(event) {
+		   	playSound('fightStart');
 		   	foeURL = this.icon.url;
-		   	var index = foeURL.match(/[0-9]+/g);
-		   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
-		   	pokeName = result[0].name;
-		   	pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
-		   	$('.pokeName').text(pokeName);
-
-		   	var h4 = $('<h4>');
-		   	var miss = $('<h4>');
-		   	h4.addClass('foeHP text-center HP');
-		   	h4.text(foeHP);
-		   	var currentFoe = $('<img>');
-		   	currentFoe.attr({
-		   		'src': foeURL,
-		   		'height': 200,
-		   		'class': 'foe letterAnimation'
-		   	});
 		   	this.setMap(null);
-		   	$('.foeContainer').prepend(h4,currentFoe);
-	  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
-	  	  	$('#myModal').modal('show');
+		   	setTimeout(function (){
+		   		$('.mover').css({
+			   		'animation-duration': animationSpeed+'s',
+			   		'-webkit-animation-duration': animationSpeed+'s',
+			   		'-moz-animation-duration': animationSpeed+'s',
+					'-o-animation-duration': animationSpeed+'s'
+				});
+			   	battleEnd = false;
+			   	$('.foeContainer').empty();
+			   	$('.results').empty();
+			   	$('.results').text('Click the screen when the green dot is covering the red dot to hit the pokemon.')
+	   			$('.hero').animate({opacity:1}, 100);
+			   	$('.slider').css({
+			   		'opacity': 1
+			   	});
+			   	heroHP = 120;
+			   	//randomizes foeHP
+			   	foeHP = numGen(80, 160, 0);
+			   	//randomizes the amount of damage each hit does to foe
+			   	foeModifier = Math.floor(foeHP / numGen(2,4,0));
+			   	$('.heroHP').text(heroHP);
+			   	// foeURL = this.icon.url;
+			   	var index = foeURL.match(/[0-9]+/g);
+			   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
+			   	pokeName = result[0].name;
+			   	pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
+			   	$('.pokeName').text(pokeName);
+
+			   	var h4 = $('<h4>');
+			   	var miss = $('<h4>');
+			   	h4.addClass('foeHP text-center HP');
+			   	h4.text(foeHP);
+			   	var currentFoe = $('<img>');
+			   	currentFoe.attr({
+			   		'src': foeURL,
+			   		'height': 200,
+			   		'class': 'foe letterAnimation'
+			   	});
+			   	
+			   	$('.foeContainer').prepend(h4,currentFoe);
+		  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
+		  	  	$('#myModal').modal('show');
+		   	},300);
 		});
 		   //converting numberPokemon to Number and adding 1 to display 50
 		   pokeRemain = Number(numberPokemon)+1;
@@ -280,22 +302,16 @@ function setMarkers(map) {
 	
 }
 
-
-
-////////title animation//////////
-
-
-
-
 //////////////////////Javascript for fight mechanic//////////////////////
 
 function reduceHP(character) {
-		if (character === 'hero') {
-			return heroHP-=heroModifier;
-		} else if ( character === 'foe') {
-			return foeHP-=foeModifier;
-		}
+	if (character === 'hero') {
+		return heroHP-=heroModifier;
+	} else if ( character === 'foe') {
+		return foeHP-=foeModifier;
 	}
+}
+
 function writeHP() {
 	if (hit) {
 		foeHP = reduceHP('foe');
@@ -342,6 +358,7 @@ function checkLives() {
 
 function checkWin() {
 	if (heroHP<=0) {
+		setTimeout(function () {playSound('loss');}, 600);
 		numberPokemon--;
 		battleEnd = true;
 		$('.results').html('You Lose!');
@@ -350,13 +367,9 @@ function checkWin() {
 		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
 			$('#myModal').modal('hide');
-			// $('.hero').fadeIn(10);
 		}, 1000 * 3);
-    
-		numberPokemon--;
 		$("#numberPokes").text(numberPokemon);
 		lives--;
-
 		$("#lossCount").text(lives);
 		checkLives();
 	} else if (foeHP<=0) {
@@ -375,6 +388,7 @@ function checkWin() {
 		//mousedown event to trigger foe going to pen, collapsing the modal,  
 		//adjusting height of image, and making it draggable
 		$(document).on('click', 'img.caught', function () {
+			playSound('capture');
 			//controls height of foe in pen
 			$('img.caught').appendTo('#pen').css({
 				'height':'50px'
@@ -391,7 +405,7 @@ function checkWin() {
 
 		//controls increase of .slide animation
 		animationSpeed = 4;
-		speedModifier+=.05;
+		speedModifier+=.07;
 		animationSpeed = animationSpeed / speedModifier;
 
 	}//end of else if conditional
@@ -423,34 +437,36 @@ $(document).on('click','#myModal' ,function () {
 	console.log(mover.left);
 	//as long as hero and foe are alive, animation effects are added
 	//when the modal is clicked. Timeout allows animation to finish.
-	if (heroHP>0 && foeHP>0) {
-		$('.hero').addClass('animateRight');
-		$( ".hero" ).effect( "bounce", "slow" );
-
-		setTimeout(function () {
-			$('.hero').removeClass('animateRight');
-		},600);
-		//conditional checks if mover is within the hitbox.  If so, sets
-		//hit flag to true and allows bounce animation.  Also writes 'hit' to screen
-		if (mover.left > 85 && mover.left < 115) {
-			hit = true;
+		if (heroHP>0 && foeHP>0) {
 			setTimeout(function () {
-				$( ".foe" ).effect( "bounce", "slow" );
-			},300);
-			hitText('Hit!','hit');
+				$('.hero').addClass('animateRight');
+				$( ".hero" ).effect( "bounce", "slow" );
+			},100);
 
-		//if not in hit box, sets hit to false and writes 'miss' to screen
-		} else {
-			hit = false;
-			hitText('Miss!', 'miss');
+			setTimeout(function () {
+				$('.hero').removeClass('animateRight');
+			},700);
+			//conditional checks if mover is within the hitbox.  If so, sets
+			//hit flag to true and allows bounce animation.  Also writes 'hit' to screen
+			if (mover.left > 85 && mover.left < 115) {
+				var index = numGen(0,2,0);
+				playSound('hit'+Number(index));
+				hit = true;
+				setTimeout(function () {
+					$( ".foe" ).effect( "bounce", "slow" );
+				},300);
+				hitText('Hit!','hit');
+
+			//if not in hit box, sets hit to false and writes 'miss' to screen
+			} else {
+				var index = numGen(0,3,0);
+				playSound('miss'+Number(index));
+				hit = false;
+				hitText('Miss!', 'miss');
+			}
+			writeHP();
 		}
-		writeHP();
-	}
 	checkWin();
 
 	}//end of !battleEnd conditional
 });//end of #myModal onclick event
-
-
-
-
