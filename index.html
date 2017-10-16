@@ -4,7 +4,7 @@
 	<title>Poke-Map Challenge</title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link href="assets/css/reset.css" type="text/css" rel="stylesheet">
-	<link href="assets/imfavicon.ico" rel="icon" type="image/x-icon" />
+	<link href="assets/images/favicon.ico" rel="icon" type="image/x-icon" />
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Sedgwick+Ave+Display" rel="stylesheet">
@@ -36,10 +36,18 @@
 	    	<!-- </div> -->
 	    	<h3 class="accordionHeader">User Info</h3>
 	    	<div class="accordionBody">
-				<div id="name"></div>
+	    		<table class="table">
+	    			
+	    				<tr><td>Player Name:</td><td id="name"></td></tr>
+	    				<tr><td>Pokemon Remaining:</td><td id="numberPokes"></td></tr>
+	    				<tr><td>Pokemon Caught:</td><td id="winCount"></td></tr>
+	    				<tr><td>Lives Remaining:</td><td id="lossCount"></td></tr>
+	    			
+	    		</table>
+				<!-- <div id="name"></div>
 				<div id="numberPokes"></div>
 				<div id="winCount"></div>
-				<div id="lossCount"></div>
+				<div id="lossCount"></div> -->
 	    	</div>
 	    	<h3 class="accordionHeader">Poke-Pen</h3>
 	    	<div class="accordionBody"><div class="panel-body" id="pen"></div>
