@@ -14,7 +14,7 @@ var activePokemon = [];
 var markerArray = [];
 var pokeName = '';
 var battleEnd = false;
-loopCount = 50;
+var loopCount = 50;
 //PlayerName variable
 var playerName= [];
 var winCount = 0;
@@ -298,7 +298,7 @@ function reduceHP(character) {
 			return foeHP-=foeModifier;
 		}
 	}
-function writeHit() {
+function writeHP() {
 	if (hit) {
 		foeHP = reduceHP('foe');
 		$('.foeHP').html(foeHP);
@@ -361,8 +361,6 @@ function checkWin() {
 
 		$("#lossCount").text(lives);
 		checkLives();
-
-
 	} else if (foeHP<=0) {
 		numberPokemon--;
 		//ensures that foeHP never displays less than 0
@@ -375,10 +373,10 @@ function checkWin() {
 		//delays writing the message by 500ms to allow animation to complete
 		setTimeout(function() {
 			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
-			// $('.caught').removeClass('animateLeft')
 		},500);
-		//mousedown event to trigger foe going to pen
-		$(document).on('mousedown', 'img.caught', function () {
+		//mousedown event to trigger foe going to pen, collapsing the modal,  
+		//adjusting height of image, and making it draggable
+		$(document).on('click', 'img.caught', function () {
 			//controls height of foe in pen
 			$('img.caught').appendTo('#pen').css({
 				'height':'50px'
@@ -388,10 +386,8 @@ function checkWin() {
 				//controls grid size for drag movement
 				grid: [ 10, 10 ],
 			});
-			
-
 			$('#myModal').modal('hide');
-		});
+		});//end of mouse
 		winCount++;
 		$("#winCount").text(winCount);
 
@@ -401,15 +397,15 @@ function checkWin() {
 		animationSpeed = animationSpeed / speedModifier;
 
 	}//end of else if conditional
+
+	//removes slider at the end of battle
 	if (battleEnd) {
 		$('.slider').css({'opacity':0}, 1000)
-		setTimeout(function () {
-			// $('.slider').css({opacity: 1.0, visibility: "hidden"}).animate({opacity: 0}, 200);
-		}, 300)
 	}
 	
 }//end of checkwin
 
+//function writes 'hit' or 'miss' to screen
 function hitText(text,status) {
 	if ($('#hitText')) {
 		$('#hitText').remove();
@@ -427,36 +423,35 @@ $(document).on('click','#myModal' ,function () {
 	if (!battleEnd) {
 	var mover = $('.mover').position();
 	console.log(mover.left);
-
+	//as long as hero and foe are alive, animation effects are added
+	//when the modal is clicked. Timeout allows animation to finish.
 	if (heroHP>0 && foeHP>0) {
 		$('.hero').addClass('animateRight');
-		// $('.foe').addClass('animateLeft');
 		$( ".hero" ).effect( "bounce", "slow" );
-
 
 		setTimeout(function () {
 			$('.hero').removeClass('animateRight');
-			// $('.foe').removeClass('animateLeft');
 		},600);
-
+		//conditional checks if mover is within the hitbox.  If so, sets
+		//hit flag to true and allows bounce animation.  Also writes 'hit' to screen
 		if (mover.left > 85 && mover.left < 115) {
 			hit = true;
 			setTimeout(function () {
 				$( ".foe" ).effect( "bounce", "slow" );
 			},300);
 			hitText('Hit!','hit');
-			
-			
+
+		//if not in hit box, sets hit to false and writes 'miss' to screen
 		} else {
 			hit = false;
 			hitText('Miss!', 'miss');
 		}
-		writeHit();
+		writeHP();
 	}
 	checkWin();
 
-	}
-});
+	}//end of !battleEnd conditional
+});//end of #myModal onclick event
 
 
 
