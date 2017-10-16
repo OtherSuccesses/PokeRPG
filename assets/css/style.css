@@ -186,17 +186,13 @@ h1#mainTitle {
 	color:white;
 }
 
-/*commented out in case we want to go back to different name input*/
-
-/*#playerNameButton{
-	color:black;
+#playerNameButton{
 	background-color: lightgreen;
 	border-color: darkgreen;
 	border-width: 3px;
-	transition:all 300ms ease;
+	color: black;
 	transform: scale(1);
-	opacity: 0.8;
-	font-size: 23px;
+	transition:all 300ms ease;
 }
 
 #playerNameButton:hover {
@@ -208,7 +204,7 @@ h1#mainTitle {
 
 #playerNameButton:active {
 	transform: scale(1);
-}*/
+}
 
 .validationTxt {
 	font-size: 15px;
@@ -262,7 +258,6 @@ h1#mainTitle {
 .hero {
 	z-index: 100;
 }
-
 
 
 	/**************************************animation code**************************************/

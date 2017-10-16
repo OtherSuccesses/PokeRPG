@@ -1,5 +1,5 @@
 // Global Variables
-
+var map;
 var hit = '';
 var foeURL = '';
 var heroHP = 120;
@@ -40,12 +40,10 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
-
-
- // add firebase data to local array
+// add firebase data to local array
 database.ref().on("child_added", function(childSnapshot){
 	pokeArray.push(childSnapshot.val());
-	});
+});
 
 //Pokemon API Code
 var initializePokemonData = function(){
@@ -80,7 +78,8 @@ $(document).on("click", "#restart-btn", function(event){
 	location.reload();
 });
 
-function letterBounce(element, duration, increase) {
+//function that makes the letters "sway"
+function letterSway(element, duration, increase) {
 	var delay=0;
 	var title = $(element);
 	var titleText = title.html();
@@ -108,7 +107,7 @@ function letterBounce(element, duration, increase) {
 
 //Player Name Entry Modal JS
 $(window).on('load',function(){
-	letterBounce('#mainTitle','5s', 500);
+	letterSway('#mainTitle','5s', 500);
 	$("#winCount").text(winCount);
 	$("#lossCount").text(lives);
 	//added to stop user from clicking outside modal to bypass
@@ -200,7 +199,7 @@ function generateCoordinates() {
 	// generate sprite coordinates
 	latitude ();
 	longitude();
-	}
+}
 
 // initialize google maps api
 function initMap() {
@@ -212,10 +211,9 @@ function initMap() {
         window.onload = setMarkers(map);
       };
 
-// initialize markers on map
-var map; 
+// Adds markers to the map. 
 function setMarkers(map) {
-	  // Adds markers to the map.
+
 	generateCoordinates();
 
 	for (var i = 1; i<=loopCount; i++){
