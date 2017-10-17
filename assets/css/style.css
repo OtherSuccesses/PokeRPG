@@ -165,7 +165,7 @@ h1#mainTitle {
 }
 
 /*Player Name Modal CSS*/
-#playerNameEntryHeader{
+#playerNameEntryHeader, #lossHeader{
 	background-color: antiquewhite;
 	border-radius: 15px;
 	color: slategray;
@@ -176,7 +176,7 @@ h1#mainTitle {
 
 }
 
-#playerNameEntryModal {
+#playerNameEntryModal, #lossModal {
 	text-align:center;
 	color: white;
 	font-weight: bold;
@@ -186,7 +186,7 @@ h1#mainTitle {
 	color:white;
 }
 
-#playerNameButton{
+#playerNameButton, .loss-modal-buttons{
 	background-color: lightgreen;
 	border-color: darkgreen;
 	border-width: 3px;
@@ -214,6 +214,15 @@ h1#mainTitle {
 	padding: 0 10px 15px 10px;
 	border-radius: 5px;
 	border:1px dashed white;
+}
+
+#highScore {
+	color: red;
+	animation-name: highScore;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+	animation-duration: 2s;
+	animation-direction: alternate;
 }
 
 .trainerTitle {
@@ -336,7 +345,6 @@ input[type='range'] {
 }
 
 .letterAnimation{
-	/*display: inline;*/
 	display: inline-block;
 	animation-name: letterAnimation;
 	animation-duration: 2s;
@@ -344,12 +352,7 @@ input[type='range'] {
 	animation-direction: alternate;
 	animation-timing-function: ease-in-out;
 	animation-delay: 0s;
-	position: relative;
-
 }
-
-
-
 
 @keyframes slide {
 	0% {
@@ -470,71 +473,24 @@ input[type='range'] {
 }
 
 
-
-@keyframes animateLeft {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(-150%);
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-}
-
-@-webkit-keyframes animateLeft {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(-150%);
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-}
-
-@-moz-keyframes animateLeft {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(-150%);
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-}
-
-@-o-keyframes animateLeft {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(-150%);
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-}
-
-
 @keyframes letterAnimation {
 	0%, {
 		transform: translateY(-20px);
 	}
 
 	100% {
-		transform: translateY(20px);
+		transform: translateY(20px) ;
+	}
+
+}
+
+@keyframes highScore {
+	0%, {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(1.2);
 	}
 
 }

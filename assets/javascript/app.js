@@ -22,6 +22,7 @@ var playerObj;
 var lives = 10;
 //Number of Pokemon caught
 var numberPokemon = 0;
+var startScore = 0;
 var score = 0;
 
 var playSound = function (source) {
@@ -29,7 +30,6 @@ var playSound = function (source) {
 	var src  = document.createElement("source");
 	src.type = "audio/mpeg";
 	src.src  = "assets/audio/"+ source +".mp3";
-	console.log(src.src);
 	snd.appendChild(src);
 	snd.play();
 }
@@ -89,7 +89,7 @@ $(document).on("click", "#restart-btn", function(event){
 
 //function that makes the letters "sway"
 function letterSway(element, duration, increase) {
-	var delay=0;
+	var delay = 0;
 	var title = $(element);
 	var titleText = title.html();
 	title.empty();
@@ -179,6 +179,7 @@ $(document).on("click", "#playerNameButton",function(event){
 			    playerDataRef.once("value", function(snapshot){
 			    	playerObj=snapshot.val();
 			    	console.log(playerObj);
+			    	startScore = playerObj.highScore;
 		    	});
     		}
     	})
@@ -203,13 +204,13 @@ var numGen =  function(to, from, fixed) {
 // Function to generate coordinates for sprite markers
 function generateCoordinates() {
 	var latitude = function(){
-		for (i = 0; i<loopCount; i++) {
+		for (i = 0; i<=loopCount; i++) {
 		var lat = numGen(80, -80, 3);
 		markerArray[i] = {};
 		markerArray[i].latitude = lat;
 	}};
 	var longitude = function(){
-		for (i = 0; i<loopCount; i++) {
+		for (i = 0; i<=loopCount; i++) {
 		var long = numGen(-180, 180, 3);
 		markerArray[i].longitude = long;
 	}};
@@ -236,6 +237,8 @@ function setMarkers(map) {
 	for (var i = 1; i<=loopCount; i++){
 
 		numberPokemon++;
+		console.log(numberPokemon);
+		   $("#numberPokes").text(numberPokemon); 
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
 		    scaledSize: new google.maps.Size(75, 75)
@@ -296,8 +299,7 @@ function setMarkers(map) {
 		   	},300);
 		});
 		   //converting numberPokemon to Number and adding 1 to display 50
-		   pokeRemain = Number(numberPokemon)+1;
-		   $("#numberPokes").text(pokeRemain);
+			
 	}
 	
 }
@@ -322,41 +324,43 @@ function writeHP() {
 	}
 }
 
+function checkScore() {
+	if (score > startScore){
+		playerObj.highScore = score;
+		database.ref("/Players/" + playerName + "/").set({
+			name: playerName,
+			highScore: score	
+		});
+		$("#highScore").empty();
+		$("#highScore").append("<br>You've achieved a new high score!");
+	}
+}
+
 function checkLives() {
+	console.log('startScore: ', startScore);
 	if (lives <= 0){
 		score = (winCount * 100) + (lives * 1000);
+		checkScore();
+		$("#lossModal").modal({backdrop: 'static', keyboard: false});
 		$("#lossModal").modal('show');
 		$("#name-loss").text(playerName);
 		$("#poke-number-caught").text(winCount);
 		$("#score-span").text(score);
-		if (score > playerObj.highScore){
-			playerObj.highScore = score;
-			database.ref("/Players/" + playerName + "/").set({
-				name: playerName,
-				highScore: score	
-			});
-			$("#score-span").append("<br>You've achieved a new high score!");
-		}
 	}
 
 
 	if (numberPokemon<= 0){
+		score = (winCount * 100) + (lives * 1000);
+		checkScore();
+		$("#lossModal").modal({backdrop: 'static', keyboard: false});
 		$("#lossModal").modal('show');
 		$("#name-loss").text(playerName);
 		$("#poke-number-caught").text(winCount);
 		$("#score-span").text(score);
-		if (score > playerObj.highScore){
-			playerObj.highScore = score;
-			database.ref("/Players/" + playerName + "/").set({
-				name: playerName,
-				highScore: score	
-			});
-			$("#score-span").append("<br>You've achieved a new high score!");
-		}
 	}
 }
 
-function checkWin() {
+function checkBattleWin() {
 	if (heroHP<=0) {
 		setTimeout(function () {playSound('loss');}, 600);
 		numberPokemon--;
@@ -364,14 +368,14 @@ function checkWin() {
 		$('.results').html('You Lose!');
 		$("#numberPokes").text(numberPokemon);
 		$('.hero').animate({opacity:0}, 2000);
+		lives--;
+		$("#lossCount").text(lives);
 		//delays modal close and explode hero effect by 3 seconds
 		setTimeout(function () {
 			$('#myModal').modal('hide');
+			checkLives();
 		}, 1000 * 3);
-		$("#numberPokes").text(numberPokemon);
-		lives--;
-		$("#lossCount").text(lives);
-		checkLives();
+		
 	} else if (foeHP<=0) {
 		numberPokemon--;
 		//ensures that foeHP never displays less than 0
@@ -399,7 +403,8 @@ function checkWin() {
 				grid: [ 10, 10 ],
 			});
 			$('#myModal').modal('hide');
-		});//end of mouse
+			checkLives();
+		});//end of click event
 		winCount++;
 		$("#winCount").text(winCount);
 
@@ -415,7 +420,7 @@ function checkWin() {
 		$('.slider').css({'opacity':0}, 1000)
 	}
 	
-}//end of checkwin
+}//end of checkBattleWin
 
 //function writes 'hit' or 'miss' to screen
 function hitText(text,status) {
@@ -466,7 +471,7 @@ $(document).on('click','#myModal' ,function () {
 			}
 			writeHP();
 		}
-	checkWin();
+	checkBattleWin();
 
 	}//end of !battleEnd conditional
 });//end of #myModal onclick event
