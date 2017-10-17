@@ -3,6 +3,7 @@
 	src:  url('pokemonsolid.woff') format('woff');
 }
 
+
 html, body {
 	height: 100%;
 	margin: 0;
@@ -239,7 +240,7 @@ h1#mainTitle {
 	display: inline-block;
 }
 
-/*.trainerTitle:after {
+.trainerTitle:after {
 	content: ' ';
 	position: absolute;
 	height: 0px;
@@ -248,7 +249,7 @@ h1#mainTitle {
 	border-top: 15px solid antiquewhite;
 	bottom: -55px;
 	right: 50%;
-}*/
+}
 
 .space{
 	width: 15px;
@@ -279,11 +280,11 @@ h1#mainTitle {
 
 input[type='range'] {
 	background: green;
-	z-index: 185;
+	z-index: 100;
 }
 
-.difficulty-box {
-	visibility: hidden;
+.ui-state-focus {
+	outline: none !important;
 }
 
 

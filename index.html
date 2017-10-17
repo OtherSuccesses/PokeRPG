@@ -15,7 +15,7 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link href="assets/css/style.css" type="text/css" rel="stylesheet">
 <body>
-<!-- <input type="range" min="0" max="1" step="0.1" id="slider"> -->
+<input type="range" min="0" max="1" step="0.1" id="slider">
 
 <div class="container-fluid">
 	
@@ -44,51 +44,6 @@
 	    	</div>
 	    	<h3 class="accordionHeader">Poke-Pen</h3>
 	    	<div class="accordionBody"><div class="panel-body" id="pen"></div>
-
-
-		<!-- commented out and saved in case we want to revert to old panel UI -->
-
-
-	    <!--     <div class=" panel panel-primary" >
-	            <div class="panel-heading">
-	              <h3 class="panel-title"><strong>Game Instructions</strong></h3> 
-				</div>
-				<div class="panel-body">
-					<p>Drag the map around to find all the Sprites. <br>Click the Sprite to launch the capture window.<br>Click the green circle when it overlaps with the red circle to capture the Sprite.<br>Once you capture the Sprite, click it to add it to your sprite pen. You can drag the Sprites in the pen to rearrange them.</p>
-				</div>
-			</div> -->
-	<!-- 	</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-2 pull-right"> -->
-			<!-- <div class="panel panel-primary">
-	            <div class="panel-heading">
-	              <h3 class="panel-title"><strong>User Info</strong></h3> 
-				</div>
-				<div class="panel-body">
-					<div id="name"></div>
-					<div id="numberPokes"></div>
-					<div id="winCount"></div>
-					<div id="lossCount"></div>
-				</div>
-			</div> -->
-<!-- 		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-2 pull-right"> -->
-			<!-- <div class="panel panel-primary pokePen">
-	            <div class="panel-heading">
-	              <h3 class="panel-title"><strong>Poke-Pen</strong></h3> 
-				</div>
-				<div class="panel-body" id="pen">
-					
-				</div>
-			
-			</div> -->
-
-
-
-
 		</div>
 	</div>
 </div> <!-- end of container-->	
@@ -177,6 +132,34 @@
 	</div>
 </div>
 
+<!-- High Score Modal -->
+<div class="container">
+    <div class="modal fade" id="highScoreModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+            <div id="highScoreHeader" class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>The Greatest Pokemon Catchers in the world!</h3>
+            </div>
+            <div class="modal-body high-score-body">
+                <table id ="high-score-table">
+                    <tr>
+                        <td>Rank</td>
+                        <td>Name</td>
+                        <td>Score</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="loss-modal-buttons">
+                  <button class="loss-modal-buttons" id="loss-modal-btn">
+                      Back
+                  </button>
+                <button class="loss-modal-buttons" id="restart-btn">
+                      Restart
+                  </button>
+              </div>
+        </div>
+    </div>
+</div>
 
 <!-- High Score Modal -->
 <div class="container">
