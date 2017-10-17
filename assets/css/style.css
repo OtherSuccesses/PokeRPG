@@ -560,3 +560,68 @@ input[type='range'] {
 	}
 
 }
+
+@media (max-width: 560px){
+	img.hero {
+		height:100px;
+	}
+
+	#myModal .modal-content {
+		background-size: 100% 100%;
+	}
+	img.foe {
+		height: 50%;
+		margin-bottom: 	60%;
+	}
+
+	img.caught {
+		height: 50%;
+	}
+
+	#hitText {
+		width: 75%;
+	}
+
+	#foeTitle {
+		font-size: 	12px;
+	}
+
+	#hitText {
+		width: 100%;
+		font-size: 	10px;	
+		padding: 0;
+		margin: 0;
+	}
+
+	span.letterAnimation {
+		font-size: 	30px;
+	}
+}
+
+@media (max-width: 320px){
+
+
+	#thisPanel {
+		margin: 0;
+		padding: 0;
+	}
+
+	.results {
+		font-size: 	8px;
+	}
+
+	img.foe {
+		margin-bottom: 60%;
+	}
+
+	#hitText {
+		width: 100%;
+		font-size: 	10px;	
+		padding: 0;
+		margin: 0;
+	}
+
+	.foeHP, .heroHP {
+		font-size: 	10px;
+	}
+}

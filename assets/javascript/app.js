@@ -133,6 +133,19 @@ $(window).on('load',function(){
 		event: "click",
 		heightStyle: "content",
 	});
+
+	if($(window).width() <= 600) {
+		$('.space').html('<br><br>')
+	}
+});
+
+$(window).on("resize = 'horizontal'", function () {
+	if($(window).width() <= 600) {
+		$('.space').html('<br><br>')
+	}
+	if ($(window).width() >= 992) {
+		$('.space').html('');
+	}
 });
 
 $(document).on("click", "#playerNameButton",function(event){
@@ -274,7 +287,7 @@ function setMarkers(map) {
 			   	battleEnd = false;
 			   	$('.foeContainer').empty();
 			   	$('.results').empty();
-			   	$('.results').text('Click the screen when the green dot is covering the red dot to hit the pokemon.')
+			   	$('.results').text('Click when the green dot is in the middle to hit the pokemon.')
 	   			$('.hero').animate({opacity:1}, 100);
 			   	$('.slider').css({
 			   		'opacity': 1
@@ -289,7 +302,7 @@ function setMarkers(map) {
 			   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
 			   	pokeName = result[0].name;
 			   	pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
-			   	$('.pokeName').text(pokeName);
+			   	$('.pokeName').text(pokeName+'!');
 
 			   	var h4 = $('<h4>');
 			   	var miss = $('<h4>');
