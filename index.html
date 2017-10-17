@@ -15,7 +15,7 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link href="assets/css/style.css" type="text/css" rel="stylesheet">
 <body>
-<input type="range" min="0" max="1" step="0.1" id="slider">
+<!-- <input type="range" min="0" max="1" step="0.1" id="slider"> -->
 
 <div class="container-fluid">
 	
@@ -24,7 +24,7 @@
 	</div>
 	<div id="map">	</div>
 	<div class="row" id="accordionRow">
-	    <div class="col-sm-10 col-md-4 pull-right accordion">
+	    <div class="col-sm-12 col-md-4 pull-right accordion">
 	    	<h3 class="accordionHeader">Instructions</h3>
 	    			<ul id="instructions-ul" class="accordionBody">
 	    				<li>Explore the map and find all the Pokemon.</li>
@@ -127,7 +127,7 @@
 			<div class="modal-content">
 				<div class="modal-header" id="modal-header">
 					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-					<h4 class="modal-title text-center">Capture the <span class="pokeName"></span> !</h4>
+					<h4 class="modal-title text-center" id="foeTitle">Capture the <span class="pokeName"></span></h4>
 				</div>
 				<div class="modal-body row">
 					<div class="heroContainer col-xs-4 text-center">

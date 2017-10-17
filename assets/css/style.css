@@ -23,12 +23,17 @@ html, body {
 
 .map {
 	height: 100%;
-	width: 100%
+	width: 100%;	
 }
 
 .page-heading {
 	z-index: 1;
-	transform: rotate(-90deg) translateX(-50%);
+	transform: rotate(-90deg);
+	/*transform: rotate(-90deg) translate(-42%, -450%);*/
+	position: absolute;
+	top: 44%;
+    left: -23%;
+
 }
 
 h1#mainTitle {
@@ -39,7 +44,7 @@ h1#mainTitle {
 	font-weight: bold;
 	font-family: "PokemonSolid";
 	-webkit-text-stroke: 1px  #3c5aa6;
-	margin-top: -55%;
+	/*margin-top: -55%;*/
 }
 
 #thisPanel.panel {
@@ -510,37 +515,31 @@ input[type='range'] {
 
 /*********************************media queries*********************************/
 
+@media (max-width: 1200px) {
+	.page-heading {
+	transform: rotate(-90deg);
+	position: absolute;
+	top: 44%;
+    left: -20%;
+	}
+}
 
 @media (max-width: 992px){
-	#instructions-ul {
-	}
-
-	#instructions-ul li {
-		display: inline-block;
-		margin: 5px 0;
-	}
-
-	.accordionBody {
-		background-color: white;
-		padding: 105px;
-		height: 100%;
-		font-size: 15px;
-		padding: 10px 30px;
-	}
 
 	.accordion {
 		position: absolute;
-		bottom: -10%;
+		bottom: 2%;
 		left: 50%;
 		width: 100%;
-		height:15%;
 		transform: translateX(-50%);
 	}
 
-
 	.page-heading {
+		position: absolute;
+	    top: 20px;
+		left: 25%;
+		/*transform: translateX(-50%);*/
 		z-index: 100;
-		/*color: black;*/
 		transform: rotate(0deg);
 	}
 
@@ -548,26 +547,6 @@ input[type='range'] {
 		letter-spacing:5px;
 		font-size:3.5em;
 		margin-top: -5%;
-	}
-
-	.accordionHeader {
-		height: 10%;
-		margin-bottom: 0;
-		margin-top: 0;
-		/*padding: 10px;*/
-		font-size: 15px;
-	}
-
-	#instructions-ul.accordionBody.a.b.c.d {
-		height:20%;
-	}
-
-	#instructions-ul {
-	text-align: center; 	
-	}
-
-	.ui-accordion {
-	height: 45%;
 	}
 
 	.modal-dialog {
@@ -585,9 +564,81 @@ input[type='range'] {
 		margin: -14% auto;
 	}
 
-	.customHeight {
+	.results {
+		font-size: 	10px;
+	}
+
+	.trainerTitle {
+		font-size: 	15px;
+	}
+
+	#hitText {
+		font-size: 	12px;
+	}
+
+}
+
+@media (max-width: 560px){
+	img.hero {
+		height:100px;
+	}
+
+	#myModal .modal-content {
+		background-size: 100% 100%;
+	}
+	img.foe {
+		height: 50%;
+		margin-bottom: 	60%;
+	}
+
+	img.caught {
 		height: 50%;
 	}
 
+	#hitText {
+		width: 75%;
+	}
 
+	#foeTitle {
+		font-size: 	12px;
+	}
+
+	#hitText {
+		width: 100%;
+		font-size: 	10px;	
+		padding: 0;
+		margin: 0;
+	}
+
+	span.letterAnimation {
+		font-size: 	30px;
+	}
+}
+
+@media (max-width: 320px){
+
+
+	#thisPanel {
+		margin: 0;
+		padding: 0;
+	}
+
+	.results {
+		font-size: 	8px;
+	}
+
+	img.foe {
+		margin-bottom: 60%;
+	}
+
+	#hitText {
+		width: 100%;
+		font-size: 	10px;	
+		padding: 0;
+		margin: 0;
+	}
+
+	.foeHP, .heroHP {
+		font-size: 	10px;
+	}
 }
