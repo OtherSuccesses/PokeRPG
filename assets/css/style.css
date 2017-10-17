@@ -181,7 +181,7 @@ h1#mainTitle {
 
 }
 
-#playerNameEntryModal, #lossModal {
+#playerNameEntryModal, #lossModal, #highScoreModal{
 	text-align:center;
 	color: white;
 	font-weight: bold;
@@ -191,7 +191,7 @@ h1#mainTitle {
 	color:white;
 }
 
-#playerNameButton, .loss-modal-buttons, #easy, #medium, #hard{
+#playerNameButton, .loss-modal-buttons{
 	background-color: lightgreen;
 	border-color: darkgreen;
 	border-width: 3px;

@@ -19,12 +19,13 @@ var loopCount = 50;
 var playerName= [];
 var winCount = 0;
 var playerObj;
-var lives = 10;
+var lives = 1;
 //Number of Pokemon caught
 var numberPokemon = 0;
 var startScore = 0;
 var score = 0;
 var playerExists = true;
+var worldHighScores = [];
 
 var playSound = function (source) {
 	var snd  = new Audio();
@@ -79,9 +80,26 @@ var initializePokemonData = function(){
 	// setTimeout(function(){
 	// 	randomizePokemon();
 	// },3000);
-
 //High scores JS
-//	$(document).on("click", "#")
+	$(document).on("click", "#high-score-btn", function(event){
+		event.preventDefault();
+		console.log("highScore");
+		database.ref("/Players/").once("value", function(childSnapshot){
+			worldHighScores.push(childSnapshot.val());
+		});
+		var playerHighScores = [];
+		for (highScore in worldHighScores[0]){
+			playerHighScores.push(worldHighScores[0][highScore]);
+		}
+		playerHighScores = playerHighScores.sort(function(a, b){
+			return parseFloat(b.highScore) - parseFloat(a.highScore);
+		});
+		$("#lossModal").modal("toggle");
+		$("#highScoreModal").modal("toggle");
+		for(i=0;i<10; i++){
+			$("#high-score-table").append("<tr><td>" + (i+1) + "</td><td>" + playerHighScores[i].name + "</td><td>" + playerHighScores[i].highScore)
+		}
+	});
 
 //Restart Button JS
 $(document).on("click", "#restart-btn", function(event){
