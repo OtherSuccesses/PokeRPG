@@ -187,6 +187,10 @@ h1#mainTitle {
 	font-weight: bold;
 }
 
+#high-score-table{
+	text-align:center;
+}
+
 #playerNameEntryFieldLabel{
 	color:white;
 }
