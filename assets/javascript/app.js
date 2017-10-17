@@ -77,9 +77,6 @@ var initializePokemonData = function(){
 	}
 }
 
-	// setTimeout(function(){
-	// 	randomizePokemon();
-	// },3000);
 //High scores JS
 	$(document).on("click", "#high-score-btn", function(event){
 		event.preventDefault();
@@ -217,6 +214,7 @@ $(document).on("click", "#playerNameButton",function(event){
 				'<p>See if you can set a high score!</p>');
 		}
     	$("#name").text(playerName);
+    	$('#playerEntryField').hide();
     	//delays closing modal and starting background music
     	setTimeout(function () {
     		$("#playerNameEntryModal").modal('toggle');
