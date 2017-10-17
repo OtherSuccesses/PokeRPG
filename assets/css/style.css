@@ -23,7 +23,7 @@ html, body {
 
 .map {
 	height: 100%;
-	width: 100%
+	width: 100%;	
 }
 
 .page-heading {
@@ -512,35 +512,17 @@ input[type='range'] {
 
 
 @media (max-width: 992px){
-	#instructions-ul {
-	}
-
-	#instructions-ul li {
-		display: inline-block;
-		margin: 5px 0;
-	}
-
-	.accordionBody {
-		background-color: white;
-		padding: 105px;
-		height: 100%;
-		font-size: 15px;
-		padding: 10px 30px;
-	}
 
 	.accordion {
 		position: absolute;
-		bottom: -10%;
+		bottom: 0%;
 		left: 50%;
 		width: 100%;
-		height:15%;
 		transform: translateX(-50%);
 	}
 
-
 	.page-heading {
 		z-index: 100;
-		/*color: black;*/
 		transform: rotate(0deg);
 	}
 
@@ -548,26 +530,6 @@ input[type='range'] {
 		letter-spacing:5px;
 		font-size:3.5em;
 		margin-top: -5%;
-	}
-
-	.accordionHeader {
-		height: 10%;
-		margin-bottom: 0;
-		margin-top: 0;
-		/*padding: 10px;*/
-		font-size: 15px;
-	}
-
-	#instructions-ul.accordionBody.a.b.c.d {
-		height:20%;
-	}
-
-	#instructions-ul {
-	text-align: center; 	
-	}
-
-	.ui-accordion {
-	height: 45%;
 	}
 
 	.modal-dialog {
@@ -584,10 +546,5 @@ input[type='range'] {
 	
 		margin: -14% auto;
 	}
-
-	.customHeight {
-		height: 50%;
-	}
-
 
 }

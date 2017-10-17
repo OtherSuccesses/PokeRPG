@@ -127,11 +127,11 @@ $(window).on('load',function(){
     $('.validationTxt').hide();
     $( ".accordion" ).accordion({
 		active: 0,
-		classes: {
-			"ui-accordion": "highlight"
-		},
+		// classes: {
+		// 	"ui-accordion": "highlight"
+		// },
 		event: "click",
-		heightStyle: "fill",
+		heightStyle: "content",
 	});
 });
 
