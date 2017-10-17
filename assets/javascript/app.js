@@ -14,12 +14,12 @@ var activePokemon = [];
 var markerArray = [];
 var pokeName = '';
 var battleEnd = false;
-var loopCount = 5;
+var loopCount = 50;
 //PlayerName variable
 var playerName= [];
 var winCount = 0;
 var playerObj;
-var lives = 1;
+var lives = 10;
 //Number of Pokemon caught
 var numberPokemon = 0;
 var startScore = 0;
@@ -372,6 +372,8 @@ function checkBattleWin() {
 		setTimeout(function () {playSound('loss');}, 600);
 		numberPokemon--;
 		battleEnd = true;
+		heroHP = 0;
+		$('.heroHP').text(heroHP)
 		$('.results').html('You Lose!');
 		$("#numberPokes").text(numberPokemon);
 		$('.hero').animate({opacity:0}, 2000);
