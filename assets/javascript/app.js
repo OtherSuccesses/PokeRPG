@@ -127,9 +127,9 @@ $(window).on('load',function(){
     $('.validationTxt').hide();
     $( ".accordion" ).accordion({
 		active: 0,
-		// classes: {
-		// 	"ui-accordion": "highlight"
-		// },
+		classes: {
+			"ui-state-focus": "outline"
+		},
 		event: "click",
 		heightStyle: "content",
 	});
