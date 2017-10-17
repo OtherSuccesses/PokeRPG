@@ -28,7 +28,12 @@ html, body {
 
 .page-heading {
 	z-index: 1;
-	transform: rotate(-90deg) translateX(-50%);
+	transform: rotate(-90deg);
+	/*transform: rotate(-90deg) translate(-42%, -450%);*/
+	position: absolute;
+	top: 44%;
+    left: -23%;
+
 }
 
 h1#mainTitle {
@@ -39,7 +44,7 @@ h1#mainTitle {
 	font-weight: bold;
 	font-family: "PokemonSolid";
 	-webkit-text-stroke: 1px  #3c5aa6;
-	margin-top: -55%;
+	/*margin-top: -55%;*/
 }
 
 #thisPanel.panel {
@@ -510,18 +515,30 @@ input[type='range'] {
 
 /*********************************media queries*********************************/
 
+@media (max-width: 1200px) {
+	.page-heading {
+	transform: rotate(-90deg);
+	position: absolute;
+	top: 44%;
+    left: -20%;
+	}
+}
 
 @media (max-width: 992px){
 
 	.accordion {
 		position: absolute;
-		bottom: 0%;
+		bottom: 2%;
 		left: 50%;
 		width: 100%;
 		transform: translateX(-50%);
 	}
 
 	.page-heading {
+		position: absolute;
+	    top: 20px;
+		left: 25%;
+		/*transform: translateX(-50%);*/
 		z-index: 100;
 		transform: rotate(0deg);
 	}

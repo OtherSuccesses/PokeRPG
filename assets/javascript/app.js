@@ -140,7 +140,7 @@ $(window).on('load',function(){
 });
 
 $(window).on("resize = 'horizontal'", function () {
-	if($(window).width() <= 600) {
+	if($(window).width() <= 768) {
 		$('.space').html('<br><br>')
 	}
 	if ($(window).width() >= 992) {
