@@ -186,7 +186,7 @@ h1#mainTitle {
 	color:white;
 }
 
-#playerNameButton, .loss-modal-buttons{
+#playerNameButton, .loss-modal-buttons, #easy, #medium, #hard{
 	background-color: lightgreen;
 	border-color: darkgreen;
 	border-width: 3px;
@@ -230,7 +230,7 @@ h1#mainTitle {
 	display: inline-block;
 }
 
-.trainerTitle:after {
+/*.trainerTitle:after {
 	content: ' ';
 	position: absolute;
 	height: 0px;
@@ -239,7 +239,7 @@ h1#mainTitle {
 	border-top: 15px solid antiquewhite;
 	bottom: -55px;
 	right: 50%;
-}
+}*/
 
 .space{
 	width: 15px;
@@ -271,6 +271,10 @@ h1#mainTitle {
 input[type='range'] {
 	background: green;
 	z-index: 185;
+}
+
+.difficulty-box {
+	visibility: hidden;
 }
 
 

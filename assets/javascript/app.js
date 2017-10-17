@@ -14,16 +14,17 @@ var activePokemon = [];
 var markerArray = [];
 var pokeName = '';
 var battleEnd = false;
-var loopCount = 50;
+var loopCount = 5;
 //PlayerName variable
 var playerName= [];
 var winCount = 0;
 var playerObj;
-var lives = 10;
+var lives = 1;
 //Number of Pokemon caught
 var numberPokemon = 0;
 var startScore = 0;
 var score = 0;
+var playerExists = true;
 
 var playSound = function (source) {
 	var snd  = new Audio();
@@ -148,15 +149,6 @@ $(document).on("click", "#playerNameButton",function(event){
 		$('.validationTxt').show();
 	}
 	else {
-		//plays background music
-		var audio1 = document.getElementById('audio1')
-		audio1.volume = 0.1;
-		audio1.play();
-
-		$('input[type=range]').on('input', function () {
-		    console.log($(this).val());
-		    audio1.volume = $(this).val();
-		});
 		$('#thisPanel.panel').show('slow');
 		playerName = $("#playerNameEntry").val();
     	database.ref("/Players/").once("value", function(snapshot){
@@ -164,6 +156,7 @@ $(document).on("click", "#playerNameButton",function(event){
     		console.log(snapshot.val().name);
     		var playerDataRef = database.ref("/Players/" + playerName +"/");
     		if (!snapshot.val()[playerName]){
+    			playerExists = false;
     			console.log("valid name");
     			playerDataRef
 		    	.set({
@@ -176,15 +169,34 @@ $(document).on("click", "#playerNameButton",function(event){
 		    	});
     		}
     		else {
+    			playerExists = true;
 			    playerDataRef.once("value", function(snapshot){
 			    	playerObj=snapshot.val();
 			    	console.log(playerObj);
 			    	startScore = playerObj.highScore;
+			    	$("#score").text(startScore);
 		    	});
     		}
     	})
+    	if (playerExists) {
+			$('.trainerTitle').html('<p>Hello, ' + playerName + ', It\'s nice to see you again.</p>'+
+				'<p>See if you can break your high score of '+startScore+' points!</p>');
+		} else {
+			$('.trainerTitle').html('<p>Hello, ' + playerName + ', It\'s nice to meet you.</p>'+
+				'<p>See if you can set a high score!</p>');
+		}
     	$("#name").text(playerName);
-    	$("#playerNameEntryModal").modal('toggle');
+    	//delays closing modal and starting background music
+    	setTimeout(function () {
+    		$("#playerNameEntryModal").modal('toggle');
+    		//plays background music
+			var audio1 = document.getElementById('audio1')
+			audio1.volume = 0.1;
+			audio1.play();
+			$('input[type=range]').on('input', function () {
+			    audio1.volume = $(this).val();
+			});
+    	}, 1000*3);
 	}
 });
 
@@ -222,7 +234,7 @@ function generateCoordinates() {
 // initialize google maps api
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 40.765981527712825, lng: -78.78111690000003},
+        center: {lat: 35.895252, lng: -78.91968650000001},
         mapTypeId: 'satellite',
         zoom: 3
         });
@@ -235,9 +247,7 @@ function setMarkers(map) {
 	generateCoordinates();
 
 	for (var i = 1; i<=loopCount; i++){
-
 		numberPokemon++;
-		console.log(numberPokemon);
 		   $("#numberPokes").text(numberPokemon); 
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
@@ -269,13 +279,12 @@ function setMarkers(map) {
 			   	$('.slider').css({
 			   		'opacity': 1
 			   	});
-			   	heroHP = 120;
-			   	//randomizes foeHP
+			   	//randomizes hero and foe hp, and amount of damage they receive
+			   	heroHP = numGen(100, 150, 0);
+			   	heroModifier = Math.floor(foeHP / numGen(2,4,0));
 			   	foeHP = numGen(80, 160, 0);
-			   	//randomizes the amount of damage each hit does to foe
 			   	foeModifier = Math.floor(foeHP / numGen(2,4,0));
-			   	$('.heroHP').text(heroHP);
-			   	// foeURL = this.icon.url;
+	
 			   	var index = foeURL.match(/[0-9]+/g);
 			   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
 			   	pokeName = result[0].name;
@@ -286,13 +295,13 @@ function setMarkers(map) {
 			   	var miss = $('<h4>');
 			   	h4.addClass('foeHP text-center HP');
 			   	h4.text(foeHP);
+			   	$('.heroHP').text(heroHP);
 			   	var currentFoe = $('<img>');
 			   	currentFoe.attr({
 			   		'src': foeURL,
 			   		'height': 200,
 			   		'class': 'foe letterAnimation'
 			   	});
-			   	
 			   	$('.foeContainer').prepend(h4,currentFoe);
 		  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
 		  	  	$('#myModal').modal('show');
@@ -336,27 +345,25 @@ function checkScore() {
 	}
 }
 
+function endGame() {
+	$("#lossModal").modal({backdrop: 'static', keyboard: false});
+	$("#lossModal").modal('show');
+	$("#name-loss").text(playerName);
+	$("#poke-number-caught").text(winCount);
+	$("#score-span").text(score);
+}
+
 function checkLives() {
 	console.log('startScore: ', startScore);
 	if (lives <= 0){
 		score = (winCount * 100) + (lives * 1000);
 		checkScore();
-		$("#lossModal").modal({backdrop: 'static', keyboard: false});
-		$("#lossModal").modal('show');
-		$("#name-loss").text(playerName);
-		$("#poke-number-caught").text(winCount);
-		$("#score-span").text(score);
+		endGame();
 	}
-
-
 	if (numberPokemon<= 0){
 		score = (winCount * 100) + (lives * 1000);
 		checkScore();
-		$("#lossModal").modal({backdrop: 'static', keyboard: false});
-		$("#lossModal").modal('show');
-		$("#name-loss").text(playerName);
-		$("#poke-number-caught").text(winCount);
-		$("#score-span").text(score);
+		endGame(); 
 	}
 }
 
