@@ -547,4 +547,16 @@ input[type='range'] {
 		margin: -14% auto;
 	}
 
+	.results {
+		font-size: 	10px;
+	}
+
+	.trainerTitle {
+		font-size: 	15px;
+	}
+
+	#hitText {
+		font-size: 	12px;
+	}
+
 }
