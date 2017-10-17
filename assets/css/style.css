@@ -189,7 +189,7 @@ h1#mainTitle {
 }
 
 #high-score-table{
-	text-align:center;
+	margin:auto;
 }
 
 #playerNameEntryFieldLabel{
