@@ -156,7 +156,7 @@ $(window).on("resize = 'horizontal'", function () {
 	if($(window).width() <= 768) {
 		$('.space').html('<br>')
 	}
-	if ($(window).width() >= 992) {
+	if ($(window).width() > 768) {
 		$('.space').html('');
 	}
 	if ($(window).width() <= 992) {

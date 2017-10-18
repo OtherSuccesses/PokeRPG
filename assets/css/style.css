@@ -6,7 +6,8 @@
 html, body {
 	height: 100%;
 	margin: 0;
-	padding: 20px;
+	padding: 0;
+	position: relative;
 	font-family: 'Press Start 2P', cursive;
 	font-size: 12px;
 	overflow:hidden;
@@ -35,7 +36,7 @@ html, body {
 	transform: rotate(-90deg);
 	position: absolute;
 	top: 44%;
-    left: -23%;
+    left: -225px;
 }
 
 h1#mainTitle {
@@ -79,7 +80,9 @@ h1#mainTitle {
 	margin-top: 0;
 	font-family: 'PokemonSolid';
 	-webkit-text-stroke: 1px #3c5aa6;
-	padding: 10px;
+	padding: 5px;
+	cursor: pointer;
+	font-size: 20px;
 }
 
 .accordionBody {
@@ -107,12 +110,10 @@ h1#mainTitle {
 }
 
 #volume {
-	position:relative;
-	bottom: 0;
+	margin-top: 20px;
+    margin-left: 20px;
 	z-index: 100;
-	/*transform:rotate(-90deg);*/
 	width: 100px;
-	margin-top: 25%;
 }
 
 
@@ -164,7 +165,10 @@ h1#mainTitle {
 }
 
 .slider {
-	position: relative;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 20px;
 	height: 21px;
 	width: 220px;
 	background: white;
@@ -591,10 +595,6 @@ h1#mainTitle {
 
 
 
-
-
-
-
 	/*********************************  media queries  *********************************/
 
 @media screen and (max-width: 1200px) {
@@ -603,7 +603,6 @@ h1#mainTitle {
 		transform: rotate(-90deg);
 		position: absolute;
 		top: 44%;
-	  
 		}
 	}
 
@@ -622,9 +621,13 @@ h1#mainTitle {
 		font-size: 15px;
 	}
 
+	.accordionBody {
+		font-size: 10px;
+	}
+
 	.page-heading {
 		position: absolute;
-	    top: 50px;
+	    top: 0;
 	    left: 0;
     	right: 0;
 		z-index: 100;
@@ -634,7 +637,6 @@ h1#mainTitle {
 	h1#mainTitle {
 		letter-spacing:5px;
 		font-size:3.5em;
-		margin-top: -5%;
 	}
 
 	.modal-dialog {
@@ -644,10 +646,6 @@ h1#mainTitle {
 
 	.modal-content {
 		height: 200%;
-	}
-
-	.slider {
-		margin: -14% auto;
 	}
 
 	.results {
@@ -663,17 +661,18 @@ h1#mainTitle {
 	}
 
 	#volume {
-		margin-top: 20px;
-		margin-left: -60px;
+		margin-top: 50px;
+		margin-left: -25px;
 		transform:rotate(-90deg);
+	}
+
+	img.foe {
+		height: 150px;
 	}
 }
 
 @media screen and (max-width: 768px) {
-	.page-heading {
-		top:20px;
 
-	}
 	span.letterAnimation {
 		margin:5px 0;
 	}
@@ -688,6 +687,7 @@ h1#mainTitle {
 	#myModal .modal-content {
 		background-size: 100% 100%;
 	}
+
 	img.foe {
 		height: 50%;
 		margin-bottom: 	60%;
@@ -714,11 +714,6 @@ h1#mainTitle {
 
 	span.letterAnimation {
 		font-size: 	30px;
-	}
-
-	#volume {
-		margin-top: 20px;
-		margin-left: -60px;
 	}
 }
 

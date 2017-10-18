@@ -1,204 +1,177 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Poke-Map Challenge</title>
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link href="assets/css/reset.css" type="text/css" rel="stylesheet">
-	<link href="assets/images/favicon.ico" rel="icon" type="image/x-icon" />
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Sedgwick+Ave+Display" rel="stylesheet">
-	<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
- 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<link href="assets/css/style.css" type="text/css" rel="stylesheet">
-<body>
+	<head>
+		<title>Poke-Map Challenge</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<link href="assets/css/reset.css" type="text/css" rel="stylesheet">
+		<link href="assets/images/favicon.ico" rel="icon" type="image/x-icon" />
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Sedgwick+Ave+Display" rel="stylesheet">
+		<link href="assets/css/style.css" type="text/css" rel="stylesheet">
+	</head>
+	<body>
 
-<div class="container-fluid">
+		<div class="container-fluid">
+			<div class="row" id="volRow">
+				<input type="range" min="0" max="1" step="0.1" id="volume" value="0.4" class="col-xs-1">
+			</div>
+			<div class="page-heading panel text-center" id="thisPanel">
+				<h1 id="mainTitle">Poke-Map Challenge</h1>
+			</div>
+			<div id="map"></div>
+			<div class="row" id="accordionRow">
+			    <div class="col-sm-12 col-md-4 pull-right accordion">
+
+			    	<h3 class="accordionHeader">Instructions</h3>
+					<ul id="instructions-ul" class="accordionBody">
+						<li>Explore the map and find all the Pokemon.</li>
+						<li>Click the Pokemon to fight!</li>
+						<li>Once you defeat the Pokemon, click it to capture it. </li>
+						<li>Drag the Pokemon around your pen to arrange and display them.</li>
+					</ul>
+
+			    	<h3 class="accordionHeader">User Info</h3>
+			    	<div class="accordionBody">
+			    		<table class="table table-hover">
+			    				<tr><td>Player Name:</td><td id="name"></td></tr>
+			    				<tr><td>High Score:</td><td id="score">0</td></tr>
+			    				<tr><td>Pokemon Remaining:</td><td id="numberPokes"></td></tr>
+			    				<tr><td>Pokemon Caught:</td><td id="winCount"></td></tr>
+			    				<tr><td>Lives Remaining:</td><td id="lossCount"></td></tr>
+			    		</table>
+			    	</div>
+
+			    	<h3 class="accordionHeader">Poke-Pen</h3>
+			    	<div class="accordionBody">
+			    		<div class="panel-body" id="pen"></div>
+					</div>
+
+				</div>
+			</div>
+		</div> <!-- end of container-->	
+
+		<!-- Player name entry modal -->
+		<div class="container">
+			<div class="modal fade" id="playerNameEntryModal" role="dialog">
+			  <div class="modal-dialog">
+				  <div id="playerNameEntryHeader" class="modal-header">
+				    <h3 class="trainerTitle">Professor Oak: Please Enter Your Name!</h3>
+				  </div>
+				  <div class="modal-body">
+				    	<div class="professor-container">
+				    		<img src="assets/images/professor.png">
+				  		</div>
+				  		<div>
+				  			<form id="playerEntryField">
+				  				<label id="playerNameEntryFieldLabel" for="playerNameEntry">Name Input: </label>
+				  				<input type="text" id="playerNameEntry">
+				  				<input type="submit" id="playerNameButton" value="Verify!">
+				  				<p class="validationTxt"></p>
+				  			</form>
+				  		</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Fight Modal -->
+		<div class="container">
+			<div class="modal fade" id="myModal">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header" id="modal-header">
+							<h4 class="modal-title text-center" id="foeTitle">Capture the <span class="pokeName"></span></h4>
+						</div>
+						<div class="modal-body row">
+							<div class="heroContainer col-xs-4 text-center">
+								<h4 class="heroHP text-center HP"></h4>
+								<img src="assets/images/ash.png" alt="" height="200" class="hero img-responsive">
+							</div>
+							<div class="results text-center col-xs-4"></div>
+							<div class="foeContainer col-xs-4 text-center"></div>
+						</div>
+						<div class="modal-footer" id="modal-footer">
+							<div class="slider">
+								<div class="target"></div>
+								<div class="mover "></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- end of container -->
+
+		<!-- Loss Modal -->
+		<div class="container">
+			<div class="modal fade" id="lossModal" role="dialog">
+			  <div class="modal-dialog modal-lg">
+				  <div id="lossHeader" class="modal-header">
+				    <!-- <a class="close" data-dismiss="modal">×</a> -->
+				    <h3>Your Journey Has Concluded <span id="name-loss"></span>!</h3>
+				    <p class="loss-text">The adventure has been long, and you caught <span id="poke-number-caught"></span> Pokemon!</p>
+				    <p class="loss-text">Your skill has garnered you a score of <span id="score-span"></span> points!</p>
+				    <p id="highScore"></p>
+				  </div>
+				  <div class="modal-body loss-body">
+				    	<div class="professor-container">
+				    		<img src="assets/images/professor.png">
+				  		</div>
+				  		<div id="loss-modal-buttons">
+				  			<button class="loss-modal-buttons" id="high-score-btn">
+				  				High Scores
+				  			</button>
+				  			<button class="loss-modal-buttons">
+				  				Restart
+				  			</button>
+				  		</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- High Score Modal -->
+		<div class="container">
+		    <div class="modal fade" id="highScoreModal" role="dialog">
+		      <div class="modal-dialog modal-lg">
+		            <div id="highScoreHeader" class="modal-header">
+		            <!-- <a class="close" data-dismiss="modal">×</a> -->
+		            <h3>The Greatest Pokemon Catchers in the world!</h3>
+		            </div>
+		            <div class="modal-body high-score-body">
+		                <table id ="high-score-table">
+		                    <tr>
+		                        <td>Rank</td>
+		                        <td>Name</td>
+		                        <td>Score</td>
+		                    </tr>
+		                </table>
+		            </div>
+		            <div id="loss-modal-buttons">
+		                  <button class="loss-modal-buttons" id="back-btn">
+		                      Back
+		                  </button>
+		                <button class="loss-modal-buttons">
+		                      Restart
+		                  </button>
+		              </div>
+		        </div>
+		    </div>
+		</div>
+
+		<audio id="audio1" loop>
+		  <source src="assets/audio/background.mp3" type="audio/mpeg" />
+		Your browser does not support the audio element.
+		</audio>
+
+		<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	  	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+	 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	    <script type="text/javascript" src="assets/javascript/app.js"></script>
+	    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI&callback=initMap"
+	    async defer></script>
+	</body>
 	
-	<div class="page-heading panel col-lg-6 text-center" id="thisPanel">
-		<h1 id="mainTitle">Poke-Map Challenge</h1>
-	</div>
-	<div id="map">	</div>
-	<div class="row" id="accordionRow">
-	    <div class="col-sm-12 col-md-4 pull-right accordion">
-	    	<h3 class="accordionHeader">Instructions</h3>
-	    			<ul id="instructions-ul" class="accordionBody">
-	    				<li>Explore the map and find all the Pokemon.</li>
-	    				<li>Click the Pokemon to fight!</li>
-	    				<li>Once you defeat the Pokemon, click it to capture it. </li>
-	    				<li>Drag the Pokemon around your pen to arrange and display them.</li>
-	    			</ul>
-	    	<h3 class="accordionHeader">User Info</h3>
-	    	<div class="accordionBody">
-	    		<table class="table table-hover">
-	    				<tr><td>Player Name:</td><td id="name"></td></tr>
-	    				<tr><td>High Score:</td><td id="score">0</td></tr>
-	    				<tr><td>Pokemon Remaining:</td><td id="numberPokes"></td></tr>
-	    				<tr><td>Pokemon Caught:</td><td id="winCount"></td></tr>
-	    				<tr><td>Lives Remaining:</td><td id="lossCount"></td></tr>
-	    		</table>
-	    	</div>
-	    	<h3 class="accordionHeader">Poke-Pen</h3>
-	    	<div class="accordionBody"><div class="panel-body" id="pen"></div>
-		</div>
-	</div>
-</div> <!-- end of container-->	
-
-<!-- Modal for player name entry -->
-<div class="container">
-	<div class="modal fade" id="playerNameEntryModal" role="dialog">
-	  <div class="modal-dialog">
-		  <div id="playerNameEntryHeader" class="modal-header">
-		    <!-- <a class="close" data-dismiss="modal">×</a> -->
-		    <h3 class="trainerTitle">Professor Oak: Please Enter Your Name!</h3>
-		  </div>
-		  <div class="modal-body">
-		    	<div class="professor-container">
-		    		<img src="assets/images/professor.png">
-		  		</div>
-		  		<div>
-		  			<form id="playerEntryField">
-
-		  				<label id="playerNameEntryFieldLabel" for="playerNameEntry">Name Input: </label>
-		  				<input type="text" id="playerNameEntry">
-		  				<input type="submit" id="playerNameButton" value="Verify!">
-		  				<p class="validationTxt"></p>
-		  			</form>
-		  		</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<!-- Fight Modal -->
-<div class="container">
-	<div class="modal fade" id="myModal">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header" id="modal-header">
-					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-					<h4 class="modal-title text-center" id="foeTitle">Capture the <span class="pokeName"></span></h4>
-				</div>
-				<div class="modal-body row">
-					<div class="heroContainer col-xs-4 text-center">
-						<h4 class="heroHP text-center HP"></h4>
-						<img src="assets/images/ash.png" alt="" height="200" class="hero img-responsive">
-					</div>
-					<div class="results text-center col-xs-4"></div>
-					<div class="foeContainer col-xs-4 text-center"></div>
-				</div>
-				<div class="modal-footer" id="modal-footer">
-					<div class="slider">
-						<div class="target"></div>
-						<div class="mover "></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-</div><!-- end of container -->
-
-<!-- Loss Modal -->
-<div class="container">
-	<div class="modal fade" id="lossModal" role="dialog">
-	  <div class="modal-dialog modal-lg">
-		  <div id="lossHeader" class="modal-header">
-		    <!-- <a class="close" data-dismiss="modal">×</a> -->
-		    <h3>Your Journey Has Concluded <span id="name-loss"></span>!</h3>
-		    <p class="loss-text">The adventure has been long, and you caught <span id="poke-number-caught"></span> Pokemon!</p>
-		    <p class="loss-text">Your skill has garnered you a score of <span id="score-span"></span> points!</p>
-		    <p id="highScore"></p>
-		  </div>
-		  <div class="modal-body loss-body">
-		    	<div class="professor-container">
-		    		<img src="assets/images/professor.png">
-		  		</div>
-		  		<div id="loss-modal-buttons">
-		  			<button class="loss-modal-buttons" id="high-score-btn">
-		  				High Scores
-		  			</button>
-		  			<button class="loss-modal-buttons" id="restart-btn">
-		  				Restart
-		  			</button>
-		  		</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- High Score Modal -->
-<div class="container">
-    <div class="modal fade" id="highScoreModal" role="dialog">
-      <div class="modal-dialog modal-lg">
-            <div id="highScoreHeader" class="modal-header">
-            <!-- <a class="close" data-dismiss="modal">×</a> -->
-            <h3>The Greatest Pokemon Catchers in the world!</h3>
-            </div>
-            <div class="modal-body high-score-body">
-                <table id ="high-score-table">
-                    <tr>
-                        <td>Rank</td>
-                        <td>Name</td>
-                        <td>Score</td>
-                    </tr>
-                </table>
-            </div>
-            <div id="loss-modal-buttons">
-                  <button class="loss-modal-buttons" id="loss-modal-btn">
-                      Back
-                  </button>
-                <button class="loss-modal-buttons" id="restart-btn">
-                      Restart
-                  </button>
-              </div>
-        </div>
-    </div>
-</div>
-
-<!-- High Score Modal -->
-<div class="container">
-	<div class="modal fade" id="highScoreModal" role="dialog">
-	  <div class="modal-dialog modal-lg">
-			<div id="highScoreHeader" class="modal-header">
-		    <h3>The Greatest Pokemon Catchers in the World!</h3>
-			</div>
-			<div class="modal-body high-score-body">
-				<table id ="high-score-table">
-					<tr>
-						<td>Rank</td>
-						<td>Name</td>
-						<td>Score</td>
-					</tr>
-				</table>
-			</div>
-			<div id="loss-modal-buttons">
-		  		<button class="loss-modal-buttons" id="loss-modal-btn">
-		  			Back
-		  		</button>
-				<button class="loss-modal-buttons" id="restart-btn">
-	  				Restart
-	  			</button>
-		  	</div>
-		</div>
-	</div>
-</div>
-
-	<div class="row">
-		<input type="range" min="0" max="1" step="0.1" id="volume" value="0.4" class="col-xs-1 col-md-1 col-md-offset-11">
-	</div>
-
-</div>
-<audio id="audio1" loop>
-  <source src="assets/audio/background.mp3" type="audio/mpeg" />
-Your browser does not support the audio element.
-</audio>
-</body>
-    <script type="text/javascript" src="assets/javascript/app.js"></script>
-    	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpwnTjzyOwCRmPRQhpu0eREKplFV0TCDI&callback=initMap"
-    async defer></script>
 </html>
