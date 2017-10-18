@@ -80,7 +80,7 @@ h1#mainTitle {
 	margin-top: 0;
 	font-family: 'PokemonSolid';
 	-webkit-text-stroke: 1px #3c5aa6;
-	padding: 5px;
+	padding-bottom: 5px;
 	cursor: pointer;
 	font-size: 20px;
 }
@@ -832,7 +832,7 @@ input[type=range]:focus::-ms-fill-upper {
 	}
 
 	.accordionHeader {
-		padding: 5px;
+		/*padding: 5px;*/
 		font-size: 15px;
 	}
 
