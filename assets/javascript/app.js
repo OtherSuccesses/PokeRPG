@@ -19,7 +19,7 @@ var loopCount = 50;
 var playerName= [];
 var winCount = 0;
 var playerObj;
-var lives = 1;
+var lives = 10;
 //Number of Pokemon caught
 var numberPokemon = 0;
 var startScore = 0;
