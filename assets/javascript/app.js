@@ -312,6 +312,7 @@ function setMarkers(map) {
 			   	});
 			   	//randomizes hero and foe hp, and amount of damage they receive
 			   	heroHP = numGen(100, 150, 0);
+			   	console.log(heroHP + "Hero Points Set");
 			   	heroModifier = Math.floor(foeHP / numGen(2,4,0));
 			   	foeHP = numGen(80, 160, 0);
 			   	foeModifier = Math.floor(foeHP / numGen(2,4,0));
@@ -349,6 +350,7 @@ function setMarkers(map) {
 function reduceHP(character) {
 	if (character === 'hero') {
 		return heroHP-=heroModifier;
+		console.log("Hero Modifier");
 	} else if ( character === 'foe') {
 		return foeHP-=foeModifier;
 	}
@@ -360,6 +362,7 @@ function writeHP() {
 		$('.foeHP').html(foeHP);
 	} else {
 		heroHP = reduceHP('hero');
+		console.log("HP reduced");
 		$('.heroHP').html(heroHP);
 	}
 }
@@ -400,6 +403,7 @@ function checkLives() {
 
 function checkBattleWin() {
 	if (heroHP<=0) {
+		console.log("hero dies");
 		setTimeout(function () {playSound('loss');}, 600);
 		numberPokemon--;
 		battleEnd = true;
@@ -483,6 +487,7 @@ $(document).on('click','#myModal' ,function () {
 	//as long as hero and foe are alive, animation effects are added
 	//when the modal is clicked. Timeout allows animation to finish.
 		if (heroHP>0 && foeHP>0) {
+			console.log("hero and foe both have hp");
 			setTimeout(function () {
 				$('.hero').addClass('animateRight');
 				$( ".hero" ).effect( "bounce", "slow" );
