@@ -110,9 +110,9 @@ h1#mainTitle {
 	position:relative;
 	bottom: 0;
 	z-index: 100;
-	transform:rotate(-90deg);
+	/*transform:rotate(-90deg);*/
 	width: 100px;
-	margin-top: 10%;
+	margin-top: 25%;
 }
 
 
@@ -598,7 +598,7 @@ h1#mainTitle {
 	/*********************************  media queries  *********************************/
 
 @media screen and (max-width: 1200px) {
-	
+
 	.page-heading {
 		transform: rotate(-90deg);
 		position: absolute;
@@ -663,8 +663,9 @@ h1#mainTitle {
 	}
 
 	#volume {
-		margin-top: 100px;
+		margin-top: 20px;
 		margin-left: -60px;
+		transform:rotate(-90deg);
 	}
 }
 
@@ -716,7 +717,7 @@ h1#mainTitle {
 	}
 
 	#volume {
-		margin-top: 100px;
+		margin-top: 20px;
 		margin-left: -60px;
 	}
 }

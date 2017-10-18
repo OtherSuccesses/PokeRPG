@@ -73,10 +73,11 @@ var initializePokemonData = function(){
 	}
 }
 
-//High scores JS
+//click event that gets 10 best scores and displays them to the screen
 $(document).on("click", "#high-score-btn", function(event){
 	event.preventDefault();
 	database.ref("/Players/").once("value", function(childSnapshot){
+		console.log('childSnapshot.val(): ',childSnapshot.val());
 		worldHighScores.push(childSnapshot.val());
 	});
 	var playerHighScores = [];
@@ -86,6 +87,7 @@ $(document).on("click", "#high-score-btn", function(event){
 	playerHighScores = playerHighScores.sort(function(a, b){
 		return parseFloat(b.highScore) - parseFloat(a.highScore);
 	});
+	console.log('playerHighScores: ',playerHighScores);
 	$("#lossModal").modal("toggle");
 	$("#highScoreModal").modal("toggle");
 	for(i=0;i<10; i++){
@@ -267,7 +269,8 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 35.895252, lng: -78.91968650000001},
         mapTypeId: 'satellite',
-        zoom: 3
+        zoom: 3,
+        disableDefaultUI: true
         });
         window.onload = setMarkers(map);
 };
