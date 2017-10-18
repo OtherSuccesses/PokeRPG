@@ -1,666 +1,744 @@
-@font-face {
-	font-family: 'PokemonSolid';
-	src:  url('pokemonsolid.woff') format('woff');
-}
-
-
-html, body {
-	height: 100%;
-	margin: 0;
-	padding: 20px;
-	font-family: 'Press Start 2P', cursive;
-	font-size: 12px;
-	overflow:hidden;
-}
-
-#map{
-	height: 100%; 
-	width: 100%; 
-	position:absolute; 
-	top: 0; 
-	left: 0; 
-	z-index: 0;
-}
-
-.map {
-	height: 100%;
-	width: 100%;	
-}
-
-.page-heading {
-	z-index: 1;
-	transform: rotate(-90deg);
-	/*transform: rotate(-90deg) translate(-42%, -450%);*/
-	position: absolute;
-	top: 44%;
-    left: -23%;
-
-}
-
-h1#mainTitle {
-	border-radius: 5px;
-	color: #ffcb05;
-	font-size: 50px;
-	letter-spacing:5px;
-	font-weight: bold;
-	font-family: "PokemonSolid";
-	-webkit-text-stroke: 1px  #3c5aa6;
-	/*margin-top: -55%;*/
-}
-
-#thisPanel.panel {
-	background: transparent;
-}
-
-.accordion {
-	opacity: 0.2;
-	transition: opacity 300ms ease ;
-}
-
-.accordion:hover {
-	opacity: 1;
-}
-
-.accordionHeader {
-	background-color: #2a75bb;
-	border-bottom:1px solid black;
-	color: #ffcb05;
-	text-align: center;
-	margin-bottom: 0;
-	margin-top: 0;
-	font-family: 'PokemonSolid';
-	-webkit-text-stroke: 1px #3c5aa6;
-	padding: 10px;
-}
-
-.accordionBody {
-	background-color: white;
-	padding: 10px;
-	height: 30%;
-	/*font-size: 15px;*/
-	padding: 10px 30px;
-}
-
-#instructions-ul {
-	list-style: circle;
-	margin-bottom: 0px;
-}
-
-
-
-.zoom {
-	transition: transform 300ms ease;
-}
-
-.zoom:hover {
-	transform: scale(1.7);
-}
-
-.panel-title {
-	text-align: center;
-}
-
-.container {
-	z-index: 1;
-}
-
-/*************************fight animation styling*************************/
-
-#myModal .modal-content {
-	background-image: url('../images/fight_background.jpg');
-	background-size: contain;
-}
-
-#modal-header.modal-header, #modal-footer.modal-footer {
-	border: none;
-}
-
-.modal-title {
-	font-size: 20px;
-	color: white;
-}
-
-.pokeName {
-	color: blue;
-	text-shadow: 5px 5px 10px rgba(0,0,255,0.7);
-}
-
-.results {
-	color: #2a75bb;
-	height: 100%;
-	font-size: 15px;
-	font-family: 'Press Start 2P', cursive;
-}
-
-
-.mover {
-	height: 20px;
-	width: 20px;
-	background: green;
-	border-radius:50%;
-	border: 1px solid black;
-}
-
-.target {
-	position: absolute;
-	height: 20px;
-	width: 20px;
-	background: red;
-	transform: translateX(-10px);
-	left: 50%;
-	border-radius:50%;
-	border: 1px solid black;
-}
-
-.slider {
-	position: relative;
-	height: 21px;
-	width: 220px;
-	background: white;
-	border: 1px outset black;
-	border-radius: 10px;
-	margin: 0 auto;
-}
-
-.HP {
-	background:red;
-	color: white;
-	margin: 0 auto;
-	padding: 3px 5px;
-	border-radius: 10px;
-}
-
-/*Player Name Modal CSS*/
-#playerNameEntryHeader, #lossHeader{
-	background-color: antiquewhite;
-	border-radius: 15px;
-	color: slategray;
-}
-
-#playerNameEntry{
-	color:black;
-
-}
-
-#playerNameEntryModal, #lossModal, #highScoreModal{
-	text-align:center;
-	color: white;
-	font-weight: bold;
-}
-
-#high-score-table{
-	margin:auto;
-}
-
-#playerNameEntryFieldLabel{
-	color:white;
-}
-
-#playerNameButton, .loss-modal-buttons{
-	background-color: lightgreen;
-	border-color: darkgreen;
-	border-width: 3px;
-	color: black;
-	transform: scale(1);
-	transition:all 300ms ease;
-}
-
-#playerNameButton:hover {
-	color: white;
-	background-color: darkgreen;
-	border-color: lightgreen;
-	transform: scale(1.1);
-}
-
-#playerNameButton:active {
-	transform: scale(1);
-}
-
-.validationTxt {
-	font-size: 15px;
-	background:rgba(255,0,0,0.8);
-	display: inline-block;
-	line-height:18px;
-	padding: 0 10px 15px 10px;
-	border-radius: 5px;
-	border:1px dashed white;
-}
-
-#highScore {
-	color: red;
-	animation-name: highScore;
-	animation-iteration-count: infinite;
-	animation-timing-function: ease-in-out;
-	animation-duration: 2s;
-	animation-direction: alternate;
-}
-
-.trainerTitle {
-	position: relative;
-	display: inline-block;
-}
-
-.trainerTitle:after {
-	content: ' ';
-	position: absolute;
-	height: 0px;
-	width: 0px;
-	border: 15px solid transparent;
-	border-top: 15px solid antiquewhite;
-	bottom: -55px;
-	right: 50%;
-}
-
-.space{
-	width: 15px;
-	white-space: pre;
-}
-
-.hitTextBox {
-	color: white;
-
-	width:50%;
-	padding: 10px 0 10px 15px;
-	margin: 20px auto;
-	font-size: 20px;
-	opacity:0.7;
-}
-
-.hit {
-	background: green;
-}
-
-.miss {
-	background: red;	
-}
-
-.hero {
-	z-index: 100;
-}
-
-input[type='range'] {
-	background: green;
-	z-index: 100;
-}
-
-.ui-state-focus {
-	outline: none !important;
-}
-
-.validationTxt {
-	margin-top: 10px;
-}
-
-
-	/**************************************animation code**************************************/
-.mover {
-	animation-name: slide;
-	animation-duration: 4s;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
-	-webkit-animation-name: slide;
-	-webkit-animation-duration: 4s;
-	-webkit-animation-iteration-count: infinite;
-	-webkit-animation-timing-function: linear;
-	-moz-animation-name: slide;
-	-moz-animation-duration: 4s;
-	-moz-animation-iteration-count: infinite;
-	-moz-animation-timing-function: linear;
-	-o-animation-name: slide;
-	-o-animation-duration: 4s;
-	-o-animation-iteration-count: infinite;
-	-o-animation-timing-function: linear;
-	-ms-animation-name: slide;
-	-ms-animation-duration: 4s;
-	-ms-animation-iteration-count: infinite;
-	-ms-animation-timing-function: linear;
-}
-
-.animateRight {
-	animation-name: animateRight;
-	animation-duration: 600ms;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-out;
-	-webkit-animation-name: animateRight;
-	-webkit-animation-duration: 600ms;
-	-webkit-animation-iteration-count: 1;
-	-webkit-animation-timing-function: ease-out;
-	-moz-animation-name: animateRight;
-	-moz-animation-duration: 600ms;
-	-moz-animation-iteration-count: 1;
-	-moz-animation-timing-function: ease-out;
-	-o-animation-name: animateRight;
-	-o-animation-duration: 600ms;
-	-o-animation-iteration-count: 1;
-	-o-animation-timing-function: ease-out;
-	-ms-animation-name: animateRight;
-	-ms-animation-duration: 600ms;
-	-ms-animation-iteration-count: 1;
-	-ms-animation-timing-function: ease-out;
-}
-
-.animateLeft {
-	animation-name: animateLeft;
-	animation-duration: 600ms;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-out;
-	-webkit-animation-name: animateLeft;
-	-webkit-animation-duration: 600ms;
-	-webkit-animation-iteration-count: 1;
-	-webkit-animation-timing-function: ease-out;
-	-moz-animation-name: animateLeft;
-	-moz-animation-duration: 600ms;
-	-moz-animation-iteration-count: 1;
-	-moz-animation-timing-function: ease-out;
-	-o-animation-name: animateLeft;
-	-o-animation-duration: 600ms;
-	-o-animation-iteration-count: 1;
-	-o-animation-timing-function: ease-out;
-	-ms-animation-name: animateLeft;
-	-ms-animation-duration: 600ms;
-	-ms-animation-iteration-count: 1;
-	-ms-animation-timing-function: ease-out;
-}
-
-.letterAnimation{
-	display: inline-block;
-	animation-name: letterAnimation;
-	animation-duration: 2s;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-	animation-timing-function: ease-in-out;
-	animation-delay: 0s;
-}
-
-@keyframes slide {
-	0% {
-		transform: translateX(0px);
+	@font-face {
+		font-family: 'PokemonSolid';
+		src:  url('pokemonsolid.woff') format('woff');
 	}
 
-	50% {
-		transform: translateX(200px);
+	html, body {
+		height: 100%;
+		margin: 0;
+		padding: 20px;
+		font-family: 'Press Start 2P', cursive;
+		font-size: 12px;
+		overflow:hidden;
 	}
 
-	100% {
-		transform: translateX(0px);
-	}
-	
-}
-
-@-webkit-keyframes slide {
-	0% {
-		transform: translateX(0px);
+	.container {
+		z-index: 1;
 	}
 
-	50% {
-		transform: translateX(200px);
+	#map{
+		height: 100%; 
+		width: 100%; 
+		position:absolute; 
+		top: 0; 
+		left: 0; 
+		z-index: 0;
 	}
 
-	100% {
-		transform: translateX(0px);
-	}
-	
-}
-
-@-moz-keyframes slide {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(200px);
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-	
-}
-
-@-o-keyframes slide {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(200px);
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-	
-}
-
-
-
-@keyframes animateRight {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(150%);			
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-}
-
-@-webkit-keyframes animateRight {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(150%);			
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-}
-
-@-moz-keyframes animateRight {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(150%);			
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-}
-
-@-o-keyframes animateRight {
-	0% {
-		transform: translateX(0px);
-	}
-
-	50% {
-		transform: translateX(150%);			
-	}
-
-	100% {
-		transform: translateX(0px);
-	}
-}
-
-
-@keyframes letterAnimation {
-	0%, {
-		transform: translateY(-20px);
-	}
-
-	100% {
-		transform: translateY(20px) ;
-	}
-
-}
-
-@keyframes highScore {
-	0%, {
-		transform: scale(1);
-	}
-
-	100% {
-		transform: scale(1.2);
-	}
-
-}
-
-/*****************************end of animation code*****************************/
-
-
-
-
-
-
-
-
-/*********************************media queries*********************************/
-
-@media (max-width: 1200px) {
-	.page-heading {
-	transform: rotate(-90deg);
-	position: absolute;
-	top: 44%;
-  
-	}
-}
-
-@media (max-width: 992px){
-
-	.accordion {
-		position: absolute;
-		bottom: 2%;
-		left: 50%;
-		width: 100%;
-		transform: translateX(-50%);
+	.map {
+		height: 100%;
+		width: 100%;	
 	}
 
 	.page-heading {
+		z-index: 1;
+		transform: rotate(-90deg);
 		position: absolute;
-	    top: 50px;
-	    left: 0;
-    	right: 0;
-		/*left: 25%;*/
-		/*transform: translateX(-50%);*/
-		z-index: 100;
-		transform: rotate(0deg);
+		top: 44%;
+	    left: -23%;
 	}
 
 	h1#mainTitle {
+		border-radius: 5px;
+		color: #ffcb05;
+		font-size: 50px;
 		letter-spacing:5px;
-		font-size:3.5em;
-		margin-top: -5%;
+		font-weight: bold;
+		font-family: "PokemonSolid";
+		-webkit-text-stroke: 1px  #3c5aa6;
 	}
 
-	.modal-dialog {
+	.space{
+		width: 15px;
+		white-space: pre;
+	}
+
+	#thisPanel.panel {
+		background: transparent;
+	}
+
+	.panel-title {
+		text-align: center;
+	}
+
+	.accordion {
+		opacity: 0.2;
+		transition: opacity 300ms ease ;
+	}
+
+	.accordion:hover {
+		opacity: 1;
+	}
+
+	.accordionHeader {
+		background-color: #2a75bb;
+		border-bottom:1px solid black;
+		color: #ffcb05;
+		text-align: center;
+		margin-bottom: 0;
+		margin-top: 0;
+		font-family: 'PokemonSolid';
+		-webkit-text-stroke: 1px #3c5aa6;
+		padding: 10px;
+	}
+
+	.accordionBody {
+		background-color: white;
+		padding: 10px;
+		height: 30%;
+		padding: 10px 30px;
+	}
+
+	.ui-state-focus {
+		outline: none !important;
+	}
+
+	#instructions-ul {
+		list-style: circle;
+		margin-bottom: 0px;
+	}
+
+	.zoom {
+		transition: transform 300ms ease;
+	}
+
+	.zoom:hover {
+		transform: scale(1.7);
+	}
+
+	#volume {
+		position:relative;
+		bottom: 0;
+		z-index: 100;
+		transform:rotate(90deg);
+		width: 10%;
 		margin-top: 10%;
-		height: 20%;
 	}
 
-	.modal-content {
-		height: 200%;
 
+	/*************************************  fight modal styling  *************************************/
+
+	#myModal .modal-content {
+		background-image: url('../images/fight_background.jpg');
+		background-size: contain;
+	}
+
+	#modal-header.modal-header, #modal-footer.modal-footer {
+		border: none;
+	}
+
+	.modal-title {
+		font-size: 20px;
+		color: white;
+	}
+
+	.pokeName {
+		color: blue;
+		text-shadow: 5px 5px 10px rgba(0,0,255,0.7);
+	}
+
+	.results {
+		color: #2a75bb;
+		height: 100%;
+		font-size: 15px;
+		font-family: 'Press Start 2P', cursive;
+	}
+
+	.mover {
+		height: 20px;
+		width: 20px;
+		background: green;
+		border-radius:50%;
+		border: 1px solid black;
+	}
+
+	.target {
+		position: absolute;
+		height: 20px;
+		width: 20px;
+		background: red;
+		transform: translateX(-10px);
+		left: 50%;
+		border-radius:50%;
+		border: 1px solid black;
 	}
 
 	.slider {
-	
-		margin: -14% auto;
+		position: relative;
+		height: 21px;
+		width: 220px;
+		background: white;
+		border: 1px outset black;
+		border-radius: 10px;
+		margin: 0 auto;
 	}
 
-	.results {
-		font-size: 	10px;
+	.HP {
+		background:red;
+		color: white;
+		margin: 0 auto;
+		padding: 3px 5px;
+		border-radius: 10px;
 	}
+
+	.hitTextBox {
+		color: white;
+		width:50%;
+		padding: 10px 0 10px 15px;
+		margin: 20px auto;
+		font-size: 20px;
+		opacity:0.7;
+	}
+
+	.hit {
+		background: green;
+	}
+
+	.miss {
+		background: red;	
+	}
+
+	.hero {
+		z-index: 100;
+	}
+
+	/*************************************  Player Name and endgame Modal CSS  *************************************/
+	#playerNameEntryHeader, #lossHeader{
+		background-color: antiquewhite;
+		border-radius: 15px;
+		color: slategray;
+	}
+
+	#playerNameEntry{
+		color:black;
+	}
+
+	#playerNameEntryModal, #lossModal, #highScoreModal{
+		text-align:center;
+		color: white;
+		font-weight: bold;
+	}
+
+	#high-score-table{
+		margin:auto;
+	}
+
+	#playerNameEntryFieldLabel{
+		color:white;
+	}
+
+	#playerNameButton, .loss-modal-buttons{
+		background-color: lightgreen;
+		border-color: darkgreen;
+		border-width: 3px;
+		color: black;
+		transform: scale(1);
+		transition:all 300ms ease;
+	}
+
+	#playerNameButton:hover {
+		color: white;
+		background-color: darkgreen;
+		border-color: lightgreen;
+		transform: scale(1.1);
+	}
+
+	#playerNameButton:active {
+		transform: scale(1);
+	}
+
+	.validationTxt {
+		font-size: 15px;
+		background:rgba(255,0,0,0.8);
+		display: inline-block;
+		line-height:18px;
+		padding: 0 10px 15px 10px;
+		border-radius: 5px;
+		border:1px dashed white;
+	}
+
 
 	.trainerTitle {
-		font-size: 	15px;
+		position: relative;
+		display: inline-block;
 	}
 
-	#hitText {
-		font-size: 	12px;
+	.trainerTitle:after {
+		content: ' ';
+		position: absolute;
+		height: 0px;
+		width: 0px;
+		border: 15px solid transparent;
+		border-top: 15px solid antiquewhite;
+		bottom: -55px;
+		right: 50%;
 	}
 
-}
-
-@media screen and (max-width: 768px) {
-	.page-heading {
-		/*left: 32%;*/
-		top:20px;
-
-	}
-	span.letterAnimation {
-		margin:5px 0;
-	}
-}
-
-@media screen and (max-width: 560px){
-	img.hero {
-		height:100px;
+	.validationTxt {
+		margin-top: 10px;
 	}
 
-	#myModal .modal-content {
-		background-size: 100% 100%;
-	}
-	img.foe {
-		height: 50%;
-		margin-bottom: 	60%;
-	}
 
-	img.caught {
-		height: 50%;
-	}
+		/**************************************  animation code  **************************************/
 
-	#hitText {
-		width: 75%;
-	}
-
-	#foeTitle {
-		font-size: 	12px;
-	}
-
-	#hitText {
-		width: 100%;
-		font-size: 	10px;	
-		padding: 0;
-		margin: 0;
+	.mover {
+		animation-name: slide;
+		animation-duration: 4s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		-webkit-animation-name: slide;
+		-webkit-animation-duration: 4s;
+		-webkit-animation-iteration-count: infinite;
+		-webkit-animation-timing-function: linear;
+		-moz-animation-name: slide;
+		-moz-animation-duration: 4s;
+		-moz-animation-iteration-count: infinite;
+		-moz-animation-timing-function: linear;
+		-o-animation-name: slide;
+		-o-animation-duration: 4s;
+		-o-animation-iteration-count: infinite;
+		-o-animation-timing-function: linear;
 	}
 
-	span.letterAnimation {
-		font-size: 	30px;
-	}
-}
-
-@media (max-width: 320px){
-
-
-	#thisPanel {
-		margin: 0;
-		padding: 0;
-	}
-
-	.results {
-		font-size: 	8px;
-	}
-
-	img.foe {
-		margin-bottom: 60%;
+	.animateRight {
+		animation-name: animateRight;
+		animation-duration: 600ms;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-out;
+		-webkit-animation-name: animateRight;
+		-webkit-animation-duration: 600ms;
+		-webkit-animation-iteration-count: 1;
+		-webkit-animation-timing-function: ease-out;
+		-moz-animation-name: animateRight;
+		-moz-animation-duration: 600ms;
+		-moz-animation-iteration-count: 1;
+		-moz-animation-timing-function: ease-out;
+		-o-animation-name: animateRight;
+		-o-animation-duration: 600ms;
+		-o-animation-iteration-count: 1;
+		-o-animation-timing-function: ease-out;
 	}
 
-	#hitText {
-		width: 100%;
-		font-size: 	10px;	
-		padding: 0;
-		margin: 0;
+	.animateLeft {
+		animation-name: animateLeft;
+		animation-duration: 600ms;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-out;
+		-webkit-animation-name: animateLeft;
+		-webkit-animation-duration: 600ms;
+		-webkit-animation-iteration-count: 1;
+		-webkit-animation-timing-function: ease-out;
+		-moz-animation-name: animateLeft;
+		-moz-animation-duration: 600ms;
+		-moz-animation-iteration-count: 1;
+		-moz-animation-timing-function: ease-out;
+		-o-animation-name: animateLeft;
+		-o-animation-duration: 600ms;
+		-o-animation-iteration-count: 1;
+		-o-animation-timing-function: ease-out;
 	}
 
-	.foeHP, .heroHP {
-		font-size: 	10px;
+	.letterAnimation{
+		display: inline-block;
+		animation-name: letterAnimation;
+		animation-duration: 2s;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+		animation-timing-function: ease-in-out;
+		animation-delay: 0s;
+		-webkit-animation-name: letterAnimation;
+		-webkit-animation-duration: 2s;
+		-webkit-animation-iteration-count: infinite;
+		-webkit-animation-direction: alternate;
+		-webkit-animation-timing-function: ease-in-out;
+		-webkit-animation-delay: 0s;
+		-moz-animation-name: letterAnimation;
+		-moz-animation-duration: 2s;
+		-moz-animation-iteration-count: infinite;
+		-moz-animation-direction: alternate;
+		-moz-animation-timing-function: ease-in-out;
+		-moz-animation-delay: 0s;
+		-o-animation-name: letterAnimation;
+		-o-animation-duration: 2s;
+		-o-animation-iteration-count: infinite;
+		-o-animation-direction: alternate;
+		-o-animation-timing-function: ease-in-out;
+		-o-animation-delay: 0s;
 	}
-}
+
+	#highScore {
+		color: red;
+		animation-name: highScore;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease-in-out;
+		animation-duration: 2s;
+		animation-direction: alternate;
+		-webkit-animation-name: highScore;
+		-webkit-animation-iteration-count: infinite;
+		-webkit-animation-timing-function: ease-in-out;
+		-webkit-animation-duration: 2s;
+		-webkit-animation-direction: alternate;
+		-moz-animation-name: highScore;
+		-moz-animation-iteration-count: infinite;
+		-moz-animation-timing-function: ease-in-out;
+		-moz-animation-duration: 2s;
+		-moz-animation-direction: alternate;
+		-o-animation-name: highScore;
+		-o-animation-iteration-count: infinite;
+		-o-animation-timing-function: ease-in-out;
+		-o-animation-duration: 2s;
+		-o-animation-direction: alternate;
+	}
+
+	@keyframes slide {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(200px);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+		
+	}
+
+	@-webkit-keyframes slide {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(200px);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+		
+	}
+
+	@-moz-keyframes slide {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(200px);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+		
+	}
+
+	@-o-keyframes slide {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(200px);
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+		
+	}
+
+
+
+	@keyframes animateRight {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(150%);			
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+	@-webkit-keyframes animateRight {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(150%);			
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+	@-moz-keyframes animateRight {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(150%);			
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+	@-o-keyframes animateRight {
+		0% {
+			transform: translateX(0px);
+		}
+
+		50% {
+			transform: translateX(150%);			
+		}
+
+		100% {
+			transform: translateX(0px);
+		}
+	}
+
+
+	@keyframes letterAnimation {
+		0%, {
+			transform: translateY(-20px);
+		}
+
+		100% {
+			transform: translateY(20px) ;
+		}
+	}
+
+	@-webkit-keyframes letterAnimation {
+		0%, {
+			transform: translateY(-20px);
+		}
+
+		100% {
+			transform: translateY(20px) ;
+		}
+	}
+
+	@-moz-keyframes letterAnimation {
+		0%, {
+			transform: translateY(-20px);
+		}
+
+		100% {
+			transform: translateY(20px) ;
+		}
+	}
+
+	@-o-keyframes letterAnimation {
+		0%, {
+			transform: translateY(-20px);
+		}
+
+		100% {
+			transform: translateY(20px) ;
+		}
+	}
+
+	@keyframes highScore {
+		0%, {
+			transform: scale(1);
+		}
+
+		100% {
+			transform: scale(1.2);
+		}
+	}
+
+	@-webkit-keyframes highScore {
+		0%, {
+			transform: scale(1);
+		}
+
+		100% {
+			transform: scale(1.2);
+		}
+	}
+
+	@-moz-keyframes highScore {
+		0%, {
+			transform: scale(1);
+		}
+
+		100% {
+			transform: scale(1.2);
+		}
+	}
+
+	@-o-keyframes highScore {
+		0%, {
+			transform: scale(1);
+		}
+
+		100% {
+			transform: scale(1.2);
+		}
+	}
+
+
+
+
+
+
+
+	/*********************************  media queries  *********************************/
+
+	@media (max-width: 1200px) {
+		.page-heading {
+		transform: rotate(-90deg);
+		position: absolute;
+		top: 44%;
+	  
+		}
+	}
+
+	@media (max-width: 992px){
+
+		.accordion {
+			position: absolute;
+			bottom: 2%;
+			left: 50%;
+			width: 100%;
+			transform: translateX(-50%);
+		}
+
+		.accordionHeader {
+			padding: 5px;
+			font-size: 15px;
+		}
+
+		.page-heading {
+			position: absolute;
+		    top: 50px;
+		    left: 0;
+	    	right: 0;
+			/*left: 25%;*/
+			/*transform: translateX(-50%);*/
+			z-index: 100;
+			transform: rotate(0deg);
+		}
+
+		h1#mainTitle {
+			letter-spacing:5px;
+			font-size:3.5em;
+			margin-top: -5%;
+		}
+
+		.modal-dialog {
+			margin-top: 10%;
+			height: 20%;
+		}
+
+		.modal-content {
+			height: 200%;
+
+		}
+
+		.slider {
+		
+			margin: -14% auto;
+		}
+
+		.results {
+			font-size: 	10px;
+		}
+
+		.trainerTitle {
+			font-size: 	15px;
+		}
+
+		#hitText {
+			font-size: 	12px;
+		}
+
+	}
+
+	@media screen and (max-width: 768px) {
+		.page-heading {
+			/*left: 32%;*/
+			top:20px;
+
+		}
+		span.letterAnimation {
+			margin:5px 0;
+		}
+	}
+
+	@media screen and (max-width: 560px){
+		img.hero {
+			height:100px;
+		}
+
+		#myModal .modal-content {
+			background-size: 100% 100%;
+		}
+		img.foe {
+			height: 50%;
+			margin-bottom: 	60%;
+		}
+
+		img.caught {
+			height: 50%;
+		}
+
+		#hitText {
+			width: 75%;
+		}
+
+		#foeTitle {
+			font-size: 	12px;
+		}
+
+		#hitText {
+			width: 100%;
+			font-size: 	10px;	
+			padding: 0;
+			margin: 0;
+		}
+
+		span.letterAnimation {
+			font-size: 	30px;
+		}
+	}
+
+	@media (max-width: 320px){
+
+
+		#thisPanel {
+			margin: 0;
+			padding: 0;
+		}
+
+		.results {
+			font-size: 	8px;
+		}
+
+		img.foe {
+			margin-bottom: 60%;
+		}
+
+		#hitText {
+			width: 100%;
+			font-size: 	10px;	
+			padding: 0;
+			margin: 0;
+		}
+
+		.foeHP, .heroHP {
+			font-size: 	10px;
+		}
+	}

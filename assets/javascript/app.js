@@ -8,9 +8,8 @@ var foeHP = 0;
 var foeModifier = '';
 var animationSpeed = 4;
 var speedModifier = 1;
-var currentFoe = '';
+var currentFoeImg = '';
 var pokeArray = [];
-var activePokemon = [];
 var markerArray = [];
 var pokeName = '';
 var battleEnd = false;
@@ -38,7 +37,6 @@ var playSound = function (source) {
 
 //Firebase Code
 // Initialize Firebase
-
 var config = {
     apiKey: "AIzaSyC8kW0gKpIoL8W_JizTdOyuq0J0QdY7Zq0",
     authDomain: "group-project-1-b61de.firebaseapp.com",
@@ -78,31 +76,31 @@ var initializePokemonData = function(){
 }
 
 //High scores JS
-	$(document).on("click", "#high-score-btn", function(event){
-		event.preventDefault();
-		database.ref("/Players/").once("value", function(childSnapshot){
-			worldHighScores.push(childSnapshot.val());
-		});
-		var playerHighScores = [];
-		for (highScore in worldHighScores[0]){
-			playerHighScores.push(worldHighScores[0][highScore]);
-		}
-		playerHighScores = playerHighScores.sort(function(a, b){
-			return parseFloat(b.highScore) - parseFloat(a.highScore);
-		});
-		$("#lossModal").modal("toggle");
-		$("#highScoreModal").modal("toggle");
-		for(i=0;i<10; i++){
-			$("#high-score-table").append("<tr><td>" + (i+1) + "</td><td>" + playerHighScores[i].name + "</td><td>" + playerHighScores[i].highScore)
-		}
+$(document).on("click", "#high-score-btn", function(event){
+	event.preventDefault();
+	database.ref("/Players/").once("value", function(childSnapshot){
+		worldHighScores.push(childSnapshot.val());
 	});
+	var playerHighScores = [];
+	for (highScore in worldHighScores[0]){
+		playerHighScores.push(worldHighScores[0][highScore]);
+	}
+	playerHighScores = playerHighScores.sort(function(a, b){
+		return parseFloat(b.highScore) - parseFloat(a.highScore);
+	});
+	$("#lossModal").modal("toggle");
+	$("#highScoreModal").modal("toggle");
+	for(i=0;i<10; i++){
+		$("#high-score-table").append("<tr><td>" + (i+1) + "</td><td>" + playerHighScores[i].name + "</td><td>" + playerHighScores[i].highScore)
+	}
+});
 
 //Restart Button JS
 $(document).on("click", "#restart-btn", function(event){
 	location.reload();
 });
 
-//function that makes the letters "sway"
+//function that makes the title letters "sway"
 function letterSway(element, duration, increase) {
 	var delay = 0;
 	var title = $(element);
@@ -129,7 +127,7 @@ function letterSway(element, duration, increase) {
 	}
 }
 
-//Player Name Entry Modal JS
+//on load event listener
 $(window).on('load',function(){
 	letterSway('#mainTitle','5s', 500);
 	$("#winCount").text(winCount);
@@ -141,18 +139,19 @@ $(window).on('load',function(){
     $('.validationTxt').hide();
     $( ".accordion" ).accordion({
 		active: 0,
-		classes: {
-			"ui-state-focus": "outline"
-		},
 		event: "click",
 		heightStyle: "content",
 	});
-
+    //handles screen size specific JS
 	if($(window).width() <= 600) {
 		$('.space').html('<br>')
 	}
+	if ($(window).width() <= 992) {
+		$( ".accordion" ).accordion( "option", "collapsible", true );
+	}
 });
 
+//resize event listener to handle responsiveness
 $(window).on("resize = 'horizontal'", function () {
 	if($(window).width() <= 768) {
 		$('.space').html('<br>')
@@ -160,21 +159,30 @@ $(window).on("resize = 'horizontal'", function () {
 	if ($(window).width() >= 992) {
 		$('.space').html('');
 	}
+	if ($(window).width() <= 992) {
+		$( ".accordion" ).accordion( "option", "collapsible", true );
+	}
 });
 
+//click event listener that handles user input validation and submitting
+//and retrieving data on firebase
 $(document).on("click", "#playerNameButton",function(event){
 	event.preventDefault();
 	//added to prevent text from piling up
 	$(".validationTxt").empty();
 	var str = $('#playerNameEntry').val();
+	//tests for special characters
 	if(/^[a-zA-Z- ]*$/.test(str) == false) {
 		$(".validationTxt").append('<br>Your name cannot contain numbers or special characters!');
 		$('.validationTxt').show();
 	}
+	//tests for empty string
 	else if(str==""){
 		$(".validationTxt").append('<br>You must have a name! If you do not have one, please enter "Binky".');
 		$('.validationTxt').show();
 	}
+	//if user passes name validation this checks if user data exists in firebase.  If not
+	// it writes data, if so it retrieves it
 	else {
 		$('#thisPanel.panel').show('slow');
 		playerName = $("#playerNameEntry").val();
@@ -199,7 +207,9 @@ $(document).on("click", "#playerNameButton",function(event){
 			    	$("#score").text(playerObj.highScore);
 		    	});
     		}
-    	})
+    	});
+
+    	//writes situation appropriate text to welcome player to the game
     	if (playerExists) {
 			$('.trainerTitle').html('<p>Hello, ' + playerName + ', It\'s nice to see you again.</p>'+
 				'<p>See if you can break your high score of '+startScore+' points!</p>');
@@ -207,7 +217,7 @@ $(document).on("click", "#playerNameButton",function(event){
 			$('.trainerTitle').html('<p>Hello, ' + playerName + ', It\'s nice to meet you.</p>'+
 				'<p>See if you can set a high score!</p>');
 		}
-		$('#playerEntryField').hide();
+		//writes player name to screen and hides input
     	$("#name").text(playerName);
     	$('#playerEntryField').hide();
     	//delays closing modal and starting background music
@@ -231,8 +241,7 @@ setTimeout(function(){
 	}
 }, 5000);
 
-/// Data for the markers consisting of a name, a LatLng and a zIndex for the
-// order in which these markers should display on top of each other.
+//function for randomizing a numbers in a range and with specific decimal places
 var numGen =  function(to, from, fixed) {
 		return (Math.random() * (to - from) + from).toFixed(fixed) * 1; 
 };
@@ -269,10 +278,10 @@ function initMap() {
 function setMarkers(map) {
 
 	generateCoordinates();
-
+	//loop generates a sprite and event listener for each pokemon
 	for (var i = 1; i<=loopCount; i++){
 		numberPokemon++;
-		   $("#numberPokes").text(numberPokemon); 
+	   $("#numberPokes").text(numberPokemon); 
 		var icon = {
 		    url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+i+".png",
 		    scaledSize: new google.maps.Size(75, 75)
@@ -283,11 +292,16 @@ function setMarkers(map) {
 		    map: map,
 		    icon: icon
 		});
-			// add click listener to each marker
+		// add click listener to each marker
 		marker.addListener('click', function(event) {
 		   	playSound('fightStart');
 		   	foeURL = this.icon.url;
+		   	//removes the marker when clicked.  Gives player only one chance
+		   	//to catch each pokemon
 		   	this.setMap(null);
+		   	//timeout delays starting fight sequence to allow sound to fire.
+		   	//following code changes the animation speed of the slider, writes the correct
+		   	//data to the screen, generates hero and foe HP, draws the foe img and shows the modal
 		   	setTimeout(function (){
 		   		$('.mover').css({
 			   		'animation-duration': animationSpeed+'s',
@@ -308,37 +322,39 @@ function setMarkers(map) {
 			   	heroModifier = Math.floor(heroHP / numGen(2,4,0));
 			   	foeHP = numGen(80, 160, 0);
 			   	foeModifier = Math.floor(foeHP / numGen(2,4,0));
-	
+				//captures index number from sprite URL, and then searches for the corresponding
+				//object to grab the name of the pokemon
 			   	var index = foeURL.match(/[0-9]+/g);
 			   	var result = $.grep(pokeArray, function(e){ return e.id == index; });
 			   	pokeName = result[0].name;
 			   	pokeName = pokeName.charAt(0).toUpperCase() + pokeName.slice(1)
 			   	$('.pokeName').text(pokeName+'!');
 
+			   	//writes HP, foe image to the screen
 			   	var h4 = $('<h4>');
 			   	var miss = $('<h4>');
 			   	h4.addClass('foeHP text-center HP');
 			   	h4.text(foeHP);
 			   	$('.heroHP').text(heroHP);
-			   	var currentFoe = $('<img>');
-			   	currentFoe.attr({
+			   	var currentFoeImg = $('<img>');
+			   	currentFoeImg.attr({
 			   		'src': foeURL,
 			   		'height': 200,
 			   		'class': 'foe letterAnimation'
 			   	});
-			   	$('.foeContainer').prepend(h4,currentFoe);
+			   	$('.foeContainer').prepend(h4,currentFoeImg);
+			   	//opens modal that can't be bypassed
 		  		$('#myModal').modal({backdrop: 'static', keyboard: false})  
 		  	  	$('#myModal').modal('show');
 		   	},300);
 		});
-		   //converting numberPokemon to Number and adding 1 to display 50
-			
 	}
-	
 }
 
 //////////////////////Javascript for fight mechanic//////////////////////
 
+
+//function that calculates reduction of hero and foe HP
 function reduceHP(character) {
 	if (character === 'hero') {
 		return heroHP-=heroModifier;
@@ -347,6 +363,7 @@ function reduceHP(character) {
 	}
 }
 
+//function that writes HP values to the screen
 function writeHP() {
 	if (hit) {
 		foeHP = reduceHP('foe');
@@ -357,6 +374,7 @@ function writeHP() {
 	}
 }
 
+//function checks players score to see if they beat their high score
 function checkScore() {
 	if (score > startScore){
 		playerObj.highScore = score;
@@ -369,6 +387,7 @@ function checkScore() {
 	}
 }
 
+//function that writes the endGame text
 function endGame() {
 	$("#lossModal").modal({backdrop: 'static', keyboard: false});
 	$("#lossModal").modal('show');
@@ -377,6 +396,7 @@ function endGame() {
 	$("#score-span").text(score);
 }
 
+//function that calculates score and checks endgame conditions
 function checkLives() {
 	if (lives <= 0){
 		score = (winCount * 100) + (lives * 1000);
@@ -390,6 +410,9 @@ function checkLives() {
 	}
 }
 
+//function that tests battle win conditions, plays appropriate sounds, writes appropriate
+//text, decrements numberPokemon, handles fight animations, and many more fight related
+//conditions.  Provides much of the core functionality of the fight mechanic
 function checkBattleWin() {
 	if (heroHP<=0) {
 		setTimeout(function () {playSound('loss');}, 600);
@@ -437,6 +460,7 @@ function checkBattleWin() {
 			$('#myModal').modal('hide');
 			checkLives();
 		});//end of click event
+
 		winCount++;
 		$("#winCount").text(winCount);
 
@@ -454,7 +478,7 @@ function checkBattleWin() {
 	
 }//end of checkBattleWin
 
-//function writes 'hit' or 'miss' to screen
+//function writes 'hit' or 'miss' text to screen
 function hitText(text,status) {
 	if ($('#hitText')) {
 		$('#hitText').remove();
@@ -505,4 +529,5 @@ $(document).on('click','#myModal' ,function () {
 	checkBattleWin();
 
 	}//end of !battleEnd conditional
+	
 });//end of #myModal onclick event
