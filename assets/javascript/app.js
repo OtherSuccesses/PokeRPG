@@ -149,13 +149,13 @@ $(window).on('load',function(){
 	});
 
 	if($(window).width() <= 600) {
-		$('.space').html('<br><br>')
+		$('.space').html('<br>')
 	}
 });
 
 $(window).on("resize = 'horizontal'", function () {
 	if($(window).width() <= 768) {
-		$('.space').html('<br><br>')
+		$('.space').html('<br>')
 	}
 	if ($(window).width() >= 992) {
 		$('.space').html('');

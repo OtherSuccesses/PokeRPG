@@ -587,6 +587,16 @@ input[type='range'] {
 
 }
 
+@media (max-width: 768px) {
+	.page-heading {
+		left: 32%;
+
+	}
+	span.letterAnimation {
+		margin:5px 0;
+	}
+}
+
 @media (max-width: 560px){
 	img.hero {
 		height:100px;
