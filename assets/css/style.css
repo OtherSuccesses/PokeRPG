@@ -287,6 +287,10 @@ input[type='range'] {
 	outline: none !important;
 }
 
+.validationTxt {
+	margin-top: 10px;
+}
+
 
 	/**************************************animation code**************************************/
 .mover {
