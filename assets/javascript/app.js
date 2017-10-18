@@ -80,7 +80,6 @@ var initializePokemonData = function(){
 //High scores JS
 	$(document).on("click", "#high-score-btn", function(event){
 		event.preventDefault();
-		console.log("highScore");
 		database.ref("/Players/").once("value", function(childSnapshot){
 			worldHighScores.push(childSnapshot.val());
 		});
@@ -180,12 +179,9 @@ $(document).on("click", "#playerNameButton",function(event){
 		$('#thisPanel.panel').show('slow');
 		playerName = $("#playerNameEntry").val();
     	database.ref("/Players/").once("value", function(snapshot){
-    		console.log(snapshot.val());
-    		console.log(snapshot.val().name);
     		var playerDataRef = database.ref("/Players/" + playerName +"/");
     		if (!snapshot.val()[playerName]){
     			playerExists = false;
-    			console.log("valid name");
     			playerDataRef
 		    	.set({
 		    		name: playerName,
@@ -193,14 +189,12 @@ $(document).on("click", "#playerNameButton",function(event){
 		    	});
 		    	playerDataRef.once("value", function(snapshot){
 			    	playerObj=snapshot.val();
-			    	console.log(playerObj);
 		    	});
     		}
     		else {
     			playerExists = true;
 			    playerDataRef.once("value", function(snapshot){
 			    	playerObj=snapshot.val();
-			    	console.log(playerObj);
 			    	startScore = playerObj.highScore;
 			    	$("#score").text(playerObj.highScore);
 		    	});
@@ -348,7 +342,6 @@ function setMarkers(map) {
 function reduceHP(character) {
 	if (character === 'hero') {
 		return heroHP-=heroModifier;
-		console.log("Hero Modifier");
 	} else if ( character === 'foe') {
 		return foeHP-=foeModifier;
 	}
@@ -360,7 +353,6 @@ function writeHP() {
 		$('.foeHP').html(foeHP);
 	} else {
 		heroHP = reduceHP('hero');
-		console.log("HP reduced");
 		$('.heroHP').html(heroHP);
 	}
 }
@@ -386,7 +378,6 @@ function endGame() {
 }
 
 function checkLives() {
-	console.log('startScore: ', startScore);
 	if (lives <= 0){
 		score = (winCount * 100) + (lives * 1000);
 		checkScore();
@@ -401,7 +392,6 @@ function checkLives() {
 
 function checkBattleWin() {
 	if (heroHP<=0) {
-		console.log("hero dies");
 		setTimeout(function () {playSound('loss');}, 600);
 		numberPokemon--;
 		battleEnd = true;
@@ -481,11 +471,9 @@ function hitText(text,status) {
 $(document).on('click','#myModal' ,function () {
 	if (!battleEnd) {
 	var mover = $('.mover').position();
-	console.log(mover.left);
 	//as long as hero and foe are alive, animation effects are added
 	//when the modal is clicked. Timeout allows animation to finish.
 		if (heroHP>0 && foeHP>0) {
-			console.log("hero and foe both have hp");
 			setTimeout(function () {
 				$('.hero').addClass('animateRight');
 				$( ".hero" ).effect( "bounce", "slow" );
