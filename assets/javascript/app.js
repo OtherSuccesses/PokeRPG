@@ -419,7 +419,7 @@ function checkBattleWin() {
 		$("#numberPokes").text(numberPokemon);
 		//delays writing the message by 500ms to allow animation to complete
 		setTimeout(function() {
-			$('.results').html('You Captured a Pokemon! Click it to add it to your Pen');
+			$('.results').html('You Captured a '+pokeName+'! Click it to add it to your Pen');
 		},500);
 		//mousedown event to trigger foe going to pen, collapsing the modal,  
 		//adjusting height of image, and making it draggable
