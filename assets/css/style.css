@@ -529,7 +529,7 @@ input[type='range'] {
 	transform: rotate(-90deg);
 	position: absolute;
 	top: 44%;
-    left: -20%;
+  
 	}
 }
 
@@ -545,8 +545,10 @@ input[type='range'] {
 
 	.page-heading {
 		position: absolute;
-	    top: 20px;
-		left: 25%;
+	    top: 50px;
+	    left: 0;
+    	right: 0;
+		/*left: 25%;*/
 		/*transform: translateX(-50%);*/
 		z-index: 100;
 		transform: rotate(0deg);
@@ -587,9 +589,10 @@ input[type='range'] {
 
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
 	.page-heading {
-		left: 32%;
+		/*left: 32%;*/
+		top:20px;
 
 	}
 	span.letterAnimation {
@@ -597,7 +600,7 @@ input[type='range'] {
 	}
 }
 
-@media (max-width: 560px){
+@media screen and (max-width: 560px){
 	img.hero {
 		height:100px;
 	}
