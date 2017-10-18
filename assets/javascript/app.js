@@ -14,12 +14,10 @@ var markerArray = [];
 var pokeName = '';
 var battleEnd = false;
 var loopCount = 50;
-//PlayerName variable
 var playerName= [];
 var winCount = 0;
 var playerObj;
 var lives = 10;
-//Number of Pokemon caught
 var numberPokemon = 0;
 var startScore = 0;
 var score = 0;
@@ -529,5 +527,5 @@ $(document).on('click','#myModal' ,function () {
 	checkBattleWin();
 
 	}//end of !battleEnd conditional
-	
+
 });//end of #myModal onclick event
