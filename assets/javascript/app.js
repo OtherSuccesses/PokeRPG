@@ -2,9 +2,9 @@
 var map;
 var hit = '';
 var foeURL = '';
-var heroHP = 120;
-var heroModifier = heroHP / 3;
-var foeHP = 120;
+var heroHP = 0;
+var heroModifier = 0;
+var foeHP = 0;
 var foeModifier = '';
 var animationSpeed = 4;
 var speedModifier = 1;
@@ -187,7 +187,7 @@ $(document).on("click", "#playerNameButton",function(event){
 			    	playerObj=snapshot.val();
 			    	console.log(playerObj);
 			    	startScore = playerObj.highScore;
-			    	$("#score").text(startScore);
+			    	$("#score").text(playerObj.highScore);
 		    	});
     		}
     	})
@@ -198,6 +198,7 @@ $(document).on("click", "#playerNameButton",function(event){
 			$('.trainerTitle').html('<p>Hello, ' + playerName + ', It\'s nice to meet you.</p>'+
 				'<p>See if you can set a high score!</p>');
 		}
+		$('#playerEntryField').hide();
     	$("#name").text(playerName);
     	//delays closing modal and starting background music
     	setTimeout(function () {
@@ -294,7 +295,7 @@ function setMarkers(map) {
 			   	});
 			   	//randomizes hero and foe hp, and amount of damage they receive
 			   	heroHP = numGen(100, 150, 0);
-			   	heroModifier = Math.floor(foeHP / numGen(2,4,0));
+			   	heroModifier = Math.floor(heroHP / numGen(2,4,0));
 			   	foeHP = numGen(80, 160, 0);
 			   	foeModifier = Math.floor(foeHP / numGen(2,4,0));
 	
