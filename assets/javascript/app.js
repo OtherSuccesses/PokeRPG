@@ -17,7 +17,7 @@ var loopCount = 50;
 var playerName= [];
 var winCount = 0;
 var playerObj;
-var lives = 10;
+var lives = 1;
 var numberPokemon = 0;
 var startScore = 0;
 var score = 0;
@@ -92,22 +92,26 @@ $(document).on("click", "#high-score-btn", function(event){
 	for (var j = 0; j<10; j++) {
 		topTenScores.push(playerHighScores[j]);
 	}
-	for (var k = 0; k < 10; k++) {
-		if (score > topTenScores[k].highScore){
-			var obj = {highScore: score, name: playerName}
-			topTenScores = topTenScores.splice(k, 0, obj).pop();
-			break;
-		}
-	}
+	//commented out because code not working yet.  Code deals with edge cases for scoring persistence,
+	//and is a stretch goal we can work on in the future
 
-	database.ref("/topTenScores/").set({
-		'topTenScores': topTenScores
-	});
-	database.ref("/topTenScores/").once("value", function(snap){
-		topTenScores = snap.val().topTenScores;
-	});
+	// for (var k = 0; k < 10; k++) {
+	// 	if (score > topTenScores[k].highScore){
+	// 		var obj = {highScore: score, name: playerName}
+	// 		topTenScores = topTenScores.splice(k, 0, obj).pop();
+	// 		console.log(topTenScores);
+	// 		break;
+	// 	}
+	// }
 
-	for(i=0; i<topTenScores.length; i++){
+	// database.ref("/topTenScores/").set({
+	// 	'topTenScores': topTenScores
+	// });
+	// database.ref("/topTenScores/").on("value", function(snap){
+	// 	topTenScores = snap.val().topTenScores;
+	// });
+
+	for(i=0; i<10; i++){
 		$("#high-score-table").append("<tr><td>" + (i+1) + "</td><td>" + topTenScores[i].name + "</td><td>" + topTenScores[i].highScore)
 	}
 });

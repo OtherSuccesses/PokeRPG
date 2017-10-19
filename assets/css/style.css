@@ -87,6 +87,10 @@ h1#mainTitle {
 	font-size: 20px;
 }
 
+#instructionHeader {
+	border-radius: 5px 5px 0 0;
+}
+
 .accordionBody {
 	background-color: white;
 	padding: 10px;
