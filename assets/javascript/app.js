@@ -17,7 +17,7 @@ var loopCount = 50;
 var playerName= [];
 var winCount = 0;
 var playerObj;
-var lives = 10;
+var lives = 3;
 var numberPokemon = 0;
 var startScore = 0;
 var score = 0;
