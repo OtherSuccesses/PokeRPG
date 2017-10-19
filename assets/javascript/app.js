@@ -17,7 +17,7 @@ var loopCount = 50;
 var playerName= [];
 var winCount = 0;
 var playerObj;
-var lives = 10;
+var lives = 1;
 var numberPokemon = 0;
 var startScore = 0;
 var score = 0;
@@ -75,28 +75,45 @@ var initializePokemonData = function(){
 
 //click event that gets 10 best scores and displays them to the screen
 $(document).on("click", "#high-score-btn", function(event){
+	var topTenScores = [];
+	var playerHighScores = [];
 	event.preventDefault();
 	database.ref("/Players/").once("value", function(childSnapshot){
-		console.log('childSnapshot.val(): ',childSnapshot.val());
 		worldHighScores.push(childSnapshot.val());
 	});
-	var playerHighScores = [];
 	for (highScore in worldHighScores[0]){
 		playerHighScores.push(worldHighScores[0][highScore]);
 	}
 	playerHighScores = playerHighScores.sort(function(a, b){
 		return parseFloat(b.highScore) - parseFloat(a.highScore);
 	});
-	console.log('playerHighScores: ',playerHighScores);
 	$("#lossModal").modal("toggle");
 	$("#highScoreModal").modal("toggle");
-	for(i=0;i<10; i++){
-		$("#high-score-table").append("<tr><td>" + (i+1) + "</td><td>" + playerHighScores[i].name + "</td><td>" + playerHighScores[i].highScore)
+	for (var j = 0; j<10; j++) {
+		topTenScores.push(playerHighScores[j]);
+	}
+	for (var k = 0; k < 10; k++) {
+		if (score > topTenScores[k].highScore){
+			var obj = {highScore: score, name: playerName}
+			topTenScores = topTenScores.splice(k, 0, obj).pop();
+			break;
+		}
+	}
+
+	database.ref("/topTenScores/").set({
+		'topTenScores': topTenScores
+	});
+	database.ref("/topTenScores/").once("value", function(snap){
+		topTenScores = snap.val().topTenScores;
+	});
+
+	for(i=0; i<topTenScores.length; i++){
+		$("#high-score-table").append("<tr><td>" + (i+1) + "</td><td>" + topTenScores[i].name + "</td><td>" + topTenScores[i].highScore)
 	}
 });
 
 //Restart Button JS
-$(document).on("click", "#restart-btn", function(event){
+$(document).on("click", ".restart-buttons", function(event){
 	location.reload();
 });
 
@@ -223,7 +240,7 @@ $(document).on("click", "#playerNameButton",function(event){
     	//delays closing modal and starting background music
     	setTimeout(function () {
     		$("#playerNameEntryModal").modal('toggle');
-    		//plays background music
+    		//plays background music and controls volume
 			var audio1 = document.getElementById('audio1')
 			audio1.volume = 0.1;
 			audio1.play();
@@ -277,7 +294,6 @@ function initMap() {
 
 // Adds markers to the map. 
 function setMarkers(map) {
-
 	generateCoordinates();
 	//loop generates a sprite and event listener for each pokemon
 	for (var i = 1; i<=loopCount; i++){
@@ -384,7 +400,7 @@ function checkScore() {
 			highScore: score	
 		});
 		$("#highScore").empty();
-		$("#highScore").append("<br>You've achieved a new high score!");
+		$("#highScore").append("<br>You've achieved a personal high score!");
 	}
 }
 
