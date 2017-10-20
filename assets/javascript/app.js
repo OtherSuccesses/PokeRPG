@@ -23,6 +23,7 @@ var startScore = 0;
 var score = 0;
 var playerExists = true;
 var worldHighScores = [];
+var topTenScores = [];
 
 var playSound = function (source) {
 	var snd  = new Audio();
@@ -207,7 +208,9 @@ $(document).on("click", "#playerNameButton",function(event){
 	//if user passes name validation this checks if user data exists in firebase.  If not
 	// it writes data, if so it retrieves it
 	else {
-		$('#thisPanel.panel').show('slow');
+		setTimeout(function () {
+			$('#thisPanel').fadeTo(3000, 1);
+		},1000*3)
 		playerName = $("#playerNameEntry").val();
     	database.ref("/Players/").once("value", function(snapshot){
     		var playerDataRef = database.ref("/Players/" + playerName +"/");
@@ -293,8 +296,8 @@ function initMap() {
         center: {lat: 35.895252, lng: -78.91968650000001},
         mapTypeId: 'satellite',
         zoom: 3,
-        disableDefaultUI: true
-        });
+        disableDefaultUI: true,
+    });
         window.onload = setMarkers(map);
 };
 
@@ -317,6 +320,7 @@ function setMarkers(map) {
 		});
 		// add click listener to each marker
 		marker.addListener('click', function(event) {
+			console.log(this);
 		   	playSound('fightStart');
 		   	foeURL = this.icon.url;
 		   	//removes the marker when clicked.  Gives player only one chance
