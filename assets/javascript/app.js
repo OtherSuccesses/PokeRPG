@@ -17,7 +17,7 @@ var loopCount = 50;
 var playerName= [];
 var winCount = 0;
 var playerObj;
-var lives = 3;
+var lives = 5;
 var numberPokemon = 0;
 var startScore = 0;
 var score = 0;
@@ -87,8 +87,10 @@ $(document).on("click", "#high-score-btn", function(event){
 	playerHighScores = playerHighScores.sort(function(a, b){
 		return parseFloat(b.highScore) - parseFloat(a.highScore);
 	});
+	$("#highScoreModal").modal("toggle");	
+	$('#lossModal').modal({backdrop: 'static', keyboard: false})
 	$("#lossModal").modal("toggle");
-	$("#highScoreModal").modal("toggle");
+	
 	for (var j = 0; j<10; j++) {
 		topTenScores.push(playerHighScores[j]);
 	}
@@ -154,7 +156,7 @@ $(window).on('load',function(){
 	$("#winCount").text(winCount);
 	$("#lossCount").text(lives);
 	//added to stop user from clicking outside modal to bypass
-	$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false})
+	$('#playerNameEntryModal').modal({backdrop: 'static', keyboard: false});
     $('#playerNameEntryModal').modal('show');
     //hides error text div on load
     $('.validationTxt').hide();
