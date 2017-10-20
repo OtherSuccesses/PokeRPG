@@ -10,7 +10,7 @@ html, body {
 	position: relative;
 	font-family: 'Press Start 2P', cursive;
 	font-size: 10px;
-	overflow:hidden;
+	user-select: none; 
 }
 
 .container {
