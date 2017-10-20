@@ -1,4 +1,4 @@
-@font-face {
+ @font-face {
 	font-family: 'PokemonSolid';
 	src:  url('pokemonsolid.woff') format('woff');
 }
@@ -246,7 +246,7 @@ h1#mainTitle {
 	transition:all 300ms ease;
 }
 
-#playerNameButton:hover {
+#playerNameButton:hover, .loss-modal-buttons:hover {
 	color: white;
 	background-color: darkgreen;
 	border-color: lightgreen;
@@ -254,7 +254,7 @@ h1#mainTitle {
 	        transform: scale(1.1);
 }
 
-#playerNameButton:active {
+#playerNameButton:active, .loss-modal-buttons:active {
 	-webkit-transform: scale(1);
 	        transform: scale(1);
 }
@@ -289,6 +289,17 @@ h1#mainTitle {
 
 .validationTxt {
 	margin-top: 10px;
+}
+
+#high-score-table {
+	width: 100%;
+	font-size: 15px;
+}
+
+#high-score-table tr:hover {
+	background: lightgreen;
+	color: black;
+	opacity: 0.8;
 }
 
 
